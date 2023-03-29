@@ -1,0 +1,25 @@
+html {
+    height: 100%;
+}
+
+body {
+    box-sizing: border-box;
+    height: 100%;
+    margin: 0;
+}
+
+.grid {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 10px 1fr;
+}
+
+.gutter-col {
+    grid-row: 1/-1;
+    grid-column: 2;
+    cursor: col-resize;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-image: url(../public/vertical.png);
+    background-color: rgb(229, 231, 235);
+}

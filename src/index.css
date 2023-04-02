@@ -55,7 +55,6 @@ body {
     display: flex;
     margin: 0;
     padding: 0;
-    overflow: hidden;
 }
 
 #editor-navbar > a {
@@ -95,14 +94,6 @@ body {
     color: red;
 }
 
-#editor-wrapper > div.editor-selected {
-    display: block;
-}
-
-#editor-wrapper > div:not(.editor-selected) {
-    display: none;
-}
-
 #editor-wrapper {
     background-color: lightgray;
     flex: 1;
@@ -111,6 +102,15 @@ body {
 
 #editor-scripts {
     height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 180px auto;
+    grid-template-rows: 1fr;
+    column-gap: 4px;
+}
+
+#script-selector {
+    height: 100%;
     background-color: whitesmoke;
     width: 180px;
     padding: 2px 0;
@@ -118,7 +118,26 @@ body {
     border-radius: 2px;
     border-color: gray;
     border-style: solid;
+    display: flex;
+    flex-flow: column;
+    
 }
+
+#script-block-list {
+    display: flex;
+    flex: 0 0 auto;
+    flex-flow: column;
+    gap: 5px;
+    overflow-y: scroll;
+}
+
+#script-dragspace {
+    background-color: whitesmoke;
+    border-width: 1px;
+    border-radius: 2px;
+    border-color: gray;
+    border-style: solid;
+} 
 
 #script-selector-table {
     display: grid;
@@ -157,4 +176,14 @@ body {
     color: white;
 }
 
+.draggable {
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    flex-shrink: 0;
+}
 
+
+#editor-wrapper > div:not(.editor-selected) {
+    display: none;
+}

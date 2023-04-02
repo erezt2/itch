@@ -37,8 +37,8 @@ functions -> create functions made up of different blocks. can have inputs/ outp
 
 */
 const sst = document.getElementById("script-selector-table")
-sections = [["Motion", "3366FF"], ["Texture", "CC99FF"], ["Sensor", "33CCCC"], ["Audio", "FF99CC"], ["State", "FF9900"], 
-            ["Network", "FFCC99"], ["Controls", "00CC99"], ["Operations", "99CC00"], ["Functions", "666699"], ["Data", "FF6600"]]
+sections = [["Motion", "#3366FF"], ["Texture", "#CC99FF"], ["Sensor", "#33CCCC"], ["Audio", "#FF99CC"], ["State", "#00CC99"], 
+            ["Network", "#FFCC99"], ["Controls", "#FF9900"], ["Operations", "#99CC00"], ["Functions", "#666699"], ["Data", "#FF6600"]]
 selected_section = undefined
 
 function selectScriptSectionWrapper(index) {
@@ -49,7 +49,7 @@ function selectScriptSection(index) {
   if(selected_section !== undefined) selected_section.style.backgroundColor = "";
   selected_section?.classList.remove("editor-selected")
   selected_section = sst.children[index]
-  selected_section.style.backgroundColor = "#"+sections[index][1]
+  selected_section.style.backgroundColor = sections[index][1]
   selected_section.classList.add("editor-selected")
 }
 
@@ -58,7 +58,7 @@ for(let i=0; i<10; i++) {
 
   let color = document.createElement("span")
   let name = document.createElement("span")
-  color.style.backgroundColor = "#" + sections[i][1]
+  color.style.backgroundColor = sections[i][1]
   name.innerHTML = sections[i][0];
   item.appendChild(color)
   item.appendChild(name)
@@ -68,20 +68,38 @@ for(let i=0; i<10; i++) {
 }
 
 selectScriptSection(0)
+// end
+
+const Draggable = require("draggable")
 
 
-console.log(selected_editor)
+let creator = document.getElementById("creator")
+let body = document.getElementById("script-dragspace")
+creator.onclick = create
+
+function create() {
+  let drag = document.createElement("div")
+  drag.classList.add("draggable")
+  body.appendChild(drag)
+  new Draggable(drag, {})
+}
 
 
+const block_list = document.getElementById("script-block-list")
+const list_diff = 150
+function resize(event) {
+  block_list.style.height = (event.target.innerHeight - list_diff)+"px";
+}
+document.body.onresize = resize;
+block_list.style.height = (window.innerHeight - list_diff)+"px";
+
+// SEPERATE
 const PIXI = require("pixi.js")
 
-function resize() {
-  console.log("TEST")
-}
 
 let win = document.getElementById("window")
 
-document.body.onresize = resize;
+
 
 let app = new PIXI.Application({ width: 640, height: 480 });
 app.view.style += {"position": "absolute"}

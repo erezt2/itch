@@ -133,7 +133,7 @@ function drop_in_block(event) {
   console.log("block")
   let target = handle_duplicates(dragged.duplicate, dragged.target)
   event.target.parentNode.appendChild(target);
-  target.style.position = "static"
+  target.style.position = "relative"
   target.style.left = "0px"
   target.style.top = "0px"
 }

@@ -1,6 +1,7 @@
 * {
     box-sizing: border-box;
     font-family: sans-serif;
+    user-select: none; /* Standard syntax */
 }
 
 html {
@@ -113,31 +114,25 @@ body {
     height: 100%;
     background-color: whitesmoke;
     width: 180px;
-    padding: 2px 0;
+    padding: 2px 0px;
     border-width: 1px;
     border-radius: 2px;
     border-color: gray;
     border-style: solid;
     display: flex;
     flex-flow: column;
-    
 }
 
 #script-block-list {
-    display: flex;
-    flex: 0 0 auto;
-    flex-flow: column;
-    gap: 5px;
-    overflow-y: scroll;
+    overflow: scroll;
+    padding: 4px 0px 4px 4px;
 }
 
-#script-dragspace {
-    background-color: whitesmoke;
-    border-width: 1px;
-    border-radius: 2px;
-    border-color: gray;
-    border-style: solid;
-} 
+#script-block-list > div {
+    display: flex;
+    flex-flow: column;
+    gap: 5px;
+}
 
 #script-selector-table {
     display: grid;
@@ -176,14 +171,69 @@ body {
     color: white;
 }
 
-.draggable {
-    width: 100px;
-    height: 100px;
-    background-color: red;
-    flex-shrink: 0;
-}
-
-
 #editor-wrapper > div:not(.editor-selected) {
     display: none;
+}
+
+#script-block-list > div:not(.editor-selected) {
+    display: none;
+}
+
+#script-block-list > div > * {
+    flex: 0 0 auto;
+    width: 100px;
+    height: 30px;
+}
+
+#script-dragspace > * {
+    width: 100px;
+    height: 30px;
+}
+
+#script-dragspace {
+    background-color: whitesmoke;
+    border-width: 1px;
+    border-radius: 2px;
+    border-color: gray;
+    border-style: solid;
+    position: relative;
+    overflow: scroll;
+    scrollbar-gutter: stable;
+} 
+
+#script-dragspace::-webkit-scrollbar-track, #script-block-list::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+#script-dragspace::-webkit-scrollbar, #script-block-list::-webkit-scrollbar
+{
+    height: 8px;
+	width: 8px;
+	background-color: #F5F5F5;
+}
+
+#script-dragspace::-webkit-scrollbar-thumb, #script-block-list::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
+}
+
+.dropzone {
+    border: 1px solid black;
+    width: calc(120%+30px);
+    height: 15px;
+    position: relative;
+    bottom: -5px;
+}
+
+.draggable > .dropzone:not(:last-child) {
+    display: none;
+}
+
+.draggable > .draggable {
+    width: 100%;
 }

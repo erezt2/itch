@@ -20,7 +20,6 @@
     "electron": "^23.2.0"
   },
   "dependencies": {
-    "draggable": "^4.2.0",
     "electron-squirrel-startup": "^1.0.0",
     "pixi.js": "^7.2.3",
     "split-grid": "^1.0.11"

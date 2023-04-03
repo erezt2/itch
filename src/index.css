@@ -237,3 +237,11 @@ body {
 .draggable > .draggable {
     width: 100%;
 }
+
+.dragspace-dragenter {
+    background-color: white !important;
+}
+
+.dropzone-dragenter {
+    background-color: rgba(255, 255, 255, 0.5);
+}

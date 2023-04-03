@@ -117,10 +117,17 @@ function handle_duplicates(dup, dragged) {
   area_low.classList.add("dropzone")
   clone.appendChild(area_low)
   area_low.addEventListener("drop", drop_in_block);
+  area_low.addEventListener("dragenter", (event) => {
+    area_low.classList.add("dropzone-dragenter")
+  })
+  area_low.addEventListener("dragleave", (event) => {
+    area_low.classList.remove("dropzone-dragenter")
+  })
   return clone
 }
 
 function drop_in_block(event) {
+  event.target.classList.remove("dropzone-dragenter")
   event.preventDefault();
   event.stopPropagation();
   console.log("block")
@@ -130,11 +137,17 @@ function drop_in_block(event) {
   target.style.left = "0px"
   target.style.top = "0px"
 }
-
+block_playground.addEventListener("dragenter", (event) => {
+  block_playground.classList.add("dragspace-dragenter")
+})
+block_playground.addEventListener("dragleave", (event) => {
+  block_playground.classList.remove("dragspace-dragenter")
+})
 block_playground.addEventListener("dragover", (event)=> {
   event.preventDefault();
 }, false)
 block_playground.addEventListener("drop", (event) => {
+  block_playground.classList.remove("dragspace-dragenter")
   event.preventDefault();
   console.log("spread")
   let target = handle_duplicates(dragged.duplicate, dragged.target)

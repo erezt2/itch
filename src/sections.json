@@ -18,26 +18,26 @@
     }, 
     "State":{
         "color": "#00CC99",
-        "blocks": []
+        "blocks": ["testB1"]
     }, 
     "Network":{
         "color": "#FFCC99",
-        "blocks": []
+        "blocks": ["testB1"]
     }, 
     "Controls":{
         "color": "#FF9900",
-        "blocks": []
+        "blocks": ["testB1"]
     }, 
     "Operations":{
         "color": "#99CC00",
-        "blocks": []
+        "blocks": ["testB1"]
     }, 
     "Functions":{
         "color": "#666699",
-        "blocks": []
+        "blocks": ["testB1"]
     }, 
     "Data":{
         "color": "#FF6600",
-        "blocks": []
+        "blocks": ["testB1"]
     }
 }

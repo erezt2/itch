@@ -1,0 +1,43 @@
+{
+    "Motion": {
+        "color": "#3366FF",
+        "blocks": ["testA1", "testA2"]
+    }, 
+    "Texture":{
+        "color": "#CC99FF",
+        "blocks": ["testB1", "testB2", "testB3", "testB3", "testB3", "testB3", "testB3", "testB3", "testB3", "testB3", "testB3"
+        , "testB3", "testB3", "testB3", "testB3", "testB3", "testB3", "testB3", "testB3", "testB3", "testB3", "testB3"]
+    }, 
+    "Sensor":{
+        "color":  "#33CCCC",
+        "blocks": ["testC1"]
+    },
+    "Audio": {
+        "color": "#FF99CC",
+        "blocks": ["testD1"]
+    }, 
+    "State":{
+        "color": "#00CC99",
+        "blocks": []
+    }, 
+    "Network":{
+        "color": "#FFCC99",
+        "blocks": []
+    }, 
+    "Controls":{
+        "color": "#FF9900",
+        "blocks": []
+    }, 
+    "Operations":{
+        "color": "#99CC00",
+        "blocks": []
+    }, 
+    "Functions":{
+        "color": "#666699",
+        "blocks": []
+    }, 
+    "Data":{
+        "color": "#FF6600",
+        "blocks": []
+    }
+}

@@ -1,5 +1,5 @@
 import my from "./srcipt-selection.js";
-import BlockVoid from "./resize.js"
+import BlockVoid from "./blocks/blockVoid.js"
 
 export default function createBlocks(){
     function handle_duplicates(dup, dragged) {
@@ -19,6 +19,11 @@ export default function createBlocks(){
             area_low.classList.remove("dropzone-dragenter")
         })
         clone["data-block"] = new BlockVoid(clone)
+        clone.onclick = (event) => {
+            event.stopPropagation()
+            event.preventDefault()
+            clone["data-block"].getAncestor().run()
+        }
         return clone
     }
       
@@ -28,10 +33,12 @@ export default function createBlocks(){
         event.stopPropagation();
         let target = handle_duplicates(my.dragged.duplicate, my.dragged.target)
         event.target.parentNode.appendChild(target);
-        target.style.position = "relative"
+        target.style.position = "absolute"
         target.style.left = "0px"
-        target.style.top = "0px"
+        target.style.top = "100%"
     }
+
+
     my.block_playground.addEventListener("dragenter", (event) => {
         my.block_playground.classList.add("dragspace-dragenter")
     })
@@ -41,6 +48,8 @@ export default function createBlocks(){
     my.block_playground.addEventListener("dragover", (event)=> {
     event.preventDefault();
     }, false)
+
+
     my.block_playground.addEventListener("drop", (event) => {
         my.block_playground.classList.remove("dragspace-dragenter")
         event.preventDefault();
@@ -50,6 +59,7 @@ export default function createBlocks(){
         var offsetX = event.offsetX;
         var offsetY = event.offsetY;
         var element = event.target;
+
         if(element !== my.block_playground) {
             while (element !== my.block_playground) {
                 offsetX += element.offsetLeft;
@@ -60,6 +70,7 @@ export default function createBlocks(){
             target.style.top = (offsetY - my.dragged.self_y) + "px"
             return
         }
+
         target.style.left = (my.block_playground.scrollLeft + offsetX - my.dragged.self_x) + "px"
         target.style.top = (my.block_playground.scrollTop + offsetY - my.dragged.self_y) + "px"
         console.log(event)

@@ -114,7 +114,7 @@ body {
     height: 100%;
     background-color: whitesmoke;
     width: 180px;
-    padding: 2px 0px;
+    padding: 2px 0px 0px 0px;
     border-width: 1px;
     border-radius: 2px;
     border-color: gray;
@@ -180,16 +180,7 @@ body {
     display: none;
 }
 
-#script-block-list > div > * {
-    flex: 0 0 auto;
-    min-width: 100px;
-    min-height: 30px;
-}
 
-#script-dragspace > div {
-    min-width: 100px;
-    min-height: 30px;
-}
 
 #script-dragspace {
     background-color: whitesmoke;
@@ -225,9 +216,10 @@ body {
 
 .dropzone {
     /* border: 1px solid black; */
-    width: 100%;
+    width: calc(100% + 10px);
     height: 15px;
     position: absolute;
+    left:-5px;
     bottom: -10px;
 }
 
@@ -235,15 +227,35 @@ body {
     display: none;
 }
 
-.draggable > .draggable {
-    width: 100%;
+#script-block-list > div > *, #script-dragspace > div, .draggable > .draggable {
+    /* global block class */
     min-width: 100px;
     min-height: 30px;
+    padding: 0px 3px;
+    display: flex;
+    align-items: center;
+}
+
+#script-block-list > div > * {
+    /* class in block selector */
+    flex: 0 0 auto;
+}
+
+#script-dragspace > div {
+    /* class in block dragspace */
+    position: absolute;
+}
+
+.draggable > .draggable {
+    /*class for block in block */
+    width: 100%;
+    position: absolute;
 }
 
 .draggable > div:first-child {
     height: 100%;
     width: 100%;
+    display: flex;
 }
 
 .dragspace-dragenter {
@@ -251,5 +263,12 @@ body {
 }
 
 .dropzone-dragenter {
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 150, 0.2);
+}
+
+.editable {
+    background-color: white;
+    min-width: 20px;
+    margin: 1px 3px 1px 4px;
+    border-radius: 3px;
 }

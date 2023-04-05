@@ -1,26 +1,38 @@
 
-var MODULE = ((my) => {
+var MODULE = await (async (my) => {
+    function createWrapper(text) {
+        let dom = document.createElement("span")
+        dom.innerHTML = text
+        return dom
+    }
+    function createTextBox() {
+        let dom = document.createElement("span")
+        dom.contentEditable = true;
+        dom.classList.add("editable")
+        return dom
+    }
+
     const sst = document.getElementById("script-selector-table")
     const sbl = document.getElementById("script-block-list")
-    const sections = require("./code/sections.json")
+    const sections = require("./code/blocks/sections.json")
     const section_names = Object.keys(sections)
 
     let selected_section = undefined
     let selected_list = undefined
 
     function selectScriptSectionWrapper(index) {
-    return () => selectScriptSection(index)
+        return () => selectScriptSection(index)
     }
 
     function selectScriptSection(index) {
     if(selected_section !== undefined) selected_section.style.backgroundColor = "";
-    selected_section?.classList.remove("editor-selected")
-    selected_list?.classList.remove("editor-selected")
-    selected_section = sst.children[index]
-    selected_list = sbl.children[index]
-    selected_section.style.backgroundColor = sections[section_names[index]].color
-    selected_section.classList.add("editor-selected")
-    selected_list.classList.add("editor-selected")
+        selected_section?.classList.remove("editor-selected")
+        selected_list?.classList.remove("editor-selected")
+        selected_section = sst.children[index]
+        selected_list = sbl.children[index]
+        selected_section.style.backgroundColor = sections[section_names[index]].color
+        selected_section.classList.add("editor-selected")
+        selected_list.classList.add("editor-selected")
     }
 
 
@@ -60,12 +72,24 @@ var MODULE = ((my) => {
             let block = document.createElement("div")
             block.style.backgroundColor = sections[sn].color
             block.style.cursor = "pointer"
-            let inside = document.createElement("div")
-            inside.innerHTML = block_name
-            block.appendChild(inside)
             block.classList.add("draggable")
             block.draggable = true
             block.addEventListener("dragstart", my.register_dragged_dup)
+            
+
+            let inside = document.createElement("div")
+            console.log("./code/blocks/" + block_name)
+            let block_class = (await import("./blocks/" + block_name)).default
+            let block_text = block_class.display.split("|")
+            inside.appendChild(createWrapper(block_text[0]))
+            for(let i=1; i<block_text.length; i++) {
+                inside.appendChild(createTextBox())
+
+                inside.appendChild(createWrapper(block_text[i]))
+            }
+            block.appendChild(inside)
+            block["data-class"] = block_class
+
             block_list.appendChild(block)
         }
 

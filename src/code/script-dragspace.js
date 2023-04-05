@@ -1,5 +1,4 @@
-import my from "./srcipt-selection.js";
-import BlockVoid from "./blocks/blockVoid.js"
+import my from "./script-selection.js";
 
 export default function createBlocks(){
     function handle_duplicates(dup, dragged) {
@@ -18,7 +17,7 @@ export default function createBlocks(){
         area_low.addEventListener("dragleave", (event) => {
             area_low.classList.remove("dropzone-dragenter")
         })
-        clone["data-block"] = new BlockVoid(clone)
+        clone["data-block"] = new dragged["data-class"](clone)
         clone.onclick = (event) => {
             event.stopPropagation()
             event.preventDefault()
@@ -33,7 +32,6 @@ export default function createBlocks(){
         event.stopPropagation();
         let target = handle_duplicates(my.dragged.duplicate, my.dragged.target)
         event.target.parentNode.appendChild(target);
-        target.style.position = "absolute"
         target.style.left = "0px"
         target.style.top = "100%"
     }
@@ -54,7 +52,6 @@ export default function createBlocks(){
         my.block_playground.classList.remove("dragspace-dragenter")
         event.preventDefault();
         let target = handle_duplicates(my.dragged.duplicate, my.dragged.target)
-        target.style.position = "absolute"
         my.block_playground.appendChild(target);
         var offsetX = event.offsetX;
         var offsetY = event.offsetY;

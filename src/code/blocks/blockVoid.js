@@ -1,12 +1,19 @@
 const block_playground = document.getElementById("script-dragspace")
 
 export default class BlockVoid {
-    static input_types = [];
-    static display = "block";
-    inputs;
+    // static input_types = [];
+    // static display = "block";
     elementHTML; // wrapper of the entire thing
+    inputs;
     constructor(element) {
         this.elementHTML = element;
+        let disp = this.elementHTML.children[0]
+        this.inputs = []
+        for(let c of disp.children) {
+            if(!c.classList.contains("editable")) continue;
+            c.onclick = (event) => {event.stopPropagation()}
+            this.inputs.push(c)
+        }
     }
     getNext(){
         let dom = this.elementHTML.children[2]
@@ -27,14 +34,16 @@ export default class BlockVoid {
     }
 
     run() {
-        if(this.constructor == BlockVoid){
+        if(this.constructor === BlockVoid){
             console.log("WARNING: USING BASE CLASS | %s", this.elementHTML.children[0].innerHTML)
         }
         this.getNext()?.run()
     }
-    getValue(index) {
-        if(this.inputs[index] instanceof input_types[index]) return this.inputs[index];
-        return input_types[index]();
+    getValues(input_types) {
+        if (this.inputs.length !== input_types.length) throw "bad block build"
+        let l = []
+        for(let i=0; i<this.inputs.length; i++) l.push(input_types[i](this.inputs[i].innerHTML))
+        return l;
     }
 }
 

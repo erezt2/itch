@@ -1,43 +1,42 @@
 {
     "Motion": {
         "color": "#3366FF",
-        "blocks": ["testA1", "testA2"]
+        "blocks": ["VoidBlocks/wait.js", "VoidBlocks/wait.js"]
     }, 
     "Texture":{
         "color": "#CC99FF",
-        "blocks": ["testB1", "testB2", "testB3", "testB3", "testB3", "testB3", "testB3", "testB3", "testB3", "testB3", "testB3"
-        , "testB3", "testB3", "testB3", "testB3", "testB3", "testB3", "testB3", "testB3", "testB3", "testB3", "testB3"]
+        "blocks": []
     }, 
     "Sensor":{
         "color":  "#33CCCC",
-        "blocks": ["testC1"]
+        "blocks": []
     },
     "Audio": {
         "color": "#FF99CC",
-        "blocks": ["testD1"]
+        "blocks": []
     }, 
     "State":{
         "color": "#00CC99",
-        "blocks": ["testB1"]
+        "blocks": []
     }, 
     "Network":{
         "color": "#FFCC99",
-        "blocks": ["testB1"]
+        "blocks": []
     }, 
     "Controls":{
         "color": "#FF9900",
-        "blocks": ["testB1"]
+        "blocks": []
     }, 
     "Operations":{
         "color": "#99CC00",
-        "blocks": ["testB1"]
+        "blocks": []
     }, 
     "Functions":{
         "color": "#666699",
-        "blocks": ["testB1"]
+        "blocks": []
     }, 
     "Data":{
         "color": "#FF6600",
-        "blocks": ["testB1"]
+        "blocks": []
     }
 }

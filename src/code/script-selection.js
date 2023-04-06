@@ -1,3 +1,5 @@
+import blockValue from "./blocks/blockValue.js"
+import BlockVoid from "./blocks/blockVoid.js"
 
 var MODULE = await (async (my) => {
     function createWrapper(text) {
@@ -25,7 +27,7 @@ var MODULE = await (async (my) => {
     }
 
     function selectScriptSection(index) {
-    if(selected_section !== undefined) selected_section.style.backgroundColor = "";
+        if(selected_section !== undefined) selected_section.style.backgroundColor = "";
         selected_section?.classList.remove("editor-selected")
         selected_list?.classList.remove("editor-selected")
         selected_section = sst.children[index]
@@ -34,7 +36,6 @@ var MODULE = await (async (my) => {
         selected_section.classList.add("editor-selected")
         selected_list.classList.add("editor-selected")
     }
-
 
     my.block_playground = document.getElementById("script-dragspace")
 
@@ -51,6 +52,17 @@ var MODULE = await (async (my) => {
         my.dragged.self_x = event.offsetX;
         my.dragged.self_y = event.offsetY;
     }
+
+    sbl.addEventListener("dragenter", (event) => {
+        event.preventDefault()
+    })
+    sbl.addEventListener("dragleave", (event) => {event.preventDefault()})
+    sbl.addEventListener("drop", (event) => {
+        event.preventDefault()
+        my.dragged.target.remove()
+    })
+
+
     for(let i=0; i<10; i++) {
         let sn = section_names[i]
 
@@ -76,7 +88,6 @@ var MODULE = await (async (my) => {
             block.draggable = true
             block.addEventListener("dragstart", my.register_dragged_dup)
             
-
             let inside = document.createElement("div")
             console.log("./code/blocks/" + block_name)
             let block_class = (await import("./blocks/" + block_name)).default
@@ -89,6 +100,16 @@ var MODULE = await (async (my) => {
             }
             block.appendChild(inside)
             block["data-class"] = block_class
+            let returnType = "-"
+            if(block_class.prototype instanceof BlockVoid) {
+                block.classList.add("block-void")
+                returnType = "void"
+            }
+            else if(block_class.prototype instanceof blockValue) {
+                block.classList.add("block-int")
+                returnType = "int"
+            }
+            block["data-type"] = returnType
 
             block_list.appendChild(block)
         }

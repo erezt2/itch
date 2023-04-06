@@ -229,11 +229,13 @@ body {
 
 #script-block-list > div > *, #script-dragspace > div, .draggable > .draggable {
     /* global block class */
-    min-width: 100px;
-    min-height: 30px;
-    padding: 0px 3px;
+    /* min-width: 100px;
+    min-height: 30px; */
+    padding: 4px 6px;
     display: flex;
+    width: max-content;
     align-items: center;
+    /* outline: 2px solid rgba(0,0,0, 0.25); */
 }
 
 #script-block-list > div > * {
@@ -248,14 +250,26 @@ body {
 
 .draggable > .draggable {
     /*class for block in block */
-    width: 100%;
     position: absolute;
 }
 
 .draggable > div:first-child {
     height: 100%;
     width: 100%;
+    color: white;
     display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+
+.draggable > div:first-child > * {
+    flex: 0 0 auto;
+}
+
+.draggable > div:first-child > span > .draggable {
+    position: static;
+    padding: 2px 6px;
+    outline: 2px solid rgba(0,0,0, 0.25);
 }
 
 .dragspace-dragenter {
@@ -263,12 +277,22 @@ body {
 }
 
 .dropzone-dragenter {
-    background-color: rgba(255, 255, 150, 0.2);
+    background-color: rgba(255, 255, 150, 0.2) !important;
 }
 
 .editable {
+    margin: 0 3px;
+}
+
+.editable:not(:has(:first-child)) {
     background-color: white;
     min-width: 20px;
-    margin: 1px 3px 1px 4px;
-    border-radius: 3px;
+    color:black;
+    padding: 2px 3px 2px 2px;
+    font-size: 14px;
+    border-radius: 6px;
+}
+
+.block-int {
+    border-radius: 10px;
 }

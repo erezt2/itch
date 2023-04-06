@@ -29,7 +29,7 @@
     }, 
     "Operations":{
         "color": "#99CC00",
-        "blocks": []
+        "blocks": ["IntBlocks/addition.js"]
     }, 
     "Functions":{
         "color": "#666699",

@@ -18,8 +18,8 @@ functions -> create functions made up of different blocks. can have inputs/ outp
 */
 
 
-import createBlocks from "./code/script-dragspace.js"
-createBlocks()
+// import createBlocks from "./code/script-dragspace.js"
+// createBlocks()
 
 
 
@@ -27,6 +27,22 @@ createBlocks()
 
 import createResize from "./code/resize.js"
 createResize()
+
+import createSelection from "./code/script-selection.js"
+await createSelection()
+
+let object_list = ["background", "test1"]
+import createDragspace from "./code/script-dragspace.js"
+import {createSpriteSelection, selectPlayground} from "./code/create-character.js"
+
+
+
+
+for(let name of object_list) {
+  createDragspace(name)
+  createSpriteSelection(name)
+}
+selectPlayground("background")
 
 // SEPERATE
 const PIXI = require("pixi.js")

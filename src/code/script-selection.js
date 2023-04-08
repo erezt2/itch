@@ -1,7 +1,8 @@
 import blockValue from "./blocks/blockValue.js"
 import BlockVoid from "./blocks/blockVoid.js"
+import my from "./global.js"
 
-var MODULE = await (async (my) => {
+export default async function createSelection() {
     function createWrapper(text) {
         let dom = document.createElement("span")
         dom.innerHTML = text
@@ -35,22 +36,6 @@ var MODULE = await (async (my) => {
         selected_section.style.backgroundColor = sections[section_names[index]].color
         selected_section.classList.add("editor-selected")
         selected_list.classList.add("editor-selected")
-    }
-
-    my.block_playground = document.getElementById("script-dragspace")
-
-    my.dragged = {};
-    my.register_dragged_dup = (event) => {
-        my.dragged.duplicate = true;
-        my.dragged.target = event.target;
-        my.dragged.self_x = event.offsetX;
-        my.dragged.self_y = event.offsetY;
-    }
-    my.register_dragged = (event) => {
-        my.dragged.duplicate = false;
-        my.dragged.target = event.target;
-        my.dragged.self_x = event.offsetX;
-        my.dragged.self_y = event.offsetY;
     }
 
     sbl.addEventListener("dragenter", (event) => {
@@ -118,9 +103,7 @@ var MODULE = await (async (my) => {
 
     }
     selectScriptSection(0)
-    return my
-})(MODULE || {})
+}
 
-export default MODULE
 
 

@@ -8,7 +8,6 @@ export default class Addition extends BlockInt {
     }
     run() {
         let args = this.getValues(this.constructor.input_types)
-        console.log("RUN ADD")
         return args[0] + args[1]
     }
 }

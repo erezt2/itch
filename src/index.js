@@ -35,8 +35,13 @@ let object_list = ["background", "test1"]
 import createDragspace from "./code/script-dragspace.js"
 import {createSpriteSelection, selectPlayground} from "./code/create-character.js"
 
-
-
+// TODO: 
+// threading
+// sprite rendering
+// fix sprite selection
+// left click menu + dropdown menu
+// textures + sounds + states
+// make some visual changes
 
 for(let name of object_list) {
   createDragspace(name)

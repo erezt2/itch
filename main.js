@@ -13,6 +13,7 @@ app.whenReady().then(() => {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
+            nodeIntegrationInWorker: true,
         }
     })
     win.loadFile('src/index.html')

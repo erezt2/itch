@@ -28,7 +28,7 @@
         "blocks": []
     }, 
     "Operations":{
-        "color": "#669900",
+        "color": "#77BB00",
         "blocks": ["ValueBlocks/addition.js", "ValueBlocks/subtraction.js", "ValueBlocks/multiplication.js", "ValueBlocks/division.js", 
             "ValueBlocks/lessThan.js", "ValueBlocks/lessEquals.js", "ValueBlocks/equals.js", "ValueBlocks/greaterEquals.js", "ValueBlocks/greaterThan.js",
             "ValueBlocks/and.js", "ValueBlocks/or.js", "ValueBlocks/not.js", "ValueBlocks/randomInt.js", "ValueBlocks/randomUniform.js"]

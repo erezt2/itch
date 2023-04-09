@@ -43,10 +43,14 @@ import {createSpriteSelection, selectPlayground} from "./code/create-character.j
 // textures + sounds + states
 // make some visual changes
 
+let immutable = true;
 for(let name of object_list) {
   createDragspace(name)
-  createSpriteSelection(name)
+  createSpriteSelection(name, immutable)
+  immutable = false
 }
+
+
 selectPlayground("background")
 
 // SEPERATE

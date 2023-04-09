@@ -1,6 +1,6 @@
 import blockValue from "./blocks/blockValue.js"
 import BlockVoid from "./blocks/blockVoid.js"
-import my from "./global.js"
+import global from "./global.js"
 
 export default async function createSelection() {
     function createWrapper(text) {
@@ -43,8 +43,13 @@ export default async function createSelection() {
     })
     sbl.addEventListener("dragleave", (event) => {event.preventDefault()})
     sbl.addEventListener("drop", (event) => {
+        let my = Object.assign({}, global.dragged);
+        if(sbl.contains(my.target)) return;
+        if(Object.keys(my).length === 0) return;
+        global.dragged = {}
+
         event.preventDefault()
-        my.dragged.target.remove()
+        my.target.remove()
     })
 
 
@@ -71,7 +76,7 @@ export default async function createSelection() {
             block.style.cursor = "pointer"
             block.classList.add("draggable")
             block.draggable = true
-            block.addEventListener("dragstart", my.register_dragged_dup)
+            block.addEventListener("dragstart", global.register_dragged_dup)
             
             let inside = document.createElement("div")
             console.log("./code/blocks/" + block_name)

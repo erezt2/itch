@@ -235,7 +235,7 @@ body {
     /* global block class */
     /* min-width: 100px;
     min-height: 30px; */
-    padding: 4px 6px;
+    padding: 3px;
     display: flex;
     width: max-content;
     align-items: center;
@@ -272,8 +272,8 @@ body {
 
 .draggable > div:first-child > span > .draggable {
     position: static;
-    padding: 2px 6px;
-    outline: 2px solid rgba(0,0,0, 0.25);
+    padding: 3px;
+    outline: 1px solid rgba(0,0,0, 0.25);
 }
 
 .dragspace-dragenter {
@@ -290,9 +290,9 @@ body {
 
 .editable:not(:has(:first-child)) {
     background-color: white;
-    min-width: 20px;
+    min-width: 17px;
     color:black;
-    padding: 2px 3px 2px 2px;
+    padding: 1px 2px;
     font-size: 14px;
     border-radius: 6px;
 }
@@ -315,6 +315,7 @@ body {
     background-color: whitesmoke;
     border-radius: 5px;
     border: gray 2px solid;
+    cursor: pointer;
 }
 
 #sprites > div > div {
@@ -325,6 +326,7 @@ body {
     align-items: center;
     justify-content: center;
 }
+
 #sprites > div > div > img {
     width: auto;
     height: auto;

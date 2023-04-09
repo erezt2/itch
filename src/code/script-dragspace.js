@@ -1,6 +1,6 @@
 
 import handle_duplicates from "./handle-duplicates.js"
-import my from "./global.js"
+import global from "./global.js"
 
 function handle_dropped_parent(dom) {
     let p = dom.parentNode
@@ -25,11 +25,16 @@ export default function createDragspace(name){
 
 
     block_playground.addEventListener("drop", (event) => {
+        let my = Object.assign({}, global.dragged);
+        console.log(my)
+        if(Object.keys(my).length === 0) return;
+        global.dragged = {}
+
         block_playground.classList.remove("dragspace-dragenter")
         event.preventDefault();
-        let target = handle_duplicates(my.dragged.duplicate, my.dragged.target)
+        let target = handle_duplicates(my.duplicate, my.target)
 
-        handle_dropped_parent(my.dragged.target)
+        handle_dropped_parent(my.target)
         block_playground.appendChild(target);
         
 
@@ -38,9 +43,8 @@ export default function createDragspace(name){
         let x = event.clientX - rect.left
         let y = event.clientY - rect.top
 
-        target.style.left = (block_playground.scrollLeft + x - my.dragged.self_x) + "px"
-        target.style.top = (block_playground.scrollTop + y - my.dragged.self_y) + "px"
-
+        target.style.left = (block_playground.scrollLeft + x - my.self_x) + "px"
+        target.style.top = (block_playground.scrollTop + y - my.self_y) + "px"
 
         return 
         var offsetX = event.offsetX;

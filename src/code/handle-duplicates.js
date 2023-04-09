@@ -1,4 +1,4 @@
-import my from "./global.js"
+import global from "./global.js"
 
 function handle_dropped_parent(dom) {
     let p = dom.parentNode
@@ -7,10 +7,16 @@ function handle_dropped_parent(dom) {
 
 function drop_in_block(event) {
     this.classList.remove("dropzone-dragenter")
+    let my = Object.assign({}, global.dragged);
+    if(my.target["data-type"] !== "void") return
+    if(my.target.contains(this)) return;
+    if(Object.keys(my).length === 0) return;
+    global.dragged = {}
+    
     event.preventDefault();
-    if(my.dragged.target["data-type"] !== "void") return
-    let target = handle_duplicates(my.dragged.duplicate, my.dragged.target)
-    handle_dropped_parent(my.dragged.target)
+    
+    let target = handle_duplicates(my.duplicate, my.target)
+    handle_dropped_parent(my.target)
     this.parentNode.appendChild(target);
     target.style.left = "0px"
     target.style.top = "100%"
@@ -19,14 +25,18 @@ function drop_in_block(event) {
 
 function drop_in_input(event) {
     this.classList.remove("dropzone-dragenter")
+    let my = Object.assign({}, global.dragged);
+    if(my.target.contains(this)) return;
+    if(my.target["data-type"] === "void") return
+    if(Object.keys(my).length === 0) return;
+    global.dragged = {}
+
     event.preventDefault();
-    if(my.dragged.target["data-type"] === "void") return
-    
     if(this.children.length > 0) return
-    let target = handle_duplicates(my.dragged.duplicate, my.dragged.target)
+    let target = handle_duplicates(my.duplicate, my.target)
     this.innerHTML = ""
 
-    handle_dropped_parent(my.dragged.target)
+    handle_dropped_parent(my.target)
     this.appendChild(target);
     this.contentEditable = false;
     target.style.left = "0px"
@@ -38,8 +48,8 @@ export default function handle_duplicates(dup, dragged) { // duplication handle 
     if(!dup) return dragged;
     let clone = dragged.cloneNode(true)
 
-    clone.removeEventListener("dragstart", my.register_dragged_dup)
-    clone.addEventListener("dragstart", my.register_dragged)
+    clone.removeEventListener("dragstart", global.register_dragged_dup)
+    clone.addEventListener("dragstart", global.register_dragged)
 
     // clone.classList.add("draggable")
     clone["data-type"] = dragged["data-type"]

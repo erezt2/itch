@@ -1,4 +1,6 @@
 const { app, BrowserWindow } = require('electron')
+const path = require("path")
+console.log(path.join(__dirname, 'src/preload.js'))
 
 
 
@@ -14,9 +16,13 @@ app.whenReady().then(() => {
             nodeIntegration: true,
             contextIsolation: false,
             nodeIntegrationInWorker: true,
+            enableRemoteModule: true,
+            contextIsolation: false,
+            preload: path.join(__dirname, 'src/preload.js')
         }
     })
     win.loadFile('src/index.html')
+    win.webContents.openDevTools()
 })
 
 

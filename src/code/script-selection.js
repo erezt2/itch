@@ -41,6 +41,9 @@ export default async function createSelection() {
     sbl.addEventListener("dragenter", (event) => {
         event.preventDefault()
     })
+    sbl.addEventListener("dragover", (event) => {
+        event.preventDefault()
+    })
     sbl.addEventListener("dragleave", (event) => {event.preventDefault()})
     sbl.addEventListener("drop", (event) => {
         let my = Object.assign({}, global.dragged);
@@ -79,7 +82,6 @@ export default async function createSelection() {
             block.addEventListener("dragstart", global.register_dragged_dup)
             
             let inside = document.createElement("div")
-            console.log("./code/blocks/" + block_name)
             let block_class = (await import("./blocks/" + block_name)).default
             let block_text = block_class.display.split("|")
             inside.appendChild(createWrapper(block_text[0]))

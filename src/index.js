@@ -50,6 +50,40 @@ for(let name of object_list) {
   immutable = false
 }
 
+const new_char = document.getElementById("new-character")
+const sprites = document.getElementById("sprites")
+
+window.api.test()
+
+sprites.addEventListener('dragover', (event)=> {
+  console.log(event.dataTransfer.files.length === 0)
+  if(event.dataTransfer.files.length === 0) return
+  event.preventDefault();
+  event.stopPropagation();
+})
+
+sprites.addEventListener('drop', (event) => {
+  if(event.dataTransfer.files === undefined) return
+  event.preventDefault()
+  event.stopPropagation()
+  for(let file of event.dataTransfer.files) console.log(file)
+})
+
+new_char.onclick = (event) => {
+  let a = dialog.showOpenDialog({
+    properties: ['openFile'],
+    filters: [
+      { name: 'PNG file', extensions: ['png']}
+    ]
+  }).then(result => {
+    if(result.canceled || result.filePaths.length === 0) return null
+    return result
+  }).catch(err => {
+    console.log(err)
+  })
+  console.log(a)
+}
+
 
 selectPlayground("background")
 

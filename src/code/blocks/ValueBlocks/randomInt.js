@@ -6,8 +6,8 @@ export default class RandomInt extends BlockInt {
     constructor(element) {
         super(element)
     }
-    run() {
-        let args = this.getValues(this.constructor.input_types)
+    run(data) {
+        let args = this.getValues(this.constructor.input_types, data)
         return Math.floor(args[0] + Math.random() * (args[1] - args[0] + 1))
     }
 }

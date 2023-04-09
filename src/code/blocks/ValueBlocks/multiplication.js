@@ -6,8 +6,8 @@ export default class Multiplication extends BlockInt {
     constructor(element) {
         super(element)
     }
-    run() {
-        let args = this.getValues(this.constructor.input_types)
+    run(data) {
+        let args = this.getValues(this.constructor.input_types, data)
         return args[0] * args[1]
     }
 }

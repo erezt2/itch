@@ -21,20 +21,19 @@ export default class BlockGeneric {
         return step
     }
 
-    run() {
+    run(data) {
         if(this.constructor === BlockGeneric){
             console.log("WARNING: USING BASE CLASS | %s", this.elementHTML.children[0].innerHTML)
         }
-        this.getNext()?.run()
+        this.getNext()?.run(data)
     }
-    getValues(input_types) {
+    getValues(input_types, data) {
         if (this.inputs.length !== input_types.length) throw "bad block build"
         let l = []
-        console.log("AA")
         for(let i=0; i<this.inputs.length; i++) {
             let val;
             if(this.inputs[i].children.length === 0) val = this.inputs[i].innerHTML
-            else val = this.inputs[i].children[0]["data-block"].run()
+            else val = this.inputs[i].children[0]["data-block"].run(data)
             l.push(input_types[i](val))
         }
         return l;

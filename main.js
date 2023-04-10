@@ -16,7 +16,6 @@ app.whenReady().then(() => {
             nodeIntegrationInWorker: true,
             enableRemoteModule: true,
             contextIsolation: false,
-            preload: path.join(__dirname, 'src/preload.js')
         }
     })
     win.loadFile('src/index.html')

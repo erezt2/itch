@@ -31,10 +31,7 @@ createResize()
 import createSelection from "./code/script-selection.js"
 await createSelection()
 
-let object_list = ["background", "test1"]
-import createDragspace from "./code/script-dragspace.js"
-import {createSpriteSelection, selectPlayground} from "./code/create-character.js"
-import global from "./code/global.js"
+
 
 // TODO: 
 // threading
@@ -44,43 +41,20 @@ import global from "./code/global.js"
 // textures + sounds + states
 // make some visual changes
 
+
+import spriteListEvents from "./code/sprite-list-events.js"
+spriteListEvents()
+
+import createDragspace from "./code/script-dragspace.js"
+import {createSpriteSelection, selectPlayground} from "./code/create-character.js"
+
+let object_list = ["background", "test1"]
 let immutable = true;
 for(let name of object_list) {
-  createDragspace(name)
-  createSpriteSelection(name, immutable)
-  immutable = false
+    createDragspace(name)
+    createSpriteSelection(name, immutable)
+    immutable = false
 }
-
-const new_char = document.getElementById("new-character")
-const sprites = document.getElementById("sprites")
-const { ipcRenderer } = require("electron")
-const fs = require("fs")
-
-
-sprites.addEventListener('dragover', (event)=> {
-  if(Object.keys(global.dragged).length !== 0) return
-  event.preventDefault();
-  event.stopPropagation();
-})
-
-function addFile(path) {
-  console.log(path)
-}
-
-sprites.addEventListener('drop', (event) => {
-  if(event.dataTransfer.files.length === 0) return
-  event.preventDefault()
-  event.stopPropagation()
-  addFile(event.dataTransfer.files[0].path)
-})
-
-new_char.onclick = async (event) => {
-  let path = await ipcRenderer.invoke("showDialog")
-  if(path === null || path.canceled) return;
-  addFile(path.filePaths[0])
-}
-
-
 selectPlayground("background")
 
 // SEPERATE

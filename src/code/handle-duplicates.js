@@ -89,7 +89,7 @@ export default function handle_duplicates(dup, dragged) { // duplication handle 
     clone.onclick = (event) => {
         event.stopPropagation()
         event.preventDefault()
-        clone["data-block"].getAncestor().run({})
+        clone["data-block"].getAncestor().run({local_variables: {}})
     }
     
     for(let box of clone["data-block"].inputs) {

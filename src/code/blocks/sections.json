@@ -1,7 +1,7 @@
 {
     "Motion": {
         "color": "#3366FF",
-        "blocks": ["VoidBlocks/wait.js", "VoidBlocks/wait.js"]
+        "blocks": []
     }, 
     "Texture":{
         "color": "#CC99FF",
@@ -25,15 +25,16 @@
     }, 
     "Controls":{
         "color": "#FF9900",
-        "blocks": ["ContainerBlocks/ifThen.js", "ContainerBlocks/elseIf.js", "ContainerBlocks/else.js", 
-            "ContainerBlocks/repeat.js", "ContainerBlocks/repeatUntil.js",
-            "VoidBlocks/wait.js"]
+        "blocks": ["ifThen.js", "elseIf.js", "else.js", 
+            "repeat.js", "repeatUntil.js",
+            "wait.js"]
     }, 
     "Operations":{
         "color": "#77BB00",
-        "blocks": ["ValueBlocks/addition.js", "ValueBlocks/subtraction.js", "ValueBlocks/multiplication.js", "ValueBlocks/division.js", 
-            "ValueBlocks/lessThan.js", "ValueBlocks/lessEquals.js", "ValueBlocks/equals.js", "ValueBlocks/greaterEquals.js", "ValueBlocks/greaterThan.js",
-            "ValueBlocks/and.js", "ValueBlocks/or.js", "ValueBlocks/not.js", "ValueBlocks/randomInt.js", "ValueBlocks/randomUniform.js"]
+        "blocks": ["addition.js", "subtraction.js", "multiplication.js", "division.js", 
+            "lessThan.js", "lessEquals.js", "equals.js", "greaterEquals.js", "greaterThan.js",
+            "and.js", "or.js", "not.js", "randomInt.js", "randomUniform.js", "join.js",
+            "convertNumber.js", "convertString.js", "convertBoolean.js"]
     }, 
     "Functions":{
         "color": "#666699",
@@ -41,6 +42,6 @@
     }, 
     "Data":{
         "color": "#FF6600",
-        "blocks": []
+        "blocks": ["localVariable.js", "local.js", "consoleLog.js"]
     }
 }

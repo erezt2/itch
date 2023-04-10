@@ -3,6 +3,11 @@ import BlockVoid from "./blocks/blockVoid.js"
 import BlockContainer from "./blocks/blockContainer.js"
 import global from "./global.js"
 
+function handle_dropped_parent(dom) {
+    let p = dom.parentNode
+    if(p.classList.contains("editable")) p.contentEditable = true;
+}
+
 export default async function createSelection() {
     function createWrapper(text) {
         let dom = document.createElement("span")
@@ -52,6 +57,7 @@ export default async function createSelection() {
         if(sbl.contains(my.target)) return;
         if(Object.keys(my).length === 0) return;
         
+        handle_dropped_parent(my.target)
         event.preventDefault()
         my.target.remove()
     })
@@ -82,7 +88,7 @@ export default async function createSelection() {
             block.addEventListener("dragstart", global.register_dragged_dup)
             
             let inside = document.createElement("div")
-            let block_class = (await import("./blocks/" + block_name)).default
+            let block_class = (await import(`./blocks/${sn}/${block_name}`)).default
             let block_text = block_class.display.split("|")
             inside.appendChild(createWrapper(block_text[0]))
             for(let i=1; i<block_text.length; i++) {

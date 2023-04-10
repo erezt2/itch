@@ -12,7 +12,7 @@ function drop_in_block(event) {
     if(my.target.contains(this)) return;
     if(Object.keys(my).length === 0) return;
     global.dragged = {}
-    
+    event.stopPropagation();
     event.preventDefault();
     
     let target = handle_duplicates(my.duplicate, my.target)
@@ -20,7 +20,7 @@ function drop_in_block(event) {
     this.parentNode.appendChild(target);
     target.style.left = "0px"
     target.style.top = "100%"
-    event.stopPropagation();
+    
 }
 
 function drop_in_input(event) {
@@ -29,19 +29,19 @@ function drop_in_input(event) {
     if(my.target.contains(this)) return;
     if(my.target["data-type"] === "void") return
     if(Object.keys(my).length === 0) return;
-    global.dragged = {}
-
-    event.preventDefault();
     if(this.children.length > 0) return
+    global.dragged = {}
+    event.stopPropagation();
+    event.preventDefault();
     let target = handle_duplicates(my.duplicate, my.target)
-    this.innerHTML = ""
+    this.innerHTML = "" 
 
     handle_dropped_parent(my.target)
     this.appendChild(target);
     this.contentEditable = false;
     target.style.left = "0px"
     target.style.top = "0px"
-    event.stopPropagation();
+    
 }
 
 export default function handle_duplicates(dup, dragged) { // duplication handle (first drag over)
@@ -53,6 +53,25 @@ export default function handle_duplicates(dup, dragged) { // duplication handle 
 
     // clone.classList.add("draggable")
     clone["data-type"] = dragged["data-type"]
+    clone["data-block"] = new dragged["data-class"](clone)
+
+    if(dragged.classList.contains("block-container")) {
+        let inside = clone.children[1] 
+        inside["data-block"] = clone["data-block"]
+
+        let area_in = document.createElement("div")
+        inside.appendChild(area_in)
+        
+        area_in.classList.add("dropzone")
+        area_in.addEventListener("drop", drop_in_block);
+        area_in.addEventListener("dragenter", (event) => {
+            area_in.classList.add("dropzone-dragenter")
+        })
+        area_in.addEventListener("dragleave", (event) => {
+            area_in.classList.remove("dropzone-dragenter")
+        })
+    }
+
     if(dragged["data-type"] === "void") {
         let area_low = document.createElement("div")
         clone.appendChild(area_low)
@@ -67,11 +86,10 @@ export default function handle_duplicates(dup, dragged) { // duplication handle 
         })
     }
 
-    clone["data-block"] = new dragged["data-class"](clone)
     clone.onclick = (event) => {
         event.stopPropagation()
         event.preventDefault()
-        clone["data-block"].getAncestor().run()
+        clone["data-block"].getAncestor().run({})
     }
     
     for(let box of clone["data-block"].inputs) {

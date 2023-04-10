@@ -1,5 +1,6 @@
 import blockValue from "./blocks/blockValue.js"
 import BlockVoid from "./blocks/blockVoid.js"
+import BlockContainer from "./blocks/blockContainer.js"
 import global from "./global.js"
 
 export default async function createSelection() {
@@ -47,10 +48,10 @@ export default async function createSelection() {
     sbl.addEventListener("dragleave", (event) => {event.preventDefault()})
     sbl.addEventListener("drop", (event) => {
         let my = Object.assign({}, global.dragged);
+        global.dragged = {}
         if(sbl.contains(my.target)) return;
         if(Object.keys(my).length === 0) return;
-        global.dragged = {}
-
+        
         event.preventDefault()
         my.target.remove()
     })
@@ -75,10 +76,9 @@ export default async function createSelection() {
 
         for(let block_name of sections[sn].blocks) {
             let block = document.createElement("div")
-            block.style.backgroundColor = sections[sn].color
             block.style.cursor = "pointer"
             block.classList.add("draggable")
-            block.draggable = true
+            block.draggable = true 
             block.addEventListener("dragstart", global.register_dragged_dup)
             
             let inside = document.createElement("div")
@@ -90,6 +90,7 @@ export default async function createSelection() {
 
                 inside.appendChild(createWrapper(block_text[i]))
             }
+            inside.style.backgroundColor = sections[sn].color
             block.appendChild(inside)
             block["data-class"] = block_class
             let returnType = "-"
@@ -100,6 +101,13 @@ export default async function createSelection() {
             else if(block_class.prototype instanceof blockValue) {
                 block.classList.add("block-int")
                 returnType = "int"
+            }
+            else if (block_class.prototype instanceof BlockContainer) {
+                block.classList.add("block-container")
+                returnType = "void"
+                let inside2 = document.createElement("div")
+                inside2.classList.add("inside-container")
+                block.appendChild(inside2)
             }
             block["data-type"] = returnType
 

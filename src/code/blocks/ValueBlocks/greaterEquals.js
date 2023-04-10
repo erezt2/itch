@@ -1,7 +1,7 @@
 import BlockInt from "../blockValue.js";
 
 export default class GreaterEquals extends BlockInt {
-    static input_types = [Number, Number];
+    static input_types = [val => val, val => val];
     static display = "| ≥ |";
     constructor(element) {
         super(element)

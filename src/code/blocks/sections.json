@@ -25,7 +25,9 @@
     }, 
     "Controls":{
         "color": "#FF9900",
-        "blocks": []
+        "blocks": ["ContainerBlocks/ifThen.js", "ContainerBlocks/elseIf.js", "ContainerBlocks/else.js", 
+            "ContainerBlocks/repeat.js", "ContainerBlocks/repeatUntil.js",
+            "VoidBlocks/wait.js"]
     }, 
     "Operations":{
         "color": "#77BB00",

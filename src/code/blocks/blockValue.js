@@ -2,7 +2,7 @@ import BlockGeneric from "./blockGeneric.js";
 
 const block_playground = document.getElementById("script-dragspace")
 
-export default class BlockInt extends BlockGeneric {
+export default class BlockValue extends BlockGeneric {
     constructor(element) {
         super(element)
     }

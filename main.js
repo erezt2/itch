@@ -1,8 +1,6 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, dialog, ipcMain } = require('electron')
 const path = require("path")
 console.log(path.join(__dirname, 'src/preload.js'))
-
-
 
 
 app.whenReady().then(() => {
@@ -25,6 +23,20 @@ app.whenReady().then(() => {
     win.webContents.openDevTools()
 })
 
+ipcMain.handle("showDialog", (event) => {
+    let a = dialog.showOpenDialog({
+    properties: ['openFile'],
+    filters: [
+      { name: 'PNG file', extensions: ['png']}
+    ]
+    }).then(result => {
+      if(result.canceled || result.filePaths.length === 0) return null
+      return result
+    }).catch(err => {
+      console.log(err)
+    })
+    return a
+  })
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit()

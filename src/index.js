@@ -34,6 +34,7 @@ await createSelection()
 let object_list = ["background", "test1"]
 import createDragspace from "./code/script-dragspace.js"
 import {createSpriteSelection, selectPlayground} from "./code/create-character.js"
+import global from "./code/global.js"
 
 // TODO: 
 // threading
@@ -52,36 +53,31 @@ for(let name of object_list) {
 
 const new_char = document.getElementById("new-character")
 const sprites = document.getElementById("sprites")
+const { ipcRenderer } = require("electron")
+const fs = require("fs")
 
-window.api.test()
 
 sprites.addEventListener('dragover', (event)=> {
-  console.log(event.dataTransfer.files.length === 0)
-  if(event.dataTransfer.files.length === 0) return
+  if(Object.keys(global.dragged).length !== 0) return
   event.preventDefault();
   event.stopPropagation();
 })
 
+function addFile(path) {
+  console.log(path)
+}
+
 sprites.addEventListener('drop', (event) => {
-  if(event.dataTransfer.files === undefined) return
+  if(event.dataTransfer.files.length === 0) return
   event.preventDefault()
   event.stopPropagation()
-  for(let file of event.dataTransfer.files) console.log(file)
+  addFile(event.dataTransfer.files[0].path)
 })
 
-new_char.onclick = (event) => {
-  let a = dialog.showOpenDialog({
-    properties: ['openFile'],
-    filters: [
-      { name: 'PNG file', extensions: ['png']}
-    ]
-  }).then(result => {
-    if(result.canceled || result.filePaths.length === 0) return null
-    return result
-  }).catch(err => {
-    console.log(err)
-  })
-  console.log(a)
+new_char.onclick = async (event) => {
+  let path = await ipcRenderer.invoke("showDialog")
+  if(path === null || path.canceled) return;
+  addFile(path.filePaths[0])
 }
 
 

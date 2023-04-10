@@ -8,7 +8,7 @@ export default class Wait extends BlockVoid {
     }
     run(data) {
         let args = this.getValues(this.constructor.input_types, data)
-        // console.log(this)
-        setTimeout(()=>super.run(data), 1000*args[0])
+        console.log("WAIT!")
+        return super.run(data)
     }
 }

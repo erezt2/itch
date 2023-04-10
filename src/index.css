@@ -218,7 +218,7 @@ body {
 	background-color: #555;
 }
 
-.dropzone {
+.draggable > .dropzone {
     /* border: 1px solid black; */
     width: calc(100% + 10px);
     height: 15px;
@@ -227,18 +227,27 @@ body {
     bottom: -10px;
 }
 
-.draggable > .dropzone:not(:last-child) {
+.block-container > div.inside-container > .dropzone {
+    width: calc(100% - 5px);
+    height: 15px;
+    position: absolute;
+    left:0px;
+    top: 0px;
+}
+
+.dropzone:not(:last-child) {
     display: none;
 }
 
-#script-block-list > div > *, #script-dragspace > .active > div, .draggable > .draggable {
+/* #script-block-list > div > *, #script-dragspace > .active > div, .draggable > .draggable */
+.draggable {
     /* global block class */
     /* min-width: 100px;
     min-height: 30px; */
-    padding: 3px;
+    flex-flow: column;
     display: flex;
     width: max-content;
-    align-items: center;
+    align-items:baseline;
     /* outline: 2px solid rgba(0,0,0, 0.25); */
 }
 
@@ -254,12 +263,13 @@ body {
 
 .draggable > .draggable {
     /*class for block in block */
-    position: absolute;
+    position: relative; /* TEMP */
 }
 
 .draggable > div:first-child {
+    padding: 3px;
     height: 100%;
-    width: 100%;
+    /* width: 100%; */
     color: white;
     display: flex;
     align-items: center;
@@ -272,7 +282,7 @@ body {
 
 .draggable > div:first-child > span > .draggable {
     position: static;
-    padding: 3px;
+    border-radius: 10px;
     outline: 1px solid rgba(0,0,0, 0.25);
 }
 
@@ -281,14 +291,14 @@ body {
 }
 
 .dropzone-dragenter {
-    background-color: rgba(255, 255, 150, 0.2) !important;
+    background-color: rgba(0, 0, 0, 0.326) !important;
 }
 
 .editable {
     margin: 0 3px;
 }
 
-.editable:not(:has(:first-child)) {
+.editable:not(:has(:first-child)) { /* empty */
     background-color: white;
     min-width: 17px;
     color:black;
@@ -297,7 +307,7 @@ body {
     border-radius: 6px;
 }
 
-.block-int {
+.block-int > div:first-child {
     border-radius: 10px;
 }
 
@@ -344,4 +354,46 @@ body {
 
 #sprites > div.selected {
     border: #0088ff 3px solid;
+} 
+
+.block-container > div.inside-container::before {
+    content:"";
+    background-color: #FF9900;
+    position: absolute;
+    width: 50px;
+    height: 14px;
+    top: calc(100% + 1px);
+    left: -15px;
+    /* border-bottom: 1px #AA6600 solid; */
+    box-shadow: 0px -1px 0px 0px #AA6600
+}
+
+.block-container > div.inside-container::after {
+    width: 14px;
+    height: calc(100% + 2px);
+    left: -15px;
+    top: -1px;
+    position: absolute;
+    content:"";
+    background-color: #FF9900;
+    box-shadow: 1px 0px 0px 0px #AA6600
+}
+
+.block-container > div:first-child {
+    box-shadow: 0px 1px 0px 0px #AA6600;
+    min-width: 50px;
+}
+
+/* .inside-container > .draggable {
+    border-left: 1px #AA6600 solid;
+} */
+
+.block-container > div.inside-container{
+    margin-top: 1px;
+    min-height: 15px;
+    min-width: 100%;
+    margin-bottom: 15px;
+    position: relative;
+    left:15px;
+    background-color: transparent;
 }

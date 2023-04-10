@@ -1,25 +1,28 @@
-import BlockGeneric from "./blockGeneric.js"
+import BlockGeneric from "./blockGeneric.js";
 
 const block_playground = document.getElementById("script-dragspace")
 
-export default class BlockVoid extends BlockGeneric {
-    // static input_types = [];
-    // static display = "block";
+export default class BlockContainer extends BlockGeneric {
     constructor(element) {
         super(element)
-    }
-    getNext(){
-        let dom = this.elementHTML.children[2]
-        if(dom === undefined) return null
-        return dom["data-block"]
     }
     getParent() {
         let dom = this.elementHTML.parentNode
         if(dom == block_playground) return null
         return dom["data-block"]
     }
+    getInside() {
+        let dom = this.elementHTML.children[1].children[1]
+        if(dom === undefined) return null
+        return dom["data-block"]
+    }
+    getNext() {
+        let dom = this.elementHTML.children[3]
+        if(dom === undefined) return null
+        return dom["data-block"]
+    }
     run(data) {
-        if(this.constructor === BlockVoid){
+        if(this.constructor === BlockContainer){
             console.log("WARNING: USING BASE CLASS | %s", this.elementHTML.children[0].innerHTML)
         }
         let p = this.getNext()
@@ -27,4 +30,3 @@ export default class BlockVoid extends BlockGeneric {
         return p.run(data)
     }
 }
-

@@ -1,6 +1,7 @@
-import blockValue from "./blocks/blockValue.js"
+import BlockValue from "./blocks/blockValue.js"
 import BlockVoid from "./blocks/blockVoid.js"
 import BlockContainer from "./blocks/blockContainer.js"
+import BlockStart from "./blocks/blockStart.js"
 import global from "./global.js"
 
 function handle_dropped_parent(dom) {
@@ -100,11 +101,12 @@ export default async function createSelection() {
             block.appendChild(inside)
             block.dataset["path"] = `./blocks/${sn}/${block_name}`
             let returnType = "-"
+            block.dataset["preventDrop"] = false
             if(block_class.prototype instanceof BlockVoid) {
                 block.classList.add("block-void")
                 returnType = "void"
             }
-            else if(block_class.prototype instanceof blockValue) {
+            else if(block_class.prototype instanceof BlockValue) {
                 block.classList.add("block-int")
                 returnType = "int"
             }
@@ -114,6 +116,11 @@ export default async function createSelection() {
                 let inside2 = document.createElement("div")
                 inside2.classList.add("inside-container")
                 block.appendChild(inside2)
+            }
+            else if (block_class.prototype instanceof BlockStart) {
+                block.classList.add("block-start")
+                returnType = "void"
+                block.dataset["preventDrop"] = true
             }
             block.dataset["type"] = returnType
 

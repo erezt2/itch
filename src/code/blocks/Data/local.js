@@ -8,6 +8,8 @@ export default class LocalVariable extends BlockValue {
     }
     run(data) {
         let args = this.getValues(this.constructor.input_types, data)
-        return data.local_variables[args[0]]
+        if(data.local_variables.hasOwnProperty(args[0]))
+            return data.local_variables[args[0]];
+        throw Error("local variable error")
     }
 }

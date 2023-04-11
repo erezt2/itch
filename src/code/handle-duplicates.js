@@ -1,4 +1,5 @@
 import global from "./global.js"
+import BlockStart from "./blocks/blockStart.js"
 
 function handle_dropped_parent(dom) {
     let p = dom.parentNode
@@ -8,9 +9,12 @@ function handle_dropped_parent(dom) {
 async function drop_in_block(event) {
     this.classList.remove("dropzone-dragenter")
     let my = Object.assign({}, global.dragged);
-    if(my.target.dataset["type"] !== "void") return
-    if(my.target.contains(this)) return;
     if(Object.keys(my).length === 0) return;
+    if(my.target.dataset["type"] !== "void") return
+    console.log(my.target.dataset["preventDrop"] )
+    if(my.target.dataset["preventDrop"] === "true") return;
+    if(my.target.contains(this)) return;
+
     global.dragged = {}
     event.stopPropagation();
     event.preventDefault();
@@ -26,10 +30,12 @@ async function drop_in_block(event) {
 async function drop_in_input(event) {
     this.classList.remove("dropzone-dragenter")
     let my = Object.assign({}, global.dragged);
-    if(my.target.contains(this)) return;
-    if(my.target.dataset["type"] === "void") return
     if(Object.keys(my).length === 0) return;
     if(this.children.length > 0) return
+    if(my.target.contains(this)) return;
+    if(my.target.dataset["type"] === "void") return
+    if(my.target.dataset["preventDrop"] === "true") return
+    
     global.dragged = {}
     event.stopPropagation();
     event.preventDefault();
@@ -53,6 +59,7 @@ export default async function handle_duplicates(dup, dragged, exists) { // dupli
         clone.removeEventListener("dragstart", global.register_dragged_dup)
         clone.dataset["type"] = dragged.dataset["type"]
         clone.dataset["path"] = dragged.dataset["path"]
+        clone.dataset["preventDrop"] = dragged.dataset["preventDrop"]
     }
     else {
         clone = dragged
@@ -118,7 +125,7 @@ export default async function handle_duplicates(dup, dragged, exists) { // dupli
     clone.onclick = (event) => {
         event.stopPropagation()
         event.preventDefault()
-        clone["data-block"].getAncestor().run({local_variables: {}})
+        clone["data-block"].getAncestor().run(BlockStart.getDefaultData())
     }
     
     for(let box of clone["data-block"].inputs) {

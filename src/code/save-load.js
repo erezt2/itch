@@ -6,10 +6,10 @@ const storage = require("electron-json-storage")
 const sd = document.getElementById("script-dragspace")
 const te = document.getElementById("editor-textures")
 const se = document.getElementById("editor-sounds")
+storage.setDataPath(my.path)
 
 function loadState(savefile) {
-    storage.setDataPath(my.path + savefile)
-    storage.get("dragspaces", (error, data) => {
+    storage.get(savefile, (error, data) => {
         if (error) throw error;
         for(let k in data) {
           sd.insertAdjacentHTML("beforeend", data[k].script)
@@ -38,7 +38,6 @@ function loadState(savefile) {
 }
 
 function saveState(savefile) {
-    storage.setDataPath(my.path + savefile)
     let st = {}
     for(let ds of sd.children) {
       let name = ds.id.slice(3)
@@ -53,7 +52,7 @@ function saveState(savefile) {
     }
     
     // console.log("test")
-    storage.set("dragspaces", st)
+    storage.set(savefile, st)
 }
 
 

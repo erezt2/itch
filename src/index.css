@@ -308,6 +308,10 @@ body {
     margin: 0 3px;
 }
 
+.editable:focus {
+    outline: none !important;
+}
+
 .editable:not(:has(:first-child)) { /* empty */
     background-color: white;
     min-width: 17px;
@@ -319,6 +323,12 @@ body {
 
 .block-int > div:first-child {
     border-radius: 10px;
+}
+
+.block-start > div:first-child {
+    border-top: 5px rgba(0,0,0, 0.35) solid;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
 }
 
 #sprites {

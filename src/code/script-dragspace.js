@@ -32,7 +32,6 @@ export default function createDragspace(name, exists){
 
     block_playground.addEventListener("drop", async (event) => {
         let my = Object.assign({}, global.dragged);
-        console.log(my)
         if(Object.keys(my).length === 0) return;
         global.dragged = {}
 
@@ -44,7 +43,6 @@ export default function createDragspace(name, exists){
         block_playground.appendChild(target);
         
 
-        console.log(event)
         let rect = block_playground.getBoundingClientRect()
         let x = event.clientX - rect.left
         let y = event.clientY - rect.top

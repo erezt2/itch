@@ -3,14 +3,14 @@ const path = require("path")
 const { ipcRenderer } = require("electron")
 import global from "./global.js"
 
-function createAudioTemplate(name, src) {
+function createAudioTemplate(name, src, ext) {
     const template = document.createElement("div")
     let container = document.createElement("div")
     let img = document.createElement("img")
     if(src === null) img.src = "../public/new.png"
     else {
         img.src = "../public/audio.png"
-        img.dataset["audio"] = "data:audio/mp3;base64," + src
+        img.dataset["audio"] = `data:audio/${ext.toLowerCase()};base64,` + src
         template["data-sound"] = new Audio(img.dataset["audio"])
         template.onclick = function(event) {
             this["data-sound"].play()
@@ -36,8 +36,9 @@ function soundEditorAddAudio(editor, _path) {
         }
 
         data = data.toString('base64');
-        let name = global.getNextName(id_list, path.parse(_path).name)
-        let texture = createAudioTemplate(name, data)
+        let prs = path.parse(_path)
+        let name = global.getNextName(id_list, prs.name)
+        let texture = createAudioTemplate(name, data, prs.ext.slice(1))
         editor.insertBefore(texture, editor.lastChild)
     })
 }

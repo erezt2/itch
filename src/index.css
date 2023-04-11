@@ -26,11 +26,12 @@ body {
 #window {
     grid-column: 1;
     grid-row: 1;
-    background-color: azure;
-    min-width: 0;
-    min-height: 0;
-    display: inline-block;
+    display: block;
+    border: 1px gray solid;
+    min-width: 640px;
+    min-height: 480px;
 }
+
 
 #editor {
     grid-column: 2;
@@ -38,8 +39,11 @@ body {
 }
 
 #sprites {
+    margin-top: 3px;
     grid-column: 1;
+    background-color: whitesmoke;
     grid-row: 2;
+    border-top: 2px grey solid;
 }
 
 .section {

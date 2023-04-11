@@ -58,39 +58,33 @@ window.addEventListener("keydown", function(event) {
   }
   if (event.key == "l") {
     loadState("test1")
-    
-    
-    // console.log("test")
-    
   }
 });
 
 // SEPERATE
-const PIXI = require("pixi.js")
+import start from "./code/canvas.js"
+start()
+
+import createThread from "./code/worker-create.js"
 
 
-let win = document.getElementById("window")
+
+
+function sleep(ms, callback) {
+  setTimeout(callback, ms);
+}
 
 
 
-let app = new PIXI.Application({ width: 640, height: 480 });
-app.view.style += {"position": "absolute"}
-win.appendChild(app.view)
 
-let sprite = PIXI.Sprite.from('../public/generic.png');
-app.stage.addChild(sprite);
+function test() {
+  const {thread, promise} = createThread("hello", null)
+  promise.then((data) => {console.log(data)})
+  sleep(2000, ()=>thread.terminate())
+  
+}
 
-// Add a ticker callback to move the sprite back and forth
-let elapsed = 0.0;
-app.ticker.add((delta) => {
-  elapsed += delta;
-  sprite.x = 0;
-});
+test()
 
-win.addEventListener("click", (event) => {
-  console.log("test")
-})
-win.addEventListener("resize", (event) => {
-  console.log("1234")
-  //this.height = this.width * 9 / 16;
-}, true)
+
+// await ipcRenderer.invoke("runThread", "hello", "test")

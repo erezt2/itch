@@ -1,6 +1,7 @@
 const { ipcRenderer } = require("electron");
 
 var my = {}
+my.window = {width: 640, height: 480}
 my.dragged = {};
 my.register_dragged_dup = (event) => {
     my.dragged.duplicate = true;

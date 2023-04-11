@@ -47,16 +47,6 @@ await createSelection()
 import spriteListEvents from "./code/sprite-list-events.js"
 spriteListEvents()
 
-import createDragspace from "./code/script-dragspace.js"
-import {createSpriteSelection, selectPlayground} from "./code/create-character.js"
-
-let object_list = []//["background", "test1"]
-let immutable = true;
-for(let name of object_list) {
-    createDragspace(name, false)
-    createSpriteSelection(name, immutable)
-    immutable = false
-}
 // selectPlayground("background")
 
 

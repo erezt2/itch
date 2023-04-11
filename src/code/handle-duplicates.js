@@ -63,7 +63,6 @@ export default async function handle_duplicates(dup, dragged, exists) { // dupli
     // clone.classList.add("draggable")
     
     let block_class = (await import(dragged.dataset["path"])).default
-    console.log(block_class)
     clone["data-block"] = new block_class(clone)
 
     let is_container = dragged.classList.contains("block-container")
@@ -135,6 +134,5 @@ export default async function handle_duplicates(dup, dragged, exists) { // dupli
             if(box.children.length === 0) box.contentEditable = true;
         }
     }
-    console.log(clone)
     return clone
 }

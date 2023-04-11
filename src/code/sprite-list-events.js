@@ -1,28 +1,36 @@
 
 import global from "./global.js"
 
+const new_char = document.getElementById("new-character")
+const sprites = document.getElementById("sprites")
+const { ipcRenderer } = require("electron")
+const fs = require("fs")
+const path = require("path")
+import {selectPlayground, getNextName, createSprite} from "./create-character.js"
+
+
 export default function spriteListEvents() {
-    const new_char = document.getElementById("new-character")
-    const sprites = document.getElementById("sprites")
-    const { ipcRenderer } = require("electron")
-    const fs = require("fs")
-
-
     sprites.addEventListener('dragover', (event)=> {
         if(Object.keys(global.dragged).length !== 0) return
         event.preventDefault();
         event.stopPropagation();
     })
 
-    function addFile(path) {
-        console.log(path)
+    function addFile(_path) {
+        fs.readFile(_path, (err, data) => {
+            if(err) throw err;
+            let name = getNextName(path.parse(_path).name)
+            createSprite(name, false, false)
+            selectPlayground(name)
+        })
     }
 
     sprites.addEventListener('drop', (event) => {
         if(event.dataTransfer.files.length === 0) return
         event.preventDefault()
         event.stopPropagation()
-        addFile(event.dataTransfer.files[0].path)
+        if(event.dataTransfer.files[0].path.endsWith(".png")) addFile(event.dataTransfer.files[0].path)
+        else alert("only PNG files are accepted.")
     })
 
     new_char.onclick = async (event) => {

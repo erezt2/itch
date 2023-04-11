@@ -1,28 +1,22 @@
-import createDragspace from "./script-dragspace.js"
-import {createSpriteSelection, selectPlayground} from "./create-character.js"
+import {selectPlayground, createSprite} from "./create-character.js"
 import handle_duplicates from "./handle-duplicates.js"
-const { ipcRenderer } = require("electron")
+import my from "./global.js"
 const storage = require("electron-json-storage")
 
-
 const sd = document.getElementById("script-dragspace")
-const path = await ipcRenderer.invoke("homeDir") + "/saves/"
+const te = document.getElementById("editor-textures")
 
 function loadState(savefile) {
-    storage.setDataPath(path + savefile)
-    savefile = path + savefile
-    console.log(savefile)
+    storage.setDataPath(my.path + savefile)
     storage.get("dragspaces", (error, data) => {
         if (error) throw error;
-        console.log(data)
         for(let k in data) {
-          sd.insertAdjacentHTML("beforeend", data[k])
-          createDragspace(k, true)
-          createSpriteSelection(k, k === "background")
+          sd.insertAdjacentHTML("beforeend", data[k].script)
+          te.insertAdjacentHTML("beforeend", data[k].textures)
+          createSprite(k, true, k=="background")
         }
         let all_draggable = document.querySelectorAll("#script-dragspace .draggable")
         for(let i of all_draggable) {
-          console.log(i)
           handle_duplicates(true, i, true)
         }
         selectPlayground("background")
@@ -30,10 +24,15 @@ function loadState(savefile) {
 }
 
 function saveState(savefile) {
-    storage.setDataPath(path + savefile)
+    storage.setDataPath(my.path + savefile)
     let st = {}
     for(let ds of sd.children) {
-      st[ds.id.slice(3)] = ds.outerHTML
+      let name = ds.id.slice(3)
+      st[name] = {}
+      st[name].script = ds.outerHTML
+
+      let te = document.getElementById("te_"+name)
+      st[name].textures = te.outerHTML
     }
     
     // console.log("test")

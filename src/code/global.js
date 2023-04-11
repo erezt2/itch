@@ -1,3 +1,5 @@
+const { ipcRenderer } = require("electron");
+
 var my = {}
 my.dragged = {};
 my.register_dragged_dup = (event) => {
@@ -12,5 +14,6 @@ my.register_dragged = (event) => {
     my.dragged.self_x = event.offsetX;
     my.dragged.self_y = event.offsetY;
 }
+my.path = await ipcRenderer.invoke("homeDir") + "/saves/"
 
 export default my;

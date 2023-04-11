@@ -1,10 +1,6 @@
+import createDragspace from "./script-dragspace.js"
+import createTextureEditor from "./texture-editor.js"
 
-function selectPlayground(name) {
-    document.querySelector("#script-dragspace > .active")?.classList.remove("active");
-    document.querySelector(`#ds_${name}`).classList.add("active")
-    document.querySelector("#sprites > .selected")?.classList.remove("selected");
-    document.querySelector(`#ss_${name}`).classList.add("selected")
-}
 const sprites = document.getElementById("sprites")
 const new_char = document.getElementById("new-character")
 function createSpriteSelection(name, immutable) {
@@ -22,7 +18,47 @@ function createSpriteSelection(name, immutable) {
     }
 
     sprites.insertBefore(template, new_char)
+    document.addEventListener('contextmenu', function(event) {
+        alert("You've tried to open context menu");
+        event.preventDefault();
+    }, false);
 
 }
 
-export {createSpriteSelection, selectPlayground}
+function getNextName(name) {
+    let id_list = []
+    document.querySelectorAll("#script-dragspace > div").forEach((dom) => id_list.push(dom.id.slice(3)))
+    if (!id_list.includes(name)) return name;
+    let num = name.match(/\d*$/)[0]
+    name = name.slice(0, name.length - num.length)
+    if(num === "") num=0
+    else num = parseInt(num) 
+    num += 1
+    let newname = name + num
+    while(id_list.includes(newname)) {
+        num += 1
+        newname = name + num
+    }
+    return newname
+}
+
+function selectPlayground(name) {
+    console.log(name)
+
+    document.querySelector("#script-dragspace > .active")?.classList.remove("active");
+    document.getElementById(`ds_${name}`).classList.add("active") // dragspace
+
+    document.querySelector("#sprites > .selected")?.classList.remove("selected");
+    document.getElementById(`ss_${name}`).classList.add("selected") // sprite selection
+
+    document.querySelector("#editor-textures > .active")?.classList.remove("active");
+    document.getElementById(`te_${name}`).classList.add("active") // textures editor
+}
+
+function createSprite(name, exists, immutable) {
+    createSpriteSelection(name, immutable)
+    createDragspace(name, exists)
+    createTextureEditor(name, exists)
+}
+
+export {selectPlayground, getNextName, createSprite}

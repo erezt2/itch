@@ -22,11 +22,11 @@ app.whenReady().then(() => {
     win.webContents.openDevTools()
 })
 
-ipcMain.handle("showDialog", (event) => {
+ipcMain.handle("showDialog", (event, filter) => {
   let a = dialog.showOpenDialog({
   properties: ['openFile'],
   filters: [
-    { name: 'PNG file', extensions: ['png']}
+    filter
   ]
   }).then(result => {
     if(result.canceled || result.filePaths.length === 0) return null

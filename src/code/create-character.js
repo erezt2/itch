@@ -1,5 +1,6 @@
 import createDragspace from "./script-dragspace.js"
 import createTextureEditor from "./texture-editor.js"
+import createSoundEditor from "./sound-editor.js"
 
 const sprites = document.getElementById("sprites")
 const new_char = document.getElementById("new-character")
@@ -53,12 +54,16 @@ function selectPlayground(name) {
 
     document.querySelector("#editor-textures > .active")?.classList.remove("active");
     document.getElementById(`te_${name}`).classList.add("active") // textures editor
+
+    document.querySelector("#editor-sounds > .active")?.classList.remove("active");
+    document.getElementById(`se_${name}`).classList.add("active") // textures editor
 }
 
 function createSprite(name, exists, immutable) {
     createSpriteSelection(name, immutable)
     createDragspace(name, exists)
     createTextureEditor(name, exists)
+    createSoundEditor(name, exists)
 }
 
 export {selectPlayground, getNextName, createSprite}

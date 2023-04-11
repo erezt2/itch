@@ -16,4 +16,22 @@ my.register_dragged = (event) => {
 }
 my.path = await ipcRenderer.invoke("homeDir") + "/saves/"
 
+
+function getNextName(name_list, name) {
+    if (!name_list.includes(name)) return name;
+    let num = name.match(/\d*$/)[0]
+    name = name.slice(0, name.length - num.length)
+    if(num === "") num=0
+    else num = parseInt(num) 
+    num += 1
+    let newname = name + num
+    while(name_list.includes(newname)) {
+        num += 1
+        newname = name + num
+    }
+    return newname
+}
+
+my.getNextName = getNextName
+
 export default my;

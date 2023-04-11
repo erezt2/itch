@@ -1,13 +1,15 @@
 const fs = require("fs")
 const path = require("path")
 const { ipcRenderer } = require("electron")
+import global from "./global.js"
 
-function createTextureTemplate(name, src, path) {
+function createTextureTemplate(name, src) {
     const template = document.createElement("div")
     let container = document.createElement("div")
     let img = document.createElement("img")
-    if(path) img.src = src // "../public/new.png"
+    if(src === null) img.src = "../public/new.png"
     else img.src = "data:image/png;base64," + src
+    img.draggable = false;
     container.appendChild(img)
     template.appendChild(container)
 
@@ -17,38 +19,23 @@ function createTextureTemplate(name, src, path) {
     return template
 }
 
-function getNextName(editor, name) {
-    let id_list = []
-    for(let dom of editor.children) {
-        id_list.push(dom.lastChild.innerHTML)
-    }
-    console.log(id_list)
-    if (!id_list.includes(name)) return name;
-    let num = name.match(/\d*$/)[0]
-    name = name.slice(0, name.length - num.length)
-    if(num === "") num=0
-    else num = parseInt(num) 
-    num += 1
-    let newname = name + num
-    while(id_list.includes(newname)) {
-        num += 1
-        newname = name + num
-    }
-    return newname
-}
-
 function textureEditorAddImage(editor, _path) {
-    console.log("test")
     fs.readFile(_path, (err, data) => {
         if(err) throw err;
+        let id_list = []
+        for(let dom of editor.children) {
+            id_list.push(dom.lastChild.innerHTML)
+        }
+
         data = data.toString('base64');
-        let name = getNextName(editor, path.parse(_path).name)
-        let texture = createTextureTemplate(name, data, false)
+        let name = global.getNextName(id_list, path.parse(_path).name)
+        let texture = createTextureTemplate(name, data)
         editor.insertBefore(texture, editor.lastChild)
     })
 }
 
 const texture_container = document.getElementById("editor-textures")
+
 export default function createTextureEditor(name, exists) {
     let texture_editor, add_new
     if(!exists) {
@@ -57,7 +44,7 @@ export default function createTextureEditor(name, exists) {
         texture_container.appendChild(texture_editor)
         texture_editor.classList.add("flexrow")
 
-        add_new = createTextureTemplate("new texture", "../public/new.png", true)
+        add_new = createTextureTemplate("new texture", null)
         texture_editor.append(add_new)
     }
     else {
@@ -66,7 +53,7 @@ export default function createTextureEditor(name, exists) {
     }
 
     add_new.onclick = async (event) => {
-        let path = await ipcRenderer.invoke("showDialog")
+        let path = await ipcRenderer.invoke("showDialog", { name: 'PNG file', extensions: ['png']})
         if(path === null || path.canceled) return;
         textureEditorAddImage(texture_editor, path.filePaths[0])
     }
@@ -80,10 +67,8 @@ export default function createTextureEditor(name, exists) {
         if(event.dataTransfer.files.length === 0) return
         event.preventDefault()
         event.stopPropagation()
-        if(event.dataTransfer.files[0].path.endsWith(".png")) 
+        if(event.dataTransfer.files[0].path.toLowerCase().endsWith(".png")) 
             textureEditorAddImage(texture_editor, event.dataTransfer.files[0].path)
         else alert("only PNG files are accepted.")
     })
-
-    
 }

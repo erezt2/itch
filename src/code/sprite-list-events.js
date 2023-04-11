@@ -34,7 +34,7 @@ export default function spriteListEvents() {
     })
 
     new_char.onclick = async (event) => {
-        let path = await ipcRenderer.invoke("showDialog")
+        let path = await ipcRenderer.invoke("showDialog", { name: 'PNG file', extensions: ['png']})
         if(path === null || path.canceled) return;
         addFile(path.filePaths[0])
     }

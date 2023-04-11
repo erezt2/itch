@@ -200,10 +200,10 @@ body {
 #editor-textures > *:not(.active) {
     display: none;
 }
-#editor-dragspace > *:not(.active) {
+#editor-sounds > *:not(.active) {
     display: none;
 }
-#script-dragspace > *:not(.active) {
+#editor-states > *:not(.active) {
     display: none;
 }
 
@@ -409,12 +409,12 @@ body {
     background-color: transparent;
 }
 
-#editor-textures{
+#editor-textures, #editor-sounds{
     width: 100%;
     height: 100%;
 }
 
-#editor-textures > .active {
+#editor-textures > .active, #editor-sounds> .active  {
     width: 100%;
     height: 100%;
     background-color: whitesmoke;

@@ -5,6 +5,7 @@ const storage = require("electron-json-storage")
 
 const sd = document.getElementById("script-dragspace")
 const te = document.getElementById("editor-textures")
+const se = document.getElementById("editor-sounds")
 
 function loadState(savefile) {
     storage.setDataPath(my.path + savefile)
@@ -13,8 +14,21 @@ function loadState(savefile) {
         for(let k in data) {
           sd.insertAdjacentHTML("beforeend", data[k].script)
           te.insertAdjacentHTML("beforeend", data[k].textures)
+          se.insertAdjacentHTML("beforeend", data[k].sounds)
           createSprite(k, true, k=="background")
         }
+
+        let all_sounds = document.querySelectorAll("#editor-sounds > div > div")
+        for(let snd of all_sounds) { 
+          let od = snd.firstChild.firstChild.dataset["audio"]
+          if (od === undefined) continue
+          snd["data-sound"] = new Audio(od)
+          snd.onclick = function(event) {
+            this["data-sound"].play()
+            event.preventDefault();
+          }
+        }
+
         let all_draggable = document.querySelectorAll("#script-dragspace .draggable")
         for(let i of all_draggable) {
           handle_duplicates(true, i, true)
@@ -33,6 +47,9 @@ function saveState(savefile) {
 
       let te = document.getElementById("te_"+name)
       st[name].textures = te.outerHTML
+
+      let se = document.getElementById("se_"+name)
+      st[name].sounds = se.outerHTML
     }
     
     // console.log("test")

@@ -5,17 +5,17 @@ function handle_dropped_parent(dom) {
     if(p.classList.contains("editable")) p.contentEditable = true;
 }
 
-function drop_in_block(event) {
+async function drop_in_block(event) {
     this.classList.remove("dropzone-dragenter")
     let my = Object.assign({}, global.dragged);
-    if(my.target["data-type"] !== "void") return
+    if(my.target.dataset["type"] !== "void") return
     if(my.target.contains(this)) return;
     if(Object.keys(my).length === 0) return;
     global.dragged = {}
     event.stopPropagation();
     event.preventDefault();
     
-    let target = handle_duplicates(my.duplicate, my.target)
+    let target = await handle_duplicates(my.duplicate, my.target, false)
     handle_dropped_parent(my.target)
     this.parentNode.appendChild(target);
     target.style.left = "0px"
@@ -23,17 +23,17 @@ function drop_in_block(event) {
     
 }
 
-function drop_in_input(event) {
+async function drop_in_input(event) {
     this.classList.remove("dropzone-dragenter")
     let my = Object.assign({}, global.dragged);
     if(my.target.contains(this)) return;
-    if(my.target["data-type"] === "void") return
+    if(my.target.dataset["type"] === "void") return
     if(Object.keys(my).length === 0) return;
     if(this.children.length > 0) return
     global.dragged = {}
     event.stopPropagation();
     event.preventDefault();
-    let target = handle_duplicates(my.duplicate, my.target)
+    let target = await handle_duplicates(my.duplicate, my.target, false)
     this.innerHTML = "" 
 
     handle_dropped_parent(my.target)
@@ -44,23 +44,41 @@ function drop_in_input(event) {
     
 }
 
-export default function handle_duplicates(dup, dragged) { // duplication handle (first drag over)
+export default async function handle_duplicates(dup, dragged, exists) { // duplication handle (first drag over)
     if(!dup) return dragged;
-    let clone = dragged.cloneNode(true)
+    let clone
+    if(!exists) {
+        clone = dragged.cloneNode(true)
 
-    clone.removeEventListener("dragstart", global.register_dragged_dup)
+        clone.removeEventListener("dragstart", global.register_dragged_dup)
+        clone.dataset["type"] = dragged.dataset["type"]
+        clone.dataset["path"] = dragged.dataset["path"]
+    }
+    else {
+        clone = dragged
+    }
+    
     clone.addEventListener("dragstart", global.register_dragged)
 
     // clone.classList.add("draggable")
-    clone["data-type"] = dragged["data-type"]
-    clone["data-block"] = new dragged["data-class"](clone)
+    
+    let block_class = (await import(dragged.dataset["path"])).default
+    console.log(block_class)
+    clone["data-block"] = new block_class(clone)
 
-    if(dragged.classList.contains("block-container")) {
+    let is_container = dragged.classList.contains("block-container")
+    if(is_container) {
         let inside = clone.children[1] 
-        inside["data-block"] = clone["data-block"]
-
-        let area_in = document.createElement("div")
-        inside.appendChild(area_in)
+        inside.dataset["block"] = clone.dataset["block"]
+        
+        let area_in
+        if (exists) {
+            area_in = inside.children[0]
+        }
+        else {
+            area_in = document.createElement("div")
+            inside.appendChild(area_in)
+        }
         
         area_in.classList.add("dropzone")
         area_in.addEventListener("drop", drop_in_block);
@@ -72,9 +90,21 @@ export default function handle_duplicates(dup, dragged) { // duplication handle 
         })
     }
 
-    if(dragged["data-type"] === "void") {
-        let area_low = document.createElement("div")
-        clone.appendChild(area_low)
+    if(dragged.dataset["type"] === "void") {
+        let area_low
+        if(exists) {
+            if(is_container) {
+                area_low = clone.children[2]
+            }
+            else {
+                area_low = clone.children[1]
+            }
+        }
+        else {
+            area_low = document.createElement("div")
+            clone.appendChild(area_low)
+        }
+        
         
         area_low.classList.add("dropzone")
         area_low.addEventListener("drop", drop_in_block);
@@ -105,5 +135,6 @@ export default function handle_duplicates(dup, dragged) { // duplication handle 
             if(box.children.length === 0) box.contentEditable = true;
         }
     }
+    console.log(clone)
     return clone
 }

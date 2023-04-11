@@ -98,7 +98,7 @@ export default async function createSelection() {
             }
             inside.style.backgroundColor = sections[sn].color
             block.appendChild(inside)
-            block["data-class"] = block_class
+            block.dataset["path"] = `./blocks/${sn}/${block_name}`
             let returnType = "-"
             if(block_class.prototype instanceof BlockVoid) {
                 block.classList.add("block-void")
@@ -115,7 +115,7 @@ export default async function createSelection() {
                 inside2.classList.add("inside-container")
                 block.appendChild(inside2)
             }
-            block["data-type"] = returnType
+            block.dataset["type"] = returnType
 
             block_list.appendChild(block)
         }

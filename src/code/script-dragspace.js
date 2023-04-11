@@ -8,11 +8,17 @@ function handle_dropped_parent(dom) {
 }
 
 const playground_container = document.getElementById("script-dragspace")
-export default function createDragspace(name){
-    let block_playground = document.createElement("div") // (`#script-dragspace > div[name="${name}"]`)
-    block_playground.id = "ds_" + name
-    playground_container.appendChild(block_playground)
-
+export default function createDragspace(name, exists){
+    let block_playground
+    if(!exists) {
+        block_playground = document.createElement("div") // (`#script-dragspace > div[name="${name}"]`)
+        block_playground.id = "ds_" + name
+        playground_container.appendChild(block_playground)
+    }
+    else {
+        block_playground = document.getElementById("ds_" + name)
+    }
+    
     block_playground.addEventListener("dragenter", (event) => { // dragspace event listeners
         block_playground.classList.add("dragspace-dragenter")
     })
@@ -24,7 +30,7 @@ export default function createDragspace(name){
     }, false)
 
 
-    block_playground.addEventListener("drop", (event) => {
+    block_playground.addEventListener("drop", async (event) => {
         let my = Object.assign({}, global.dragged);
         console.log(my)
         if(Object.keys(my).length === 0) return;
@@ -32,7 +38,7 @@ export default function createDragspace(name){
 
         block_playground.classList.remove("dragspace-dragenter")
         event.preventDefault();
-        let target = handle_duplicates(my.duplicate, my.target)
+        let target = await handle_duplicates(my.duplicate, my.target)
 
         handle_dropped_parent(my.target)
         block_playground.appendChild(target);

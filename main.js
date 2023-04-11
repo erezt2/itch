@@ -23,19 +23,23 @@ app.whenReady().then(() => {
 })
 
 ipcMain.handle("showDialog", (event) => {
-    let a = dialog.showOpenDialog({
-    properties: ['openFile'],
-    filters: [
-      { name: 'PNG file', extensions: ['png']}
-    ]
-    }).then(result => {
-      if(result.canceled || result.filePaths.length === 0) return null
-      return result
-    }).catch(err => {
-      console.log(err)
-    })
-    return a
+  let a = dialog.showOpenDialog({
+  properties: ['openFile'],
+  filters: [
+    { name: 'PNG file', extensions: ['png']}
+  ]
+  }).then(result => {
+    if(result.canceled || result.filePaths.length === 0) return null
+    return result
+  }).catch(err => {
+    console.log(err)
   })
+  return a
+})
+
+ipcMain.handle("homeDir", (event) => {
+  return __dirname
+})
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit()

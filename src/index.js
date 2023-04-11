@@ -33,6 +33,8 @@ await createSelection()
 
 
 
+
+
 // TODO: 
 // threading
 // sprite rendering
@@ -48,14 +50,30 @@ spriteListEvents()
 import createDragspace from "./code/script-dragspace.js"
 import {createSpriteSelection, selectPlayground} from "./code/create-character.js"
 
-let object_list = ["background", "test1"]
+let object_list = []//["background", "test1"]
 let immutable = true;
 for(let name of object_list) {
-    createDragspace(name)
+    createDragspace(name, false)
     createSpriteSelection(name, immutable)
     immutable = false
 }
-selectPlayground("background")
+// selectPlayground("background")
+
+
+import { saveState, loadState } from "./code/save-load.js"
+
+window.addEventListener("keydown", function(event) {
+  if (event.key == "s") {
+    saveState("test1")
+  }
+  if (event.key == "l") {
+    loadState("test1")
+    
+    
+    // console.log("test")
+    
+  }
+});
 
 // SEPERATE
 const PIXI = require("pixi.js")
@@ -69,7 +87,7 @@ let app = new PIXI.Application({ width: 640, height: 480 });
 app.view.style += {"position": "absolute"}
 win.appendChild(app.view)
 
-let sprite = PIXI.Sprite.from('../public/vertical.png');
+let sprite = PIXI.Sprite.from('../public/generic.png');
 app.stage.addChild(sprite);
 
 // Add a ticker callback to move the sprite back and forth

@@ -1,8 +1,8 @@
 import BlockContainer from "../blockContainer.js";
 
-export default class Repeat extends BlockContainer {
+export default class RepeatTimes extends BlockContainer {
     static input_types = [Number];
-    static display = "repeat |";
+    static display = "repeat | times";
     constructor(element) {
         super(element)
     }

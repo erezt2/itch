@@ -26,7 +26,7 @@
     "Controls":{
         "color": "#FF9900",
         "blocks": ["ifThen.js", "elseIf.js", "else.js", 
-            "repeat.js", "repeatUntil.js",
+            "repeatTimes.js", "repeatWhile.js", "repeatUntil.js",
             "wait.js"]
     }, 
     "Operations":{

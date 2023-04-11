@@ -1,8 +1,8 @@
 import BlockContainer from "../blockContainer.js";
 
-export default class RepeatWhile extends BlockContainer {
+export default class Repeat extends BlockContainer {
     static input_types = [Boolean];
-    static display = "repeat until |";
+    static display = "repeat while |";
     constructor(element) {
         super(element)
     }
@@ -10,7 +10,7 @@ export default class RepeatWhile extends BlockContainer {
         let args = this.getValues(this.constructor.input_types, data)
         let inside = this.getInside();
 
-        while (!args[0]) {
+        while (args[0]) {
             if(inside !== null) data = inside.run(data)
             args = this.getValues(this.constructor.input_types, data)
         }

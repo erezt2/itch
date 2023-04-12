@@ -24,5 +24,6 @@ self.onmessage = function (event) {
     let ret = function_map[data["function"]](data["arguments"])
 
     self.postMessage(ret)
-    self.close()
+    self.close();
 }
+ 

@@ -10,7 +10,7 @@ export default class BlockStart extends BlockGeneric {
         return false
     }
     getNext(){
-        let dom = this.elementHTML.children[2]
+        let dom = this.getSelf().children[2]
         if(dom === undefined) return null
         return dom["data-block"]
     }
@@ -19,7 +19,7 @@ export default class BlockStart extends BlockGeneric {
     }
     run(data) {
         if(this.constructor === BlockStart){
-            console.log("WARNING: USING BASE CLASS | %s", this.elementHTML.children[0].innerHTML)
+            console.log("WARNING: USING BASE CLASS | %s", this.getSelf().children[0].innerHTML)
         }
         let p = this.getNext()
         if(p===null) return data

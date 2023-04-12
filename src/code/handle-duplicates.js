@@ -127,8 +127,10 @@ export default async function handle_duplicates(dup, dragged, exists) { // dupli
         event.preventDefault()
         clone["data-block"].getAncestor().run(BlockStart.getDefaultData())
     }
-    
-    for(let box of clone["data-block"].inputs) {
+
+    let disp = clone.children[0]
+    for(let box of disp.children) {
+        if(!box.classList.contains("editable")) continue;
         box.addEventListener("drop", drop_in_input);
         box.addEventListener("dragenter", (event) => {
             box.classList.add("dropzone-dragenter")
@@ -141,5 +143,6 @@ export default async function handle_duplicates(dup, dragged, exists) { // dupli
             if(box.children.length === 0) box.contentEditable = true;
         }
     }
+
     return clone
 }

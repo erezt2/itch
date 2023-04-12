@@ -7,23 +7,23 @@ export default class BlockContainer extends BlockGeneric {
         super(element)
     }
     getParent() {
-        let dom = this.elementHTML.parentNode
+        let dom = this.getSelf().parentNode
         if(dom == block_playground) return null
         return dom["data-block"]
     }
     getInside() {
-        let dom = this.elementHTML.children[1].children[1]
+        let dom = this.getSelf().children[1].children[1]
         if(dom === undefined) return null
         return dom["data-block"]
     }
     getNext() {
-        let dom = this.elementHTML.children[3]
+        let dom = this.getSelf().children[3]
         if(dom === undefined) return null
         return dom["data-block"]
     }
     run(data) {
         if(this.constructor === BlockContainer){
-            console.log("WARNING: USING BASE CLASS | %s", this.elementHTML.children[0].innerHTML)
+            console.log("WARNING: USING BASE CLASS | %s", this.getSelf().children[0].innerHTML)
         }
         let p = this.getNext()
         if(p===null) return data

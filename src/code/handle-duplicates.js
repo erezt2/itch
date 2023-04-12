@@ -1,5 +1,7 @@
 import global from "./global.js"
 import BlockStart from "./blocks/blockStart.js"
+// import createThread from "./worker-create.js"
+import BlockGeneric from "./blocks/blockGeneric.js";
 
 function handle_dropped_parent(dom) {
     let p = dom.parentNode
@@ -125,7 +127,8 @@ export default async function handle_duplicates(dup, dragged, exists) { // dupli
     clone.onclick = (event) => {
         event.stopPropagation()
         event.preventDefault()
-        clone["data-block"].getAncestor().run(BlockStart.getDefaultData())
+        
+        createThread("run block", {obj: clone["data-block"].getAncestor().id, input: BlockStart.getDefaultData()})
     }
 
     let disp = clone.children[0]

@@ -1,6 +1,5 @@
 const { app, BrowserWindow, dialog, ipcMain } = require('electron')
 const path = require("path")
-console.log(path.join(__dirname, 'src/preload.js'))
 const { Worker } = require('worker_threads')
 
 
@@ -20,8 +19,11 @@ app.whenReady().then(() => {
             sandbox:false,
         }
     })
-    win.loadFile('src/index.html')
+    win.loadFile('./src/index.html')
     win.webContents.openDevTools()
+    ipcMain.handle("runThread", (event, _function, arguments) => {
+      const worker = new Worker('./src/code/worker-thread.mjs', { workerData: {function: _function, arguments: arguments} })
+    })
 })
 
 ipcMain.handle("showDialog", (event, filter) => {
@@ -39,10 +41,6 @@ ipcMain.handle("showDialog", (event, filter) => {
   return a
 })
 
-
-ipcMain.handle("runThread", (event, _function, arguments) => {
-  const worker = new Worker('./src/code/worker-thread.js', { workerData: {function: _function, arguments: arguments} })
-})
 
 
 ipcMain.handle("homeDir", (event) => {

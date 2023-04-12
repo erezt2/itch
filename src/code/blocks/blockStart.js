@@ -26,7 +26,7 @@ export default class BlockStart extends BlockGeneric {
         return p.run(data)
     }
     static getDefaultData() {
-        return {local_variables: {}}
+        return {local_variables: {}, else: false}
     }
 }
 

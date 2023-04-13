@@ -59,8 +59,8 @@ function selectPlayground(name) {
     document.getElementById(`se_${name}`).classList.add("active") // textures editor
 }
 
-function createSprite(name, exists, immutable, path) {
-    createSpriteSelection(name, immutable)
+function createSprite(name, exists, path) {
+    createSpriteSelection(name)
     createDragspace(name, exists)
     let editor = createTextureEditor(name, exists)
     createSoundEditor(name, exists)

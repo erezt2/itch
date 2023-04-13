@@ -18,7 +18,7 @@ export default function spriteListEvents() {
 
     function addFile(_path) {
         let name = getNextName(path.parse(_path).name)
-        createSprite(name, false, false, _path)
+        createSprite(name, false, _path)
         selectPlayground(name)
     }
 

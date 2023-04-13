@@ -4,6 +4,10 @@
     user-select: none; /* Standard syntax */
 }
 
+canvas {
+    display: block;
+}
+
 html {
     height: 100%;
 }
@@ -215,21 +219,21 @@ body {
     display: none;
 }
 
-#script-dragspace > .active::-webkit-scrollbar-track, #script-block-list::-webkit-scrollbar-track
+.flexrow::-webkit-scrollbar-track, #script-dragspace > .active::-webkit-scrollbar-track, #script-block-list::-webkit-scrollbar-track
 {
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 	border-radius: 10px;
 	background-color: #F5F5F5;
 }
 
-#script-dragspace > .active::-webkit-scrollbar, #script-block-list::-webkit-scrollbar
+.flexrow::-webkit-scrollbar, #script-dragspace > .active::-webkit-scrollbar, #script-block-list::-webkit-scrollbar
 {
     height: 8px;
 	width: 8px;
 	background-color: #F5F5F5;
 }
 
-#script-dragspace > .active::-webkit-scrollbar-thumb, #script-block-list::-webkit-scrollbar-thumb
+.flexrow::-webkit-scrollbar-thumb, #script-dragspace > .active::-webkit-scrollbar-thumb, #script-block-list::-webkit-scrollbar-thumb
 {
 	border-radius: 10px;
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
@@ -358,6 +362,7 @@ body {
     flex-wrap: wrap;
     gap: 5px;
     align-content: flex-start;
+    margin-top: 3px;
 }
 /* 
 #sprites > div {
@@ -489,4 +494,8 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.flexrow {
+    overflow-y: scroll;
 }

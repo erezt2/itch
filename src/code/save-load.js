@@ -16,7 +16,7 @@ function loadState(savefile) {
           sd.insertAdjacentHTML("beforeend", data[k].script)
           te.insertAdjacentHTML("beforeend", data[k].textures)
           se.insertAdjacentHTML("beforeend", data[k].sounds)
-          createSprite(k, true, k=="background")
+          createSprite(k, true)
           let texture = document.getElementById(`te_${k}`).firstChild
           new SpriteMain(k ,texture)
         }

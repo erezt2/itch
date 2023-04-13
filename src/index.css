@@ -235,6 +235,7 @@ body {
 .draggable > .dropzone {
     /* border: 1px solid black; */
     width: calc(100% + 10px);
+    min-width: 45px;
     height: 15px;
     position: absolute;
     left:-5px;
@@ -244,6 +245,7 @@ body {
 .block-container > div.inside-container > .dropzone {
     width: calc(100% - 5px);
     height: 15px;
+    min-width: 45px;
     position: absolute;
     left:0px;
     top: 0px;
@@ -260,6 +262,7 @@ body {
     min-height: 30px; */
     flex-flow: column;
     display: flex;
+    overflow: visible;
     width: max-content;
     align-items:baseline;
     /* outline: 2px solid rgba(0,0,0, 0.25); */
@@ -273,12 +276,24 @@ body {
 #script-dragspace > .active > div {
     /* class in block dragspace */
     position: absolute;
+    width: 0;
 }
 
-.draggable > .draggable {
+.draggable > .draggable:last-child {
     /*class for block in block */
     position: relative; /* TEMP */
+    width: 0;
 }
+
+.inside-container > .dropzone:not(:last-child) {
+    display: none;
+}
+
+.inside-container > .draggable {
+    position: relative; /* TEMP */
+    width: 0;
+}
+
 
 .draggable > div:first-child {
     padding: 3px;
@@ -286,6 +301,7 @@ body {
     /* width: 100%; */
     color: white;
     display: flex;
+    width: max-content;
     align-items: center;
     font-size: 16px;
 }

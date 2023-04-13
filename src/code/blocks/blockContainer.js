@@ -25,9 +25,9 @@ export default class BlockContainer extends BlockGeneric {
         if(this.constructor === BlockContainer){
             console.log("WARNING: USING BASE CLASS | %s", this.elementHTML.children[0].innerHTML)
         }
+        await this.reschedule()
         let p = this.getNext()
         if(p===null) return data
-        await this.reschedule()
         return await p.run(data)
     }
 }

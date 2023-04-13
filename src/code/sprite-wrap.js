@@ -1,7 +1,9 @@
+import BlockStart from "./blocks/blockStart.js";
 import global from "./global.js"
 const {Sprite} = require("pixi.js")
 
-export default class SpriteWrap {
+
+class SpriteWrap {
     name;
     sprite;
 
@@ -14,9 +16,30 @@ export default class SpriteWrap {
 
         this.x = 0
         this.y = 0
-        
-        global.window.sprites.push(this)
-        console.log(global.window.app.stage)
+    }
+
+    runBlocks(filter) {
+        let ds = document.getElementById("ds_"+this.name)
+        for(let child of ds.children){
+            let block = child["data-block"]
+            if(block instanceof BlockStart &&
+                block.checkStart(filter)) this.runSingular(block)
+        }
+    }
+
+    runSingular(block) {
+        let start_data = {
+            local_variables: {}, else: false, sprite: this.sprite, 
+            clone_id: this.clone_id, owner: this
+        }
+        new Promise((resolve, reject) => {
+            let r = block.run(start_data)
+            resolve(r)
+        })
+    }
+
+    remove() {
+        global.window.app.stage.remove(this.sprite)
     }
 
     set x(val) {
@@ -28,10 +51,29 @@ export default class SpriteWrap {
     }
 
     get x() {  // what the program sees
-        return this.sprite.x - val
+        return this.sprite.x - 320
     }
     get y() {
-        return 320 - this.sprite.y
+        return 240 - this.sprite.y
     }
     
 }
+
+class SpriteCopy extends SpriteWrap {
+
+}
+
+class SpriteMain extends SpriteWrap {
+    clone_id = 0;
+    constructor(name, texture) {
+        super(name, texture)
+        global.window.sprites[name] = this
+    }
+    remove() {
+        delete global.window.sprites[this.name]
+        super.remove()
+    }
+}
+
+
+export { SpriteWrap, SpriteCopy, SpriteMain }

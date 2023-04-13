@@ -22,9 +22,9 @@ export default class BlockVoid extends BlockGeneric {
         if(this.constructor === BlockVoid){
             console.log("WARNING: USING BASE CLASS | %s", this.elementHTML.children[0].innerHTML)
         }
+        await this.reschedule()
         let p = this.getNext()
         if(p===null) return data
-        await this.reschedule()
         return p.run(data)
     }
 }

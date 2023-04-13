@@ -1,7 +1,7 @@
 {
     "Motion": {
         "color": "#3366FF",
-        "blocks": ["setX.js", "setY.js"]
+        "blocks": ["setX.js", "setY.js", "getX.js", "getY.js"]
     }, 
     "Texture":{
         "color": "#CC99FF",
@@ -34,7 +34,7 @@
         "blocks": ["addition.js", "subtraction.js", "multiplication.js", "division.js", 
             "lessThan.js", "lessEquals.js", "equals.js", "greaterEquals.js", "greaterThan.js",
             "and.js", "or.js", "not.js", "randomInt.js", "randomUniform.js", "join.js",
-            "convertNumber.js", "convertString.js", "convertBoolean.js", "sin.js", "getTime.js"]
+            "convertNumber.js", "convertString.js", "convertBoolean.js", "sin.js", "abs.js", "getTime.js"]
     }, 
     "Functions":{
         "color": "#666699",

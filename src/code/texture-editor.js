@@ -2,7 +2,7 @@ const fs = require("fs")
 const path = require("path")
 const { ipcRenderer } = require("electron")
 import global from "./global.js"
-import SpriteWrap from "./sprite-wrap.js"
+import {SpriteMain} from "./sprite-wrap.js"
 
 function createTextureTemplate(name, src) {
     const template = document.createElement("div")
@@ -33,7 +33,7 @@ function textureEditorAddImage(editor, _path, _name) {
         let texture = createTextureTemplate(name, data)
         editor.insertBefore(texture, editor.lastChild)
         
-        if(_name) new SpriteWrap(_name, texture)
+        if(_name) new SpriteMain(_name, texture)
     })
 }
 

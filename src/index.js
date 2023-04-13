@@ -35,13 +35,13 @@ await createSelection()
 
 
 
-// TODO: 
-// threading
+// TODO:
 // sprite rendering
-// fix sprite selection
 // left click menu + dropdown menu
-// textures + sounds + states
-// make some visual changes
+// states
+// make some visual changes (fix ghost bug)
+// add blocks
+import global from "./code/global.js"
 
 
 import spriteListEvents from "./code/sprite-list-events.js"
@@ -67,10 +67,18 @@ window.addEventListener("keydown", function(event) {
   }
 });
 
+let start_buttom = document.getElementById("start_button")
+start_buttom.onclick = function(event) {
+  let sprites = global.window.sprites
+  for(let k in sprites) {
+    sprites[k].runBlocks({start: true})
+  }
+}
+
 // SEPERATE
 import start from "./code/canvas.js"
 let app = start()
-import global from "./code/global.js"
+
 
 global.window.app = app
 

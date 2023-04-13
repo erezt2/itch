@@ -1,7 +1,6 @@
 import createDragspace from "./script-dragspace.js"
 import {createTextureEditor, textureEditorAddImage} from "./texture-editor.js"
 import createSoundEditor from "./sound-editor.js"
-import SpriteWrap from "./sprite-wrap.js"
 
 const sprites = document.getElementById("sprites")
 const new_char = document.getElementById("new-character")

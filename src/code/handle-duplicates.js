@@ -26,7 +26,8 @@ async function drop_in_block(event) {
     handle_dropped_parent(my.target)
     this.parentNode.appendChild(target);
     target.style.left = "0px"
-    target.style.top = "100%"
+    if(this.parentNode.classList.contains("draggable")) target.style.top = "100%"
+    else target.style.top = "0px"
     
 }
 
@@ -78,7 +79,7 @@ export default async function handle_duplicates(dup, dragged, exists) { // dupli
     let is_container = dragged.classList.contains("block-container")
     if(is_container) {
         let inside = clone.children[1] 
-        inside.dataset["block"] = clone.dataset["block"]
+        inside["data-block"] = clone["data-block"]
         
         let area_in
         if (exists) {
@@ -129,13 +130,10 @@ export default async function handle_duplicates(dup, dragged, exists) { // dupli
         event.stopPropagation()
         event.preventDefault()
         
-        let sprite = PIXI.Sprite.from('../public/test.png');
-        global.window.app.stage.addChild(sprite);
-        new Promise((resolve, reject) => {
-            let first = clone["data-block"].getAncestor()
-            let r = first.run(BlockStart.getDefaultData(sprite))
-            resolve(r)
-        })
+        let first = clone["data-block"].getAncestor()
+        console.log(first.elementHTML)
+        let name = first.elementHTML.parentNode.id.slice(3)
+        global.window.sprites[name].runSingular(first)
         
         // createThread("run block", {obj: .id, input: })
     }

@@ -21,13 +21,10 @@ export default class BlockStart extends BlockGeneric {
         if(this.constructor === BlockStart){
             console.log("WARNING: USING BASE CLASS | %s", this.elementHTML.children[0].innerHTML)
         }
+        await this.reschedule()
         let p = this.getNext()
         if(p===null) return data
-        await this.reschedule()
         return p.run(data)
-    }
-    static getDefaultData(sprite) {
-        return {local_variables: {}, else: false, sprite: sprite}
     }
 }
 

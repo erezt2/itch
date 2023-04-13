@@ -6,10 +6,12 @@ export default class LocalVariable extends BlockValue {
     constructor(element) {
         super(element)
     }
-    run(data) {
-        let args = this.getValues(this.constructor.input_types, data)
-        if(data.local_variables.hasOwnProperty(args[0]))
+    async run(data) {
+        let args = await this.getValues(this.constructor.input_types, data)
+        if(data.local_variables.hasOwnProperty(args[0])) {
             return data.local_variables[args[0]];
-        throw Error("local variable error")
+        }
+        console.log(data)
+        throw Error(data)
     }
 }

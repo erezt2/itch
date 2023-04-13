@@ -6,12 +6,13 @@ export default class Else extends BlockContainer {
     constructor(element) {
         super(element)
     }
-    run(data) {
+    async run(data) {
+        let args = await this.getValues(this.constructor.input_types, data)
         if(data["else"]) {
             let inside = this.getInside();
-            if(inside !== null) data = inside.run(data)
+            if(inside !== null) data = await inside.run(data)
         }
         data["else"] = false;
-        return super.run(data);
+        return await super.run(data);
     }
 }

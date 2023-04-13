@@ -5,7 +5,6 @@ const { parentPort, workerData } = require('worker_threads');
 console.log(workerData)
 console.log(document.querySelector("p"))
 
-if(false){
 function sayHello(data) {
     sleep(1000)
     for(let i=0; i<10; i++) {
@@ -33,5 +32,4 @@ parentPort.onmessage = async function (event) {
 
     parentPort.postMessage(ret)
     parentPort.close()
-}
 }

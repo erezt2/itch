@@ -6,14 +6,14 @@ export default class RepeatWhile extends BlockContainer {
     constructor(element) {
         super(element)
     }
-    run(data) {
-        let args = this.getValues(this.constructor.input_types, data)
+    async run(data) {
+        let args = await this.getValues(this.constructor.input_types, data)
         let inside = this.getInside();
 
         while (!args[0]) {
-            if(inside !== null) data = inside.run(data)
-            args = this.getValues(this.constructor.input_types, data)
+            if(inside !== null) data = await inside.run(data)
+            args = await this.getValues(this.constructor.input_types, data)
         }
-        return super.run(data);
+        return await super.run(data);
     }
 }

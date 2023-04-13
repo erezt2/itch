@@ -6,14 +6,14 @@ export default class IfThen extends BlockContainer {
     constructor(element) {
         super(element)
     }
-    run(data) {
-        let args = this.getValues(this.constructor.input_types, data)
+    async run(data) {
+        let args = await this.getValues(this.constructor.input_types, data)
         if(args[0]) {
             let inside = this.getInside();
-            if(inside !== null) data = inside.run(data)
+            if(inside !== null) data = await inside.run(data)
         }
         data["else"] = !args[0]
 
-        return super.run(data);
+        return await super.run(data);
     }
 }

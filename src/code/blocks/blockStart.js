@@ -10,23 +10,24 @@ export default class BlockStart extends BlockGeneric {
         return false
     }
     getNext(){
-        let dom = this.getSelf().children[2]
+        let dom = this.elementHTML.children[2]
         if(dom === undefined) return null
         return dom["data-block"]
     }
     getParent() {
         return null
     }
-    run(data) {
+    async run(data) {
         if(this.constructor === BlockStart){
-            console.log("WARNING: USING BASE CLASS | %s", this.getSelf().children[0].innerHTML)
+            console.log("WARNING: USING BASE CLASS | %s", this.elementHTML.children[0].innerHTML)
         }
         let p = this.getNext()
         if(p===null) return data
+        await this.reschedule()
         return p.run(data)
     }
-    static getDefaultData() {
-        return {local_variables: {}, else: false}
+    static getDefaultData(sprite) {
+        return {local_variables: {}, else: false, sprite: sprite}
     }
 }
 

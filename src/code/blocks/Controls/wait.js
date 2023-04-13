@@ -6,9 +6,9 @@ export default class Wait extends BlockVoid {
     constructor(element) {
         super(element)
     }
-    run(data) {
-        let args = this.getValues(this.constructor.input_types, data)
-        console.log("WAIT!")
-        return super.run(data)
+    async run(data) {
+        let args = await this.getValues(this.constructor.input_types, data)
+        await new Promise(r => setTimeout(r, data[0]*1000))
+        return await super.run(data)
     }
 }

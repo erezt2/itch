@@ -1,6 +1,7 @@
 import {selectPlayground, createSprite} from "./create-character.js"
 import handle_duplicates from "./handle-duplicates.js"
 import my from "./global.js"
+import SpriteWrap from "./sprite-wrap.js"
 const storage = require("electron-json-storage")
 
 const sd = document.getElementById("script-dragspace")
@@ -16,6 +17,8 @@ function loadState(savefile) {
           te.insertAdjacentHTML("beforeend", data[k].textures)
           se.insertAdjacentHTML("beforeend", data[k].sounds)
           createSprite(k, true, k=="background")
+          let texture = document.getElementById(`te_${k}`).firstChild
+          new SpriteWrap(k ,texture)
         }
 
         let all_sounds = document.querySelectorAll("#editor-sounds > div > div")

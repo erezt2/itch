@@ -52,26 +52,29 @@ spriteListEvents()
 
 import { saveState, loadState } from "./code/save-load.js"
 
-
+const PIXI = require("pixi.js")
 window.addEventListener("keydown", function(event) {
-  if(event.key == "q") ipcRenderer.invoke("runThread", "test", "hello1")
-  return
   if (event.key == "s") {
     saveState("test1")
   }
   if (event.key == "l") {
     loadState("test1")
   }
+  if (event.key == "p") {
+    let a = document.querySelector("#editor-textures img")
+    
+    global.window.app.stage.addChild(PIXI.Sprite.from(a.src))
+  }
 });
 
 // SEPERATE
 import start from "./code/canvas.js"
-const { ipcRenderer }  = require("electron")
 let app = start()
+import global from "./code/global.js"
+
+global.window.app = app
 
 // import createThread from "./code/worker-create.js"
-const PIXI = require("pixi.js")
-
 
 
 if (false){

@@ -6,9 +6,9 @@ export default class LocalVariable extends BlockVoid {
     constructor(element) {
         super(element)
     }
-    run(data) {
-        let args = this.getValues(this.constructor.input_types, data)
+    async run(data) {
+        let args = await this.getValues(this.constructor.input_types, data)
         data.local_variables[args[0]] = args[1]
-        return super.run(data)
+        return await super.run(data);
     }
 }

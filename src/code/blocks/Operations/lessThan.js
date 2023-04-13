@@ -6,8 +6,8 @@ export default class LessThan extends BlockInt {
     constructor(element) {
         super(element)
     }
-    run(data) {
-        let args = this.getValues(this.constructor.input_types, data)
+    async run(data) {
+        let args = await this.getValues(this.constructor.input_types, data)
         return args[0] < args[1]
     }
 }

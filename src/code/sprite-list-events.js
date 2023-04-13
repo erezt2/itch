@@ -17,12 +17,9 @@ export default function spriteListEvents() {
     })
 
     function addFile(_path) {
-        fs.readFile(_path, (err, data) => {
-            if(err) throw err;
-            let name = getNextName(path.parse(_path).name)
-            createSprite(name, false, false)
-            selectPlayground(name)
-        })
+        let name = getNextName(path.parse(_path).name)
+        createSprite(name, false, false, _path)
+        selectPlayground(name)
     }
 
     sprites.addEventListener('drop', (event) => {

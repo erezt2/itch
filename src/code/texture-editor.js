@@ -2,6 +2,7 @@ const fs = require("fs")
 const path = require("path")
 const { ipcRenderer } = require("electron")
 import global from "./global.js"
+import SpriteWrap from "./sprite-wrap.js"
 
 function createTextureTemplate(name, src) {
     const template = document.createElement("div")
@@ -19,7 +20,7 @@ function createTextureTemplate(name, src) {
     return template
 }
 
-function textureEditorAddImage(editor, _path) {
+function textureEditorAddImage(editor, _path, _name) {
     fs.readFile(_path, (err, data) => {
         if(err) throw err;
         let id_list = []
@@ -31,12 +32,14 @@ function textureEditorAddImage(editor, _path) {
         let name = global.getNextName(id_list, path.parse(_path).name)
         let texture = createTextureTemplate(name, data)
         editor.insertBefore(texture, editor.lastChild)
+        
+        if(_name) new SpriteWrap(_name, texture)
     })
 }
 
 const texture_container = document.getElementById("editor-textures")
 
-export default function createTextureEditor(name, exists) {
+function createTextureEditor(name, exists) {
     let texture_editor, add_new
     if(!exists) {
         texture_editor = document.createElement("div") // (`#script-dragspace > div[name="${name}"]`)
@@ -71,4 +74,8 @@ export default function createTextureEditor(name, exists) {
             textureEditorAddImage(texture_editor, event.dataTransfer.files[0].path)
         else alert("only PNG files are accepted.")
     })
+
+    return texture_editor;
 }
+
+export {createTextureEditor, textureEditorAddImage} 

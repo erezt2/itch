@@ -6,20 +6,13 @@ export default class BlockGeneric {
     elementHTML; // wrapper of the entire thing
     inputs;
     constructor(element) {
-        this.elementHTML = "block_number_"+global.current_block_id;
-        element.id = "block_number_"+global.current_block_id;
-        global.current_block_id += 1
+        this.elementHTML = element;
         let disp = element.children[0]
         this.inputs = []
         for(let c of disp.children) {
             if(!c.classList.contains("editable")) continue;
-            c.id = "input_number_"+global.current_input_id;
-            this.inputs.push(c.id)
-            global.current_input_id += 1
+            this.inputs.push(c)
         }
-    }
-    getSelf() {
-        return document.getElementById(this.elementHTML)
     }
     getParent() {return null;}
     getAncestor() {
@@ -28,15 +21,18 @@ export default class BlockGeneric {
             step = step.getParent()
         }
         return step
+    } 
+    reschedule() {
+        return new Promise(resolve => setTimeout(resolve, 0))
     }
-    getValues(input_types, data) {
+    async getValues(input_types, data) {
         if (this.inputs.length !== input_types.length) throw "bad block build"
         let l = []
         for(let i=0; i<this.inputs.length; i++) {
             let val;
-            let dom =  document.getElementById(this.inputs[i])
+            let dom = this.inputs[i]
             if(dom.children.length === 0) val = dom.innerHTML
-            else val = dom.children[0]["data-block"].run(data)
+            else val = await dom.children[0]["data-block"].run(data)
             l.push(input_types[i](val))
         }
         return l;

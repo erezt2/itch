@@ -6,11 +6,11 @@ export default class OnStart extends BlockStart {
     constructor(element) {
         super(element)
     }
-    run(data) {
-        let args = this.getValues(this.constructor.input_types, data)
-        return super.run(data)
+    async run(data) {
+        let args = await this.getValues(this.constructor.input_types, data)
+        return await super.run(data)
     }
-    checkStart(data) {
-        if(data.start) this.run(this.constructor.getDefaultData());
+    async checkStart(data) {
+        if(data.start) await this.run(this.constructor.getDefaultData());
     }
 }

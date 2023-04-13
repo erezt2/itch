@@ -2,6 +2,7 @@ import global from "./global.js"
 import BlockStart from "./blocks/blockStart.js"
 // import createThread from "./worker-create.js"
 import BlockGeneric from "./blocks/blockGeneric.js";
+const PIXI = require("pixi.js")
 
 function handle_dropped_parent(dom) {
     let p = dom.parentNode
@@ -124,16 +125,22 @@ export default async function handle_duplicates(dup, dragged, exists) { // dupli
         })
     }
 
-    clone.onclick = (event) => {
+    clone.onclick = async (event) => {
         event.stopPropagation()
         event.preventDefault()
         
-        createThread("run block", {obj: clone["data-block"].getAncestor().id, input: BlockStart.getDefaultData()})
+        let sprite = PIXI.Sprite.from('../public/test.png');
+        global.window.app.stage.addChild(sprite);
+        new Promise((resolve, reject) => {
+            let first = clone["data-block"].getAncestor()
+            let r = first.run(BlockStart.getDefaultData(sprite))
+            resolve(r)
+        })
+        
+        // createThread("run block", {obj: .id, input: })
     }
 
-    let disp = clone.children[0]
-    for(let box of disp.children) {
-        if(!box.classList.contains("editable")) continue;
+    for(let box of clone["data-block"].inputs) {
         box.addEventListener("drop", drop_in_input);
         box.addEventListener("dragenter", (event) => {
             box.classList.add("dropzone-dragenter")

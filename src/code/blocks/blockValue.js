@@ -7,7 +7,7 @@ export default class BlockValue extends BlockGeneric {
         super(element)
     }
     getParent() {
-        let dom = this.getSelf().parentNode
+        let dom = this.elementHTML.parentNode
         if(dom == block_playground) return null
         return dom.parentNode.parentNode["data-block"]
     }

@@ -67,13 +67,6 @@ window.addEventListener("keydown", function(event) {
   }
 });
 
-let start_buttom = document.getElementById("start_button")
-start_buttom.onclick = function(event) {
-  let sprites = global.window.sprites
-  for(let k in sprites) {
-    sprites[k].runBlocks({start: true})
-  }
-}
 
 // SEPERATE
 import start from "./code/canvas.js"
@@ -81,6 +74,18 @@ let app = start()
 
 
 global.window.app = app
+
+setTimeout(()=>{
+  const can = document.querySelector("#window > canvas")
+  const rect = can.getBoundingClientRect()
+  window.addEventListener("mousemove", (event) => {
+      global.mouse_pos = { 
+          x: event.clientX - rect.left,
+          y: event.clientY - rect.top
+      }
+  })
+}, 500)
+
 
 // import createThread from "./code/worker-create.js"
 

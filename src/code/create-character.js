@@ -19,7 +19,7 @@ function createSpriteSelection(name, immutable) {
     }
 
     sprites.insertBefore(template, new_char)
-    document.addEventListener('contextmenu', function(event) {
+    template.addEventListener('contextmenu', function(event) {
         alert("You've tried to open context menu");
         event.preventDefault();
     }, false);

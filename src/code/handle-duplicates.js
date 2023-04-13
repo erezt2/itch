@@ -126,12 +126,11 @@ export default async function handle_duplicates(dup, dragged, exists) { // dupli
         })
     }
 
-    clone.onclick = async (event) => {
+    clone.children[0].onclick = async (event) => {
         event.stopPropagation()
         event.preventDefault()
         
         let first = clone["data-block"].getAncestor()
-        console.log(first.elementHTML)
         let name = first.elementHTML.parentNode.id.slice(3)
         global.window.sprites[name].runSingular(first)
         

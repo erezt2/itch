@@ -41,30 +41,49 @@ class SpriteWrap {
     remove() {
         global.window.app.stage.remove(this.sprite)
     }
-
+ 
     set x(val) {
-        this.sprite.x = val + 320
+        let halfW = Math.round(global.window.width / 2)
+        this.sprite.x = val + halfW
     }
 
     set y(val) {
-        this.sprite.y = -val + 240
+        let halfH = Math.round(global.window.height / 2)
+        this.sprite.y = -val + halfH
     }
 
     get x() {  // what the program sees
-        return this.sprite.x - 320
+        let halfW = Math.round(global.window.width / 2)
+        return this.sprite.x - halfW
     }
     get y() {
-        return 240 - this.sprite.y
+        let halfH = Math.round(global.window.height / 2)
+        return halfH - this.sprite.y
     }
     
 }
 
 class SpriteCopy extends SpriteWrap {
-
+    clode_id;
+    parent;
+    constructor(sprite_main) {
+        this.parent = sprite_main
+        this.clone_id = sprite_main.clode_next
+        sprite_main.clode_next += 1;
+        sprite_main.push(this)
+        super(this.parent.name, this.parent.sprite.texture)
+    }
+    remove() {
+        const index = this.parent.clone_list.indexOf(this)
+        this.parent.clone_list.remove(index)
+        super.remove()
+    }
 }
 
 class SpriteMain extends SpriteWrap {
     clone_id = 0;
+    clone_next = 1;
+    clone_list = []
     constructor(name, texture) {
         super(name, texture)
         global.window.sprites[name] = this

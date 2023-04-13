@@ -1,14 +1,14 @@
 import BlockVoid from "../blockVoid.js";
 
-export default class SetX extends BlockVoid {
+export default class ChangeAngle extends BlockVoid {
     static input_types = [Number];
-    static display = "set Y to |";
+    static display = "change angle by |";
     constructor(element) {
         super(element)
     }
     async run(data) {
         let args = await this.getValues(this.constructor.input_types, data)
-        data.owner.y = args[0]
+        data.sprite.angle = (data.sprite.angle + args[0] % 360)
         return await super.run(data);
     }
 }

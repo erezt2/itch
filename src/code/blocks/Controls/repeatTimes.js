@@ -11,6 +11,7 @@ export default class RepeatTimes extends BlockContainer {
         let inside = this.getInside();
         for(let i=0; i<args[0]; i++){
             if(inside !== null) data = await inside.run(data)
+            await this.reschedule()
         }
         return await super.run(data);
     }

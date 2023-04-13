@@ -5,6 +5,8 @@ my.current_block_id = 0
 my.current_input_id = 0
 my.window = {width: 640, height: 480, app: null, sprites: {}}
 my.dragged = {};
+my.mouse_pos = {x:0, y:0}
+
 my.register_dragged_dup = (event) => {
     my.dragged.duplicate = true;
     my.dragged.target = event.target;

@@ -2,13 +2,13 @@ import BlockVoid from "../blockVoid.js";
 
 export default class SetX extends BlockVoid {
     static input_types = [Number];
-    static display = "set X position to |";
+    static display = "set X to |";
     constructor(element) {
         super(element)
     }
     async run(data) {
         let args = await this.getValues(this.constructor.input_types, data)
-        data.owner.x = Math.round(args[0])
+        data.owner.x = args[0]
         return await super.run(data);
     }
 }

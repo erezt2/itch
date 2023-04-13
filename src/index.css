@@ -29,7 +29,8 @@ body {
     display: block;
     border: 1px gray solid;
     min-width: 640px;
-    min-height: 480px;
+    min-height: 420px;
+    padding-bottom: -5px;
 }
 
 
@@ -39,7 +40,6 @@ body {
 }
 
 #sprites {
-    margin-top: 3px;
     grid-column: 1;
     background-color: whitesmoke;
     grid-row: 2;
@@ -151,6 +151,10 @@ body {
     border-bottom: 1px;
     border-color: grey;
     border-style: solid;
+}
+
+.draggable > div:first-child {
+    cursor: pointer;
 }
 
 #script-selector-table > a {
@@ -276,13 +280,11 @@ body {
 #script-dragspace > .active > div {
     /* class in block dragspace */
     position: absolute;
-    width: 0;
 }
 
 .draggable > .draggable:last-child {
     /*class for block in block */
     position: relative; /* TEMP */
-    width: 0;
 }
 
 .inside-container > .dropzone:not(:last-child) {
@@ -291,7 +293,6 @@ body {
 
 .inside-container > .draggable {
     position: relative; /* TEMP */
-    width: 0;
 }
 
 

@@ -83,7 +83,6 @@ export default async function createSelection() {
 
         for(let block_name of sections[sn].blocks) {
             let block = document.createElement("div")
-            block.style.cursor = "pointer"
             block.classList.add("draggable")
             block.draggable = true 
             block.addEventListener("dragstart", global.register_dragged_dup)

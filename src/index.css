@@ -350,6 +350,11 @@ body {
     border-radius: 10px;
 }
 
+
+.block-start {
+    border-top-left-radius: 4px;
+}
+
 .block-start > div:first-child {
     border-top: 5px rgba(0,0,0, 0.35) solid;
     border-top-left-radius: 4px;
@@ -501,6 +506,9 @@ body {
 }
 
 .running { 
-    box-shadow: -10px 0px 20px -10px rgb(0, 0, 0);
-    
+    box-shadow: -8px 0px 5px -5px rgb(0, 0, 0);
+}
+
+.selecetion-gap {
+    margin-bottom: 10px;
 }

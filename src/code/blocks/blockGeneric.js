@@ -38,8 +38,12 @@ export default class BlockGeneric {
         if (this.inputs.length !== input_types.length) throw "bad block build"
         let l = []
         for(let i=0; i<this.inputs.length; i++) {
-            let val;
             let dom = this.inputs[i]
+            if(input_types[i].isList) {
+                l.push(String(input_types[i](dom.innerHTML)))
+                continue
+            }
+            let val;
             if(dom.children.length === 0) val = dom.innerHTML
             else val = await dom.children[0]["data-block"].run(data)
             l.push(input_types[i](val))

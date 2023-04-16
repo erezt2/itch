@@ -1,9 +1,11 @@
 {
     "Motion": {
         "color": "#3366FF",
-        "blocks": ["setX.js", "changeX.js",
+        "blocks": ["move.js", "setAngle.js", "changeAngle.js",
+                    "-gap",
+                    "setX.js", "changeX.js",
                     "setY.js", "changeY.js",
-                    "setAngle.js", "changeAngle.js",
+                    "-gap",
                     "getX.js", "getY.js", "getAngle.js"]
     }, 
     "Texture":{

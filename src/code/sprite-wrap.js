@@ -95,6 +95,9 @@ class SpriteWrap {
 
     remove() {
         global.window.app.stage.remove(this.sprite)
+        for(let k in this.keydict) {
+            k.cancel()
+        }
     }
  
     set x(val) {

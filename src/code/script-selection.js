@@ -5,41 +5,45 @@ import BlockStart from "./blocks/blockStart.js"
 import global from "./global.js"
 import {handle_dropped_parent} from "./handle-duplicates.js"
 
-export default async function createSelection() {
-    function createWrapper(text) {
-        let dom = document.createElement("span")
-        dom.innerHTML = text
-        return dom
-    }
-    function createTextBox() {
-        let dom = document.createElement("span")
-        dom.contentEditable = true;
-        dom.classList.add("editable")
-        return dom
-    }
+function createWrapper(text) {
+    let dom = document.createElement("span")
+    dom.innerHTML = text
+    return dom
+}
+function createTextBox() {
+    let dom = document.createElement("span")
+    dom.contentEditable = true;
+    dom.classList.add("editable")
+    return dom
+}
 
+function createListWrap(data) {
+    // TODO: Add shit
+}
+
+function selectScriptSectionWrapper(index) {
+    return () => selectScriptSection(index)
+}
+
+let selected_section = undefined
+let selected_list = undefined
+function selectScriptSection(index) {
+    if(selected_section !== undefined) selected_section.style.backgroundColor = "";
+    selected_section?.classList.remove("editor-selected")
+    selected_list?.classList.remove("editor-selected")
+    selected_section = sst.children[index]
+    selected_list = sbl.children[index]
+    selected_section.style.backgroundColor = sections[section_names[index]].color
+    selected_section.classList.add("editor-selected")
+    selected_list.classList.add("editor-selected")
+}
+
+export default async function createSelection() {
     const sst = document.getElementById("script-selector-table")
     const sbl = document.getElementById("script-block-list")
     const sections = require("./code/blocks/sections.json")
     const section_names = Object.keys(sections)
-
-    let selected_section = undefined
-    let selected_list = undefined
-
-    function selectScriptSectionWrapper(index) {
-        return () => selectScriptSection(index)
-    }
-
-    function selectScriptSection(index) {
-        if(selected_section !== undefined) selected_section.style.backgroundColor = "";
-        selected_section?.classList.remove("editor-selected")
-        selected_list?.classList.remove("editor-selected")
-        selected_section = sst.children[index]
-        selected_list = sbl.children[index]
-        selected_section.style.backgroundColor = sections[section_names[index]].color
-        selected_section.classList.add("editor-selected")
-        selected_list.classList.add("editor-selected")
-    }
+    
 
     sbl.addEventListener("dragenter", (event) => {
         event.preventDefault()
@@ -79,6 +83,15 @@ export default async function createSelection() {
 
         for(let block_name of sections[sn].blocks) {
             let block = document.createElement("div")
+            if(block_name.startsWith("-")) {
+                if(block_name == "-gap") {
+                    block.classList.add("selection-gap")
+                    block_list.appendChild(block)
+                }
+
+                continue
+            }
+            
             block.classList.add("draggable")
             block.draggable = true 
             block.addEventListener("dragstart", global.register_dragged_dup)
@@ -88,9 +101,16 @@ export default async function createSelection() {
             let block_text = block_class.display.split("|")
             inside.appendChild(createWrapper(block_text[0]))
             for(let i=1; i<block_text.length; i++) {
-                inside.appendChild(createTextBox())
-
+                let convertor = block_class.input_types[i-1]
+                if(convertor.isList) {
+                    inside.appendChild(createListWrap(convertor))
+                }
+                else {
+                    inside.appendChild(createTextBox())
+                }
+                
                 inside.appendChild(createWrapper(block_text[i]))
+                
             }
             inside.style.backgroundColor = sections[sn].color
             block.appendChild(inside)

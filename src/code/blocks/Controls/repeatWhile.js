@@ -12,6 +12,7 @@ export default class Repeat extends BlockContainer {
 
         while (args[0]) {
             if(inside !== null) data = await inside.run(data)
+            if(data.key.canceled) break
             args = await this.getValues(this.constructor.input_types, data)
             await this.reschedule()
         }

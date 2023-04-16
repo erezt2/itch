@@ -4,7 +4,6 @@
         "blocks": ["setX.js", "changeX.js",
                     "setY.js", "changeY.js",
                     "setAngle.js", "changeAngle.js",
-                    "getMouseX.js", "getMouseY.js",
                     "getX.js", "getY.js", "getAngle.js"]
     }, 
     "Texture":{
@@ -13,7 +12,7 @@
     }, 
     "Sensor":{
         "color":  "#33CCCC",
-        "blocks": []
+        "blocks": ["getMouseX.js", "getMouseY.js"]
     },
     "Audio": {
         "color": "#FF99CC",

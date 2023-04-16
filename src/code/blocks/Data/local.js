@@ -11,7 +11,6 @@ export default class LocalVariable extends BlockValue {
         if(data.local_variables.hasOwnProperty(args[0])) {
             return data.local_variables[args[0]];
         }
-        console.log(data)
         throw Error(data)
     }
 }

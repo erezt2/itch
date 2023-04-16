@@ -1,6 +1,6 @@
-import BlockGeneric from "./blockGeneric.js"
+import BlockRunnable from "./blockRunnable.js";
 
-export default class BlockStart extends BlockGeneric {
+export default class BlockStart extends BlockRunnable {
     // static input_types = [];
     // static display = "block";
     constructor(element) {
@@ -16,15 +16,6 @@ export default class BlockStart extends BlockGeneric {
     }
     getParent() {
         return null
-    }
-    async run(data) {
-        if(this.constructor === BlockStart){
-            console.log("WARNING: USING BASE CLASS | %s", this.elementHTML.children[0].innerHTML)
-        }
-        await this.reschedule()
-        let p = this.getNext()
-        if(p===null) return data
-        return p.run(data)
     }
 }
 

@@ -3,6 +3,16 @@ import global from "./global.js"
 const {Sprite} = require("pixi.js")
 
 
+class Key {
+    canceled = false
+    constructor() {
+        global.keys.push(this)
+    }
+    cancel(data) {
+        this.canceled = true
+    }
+}
+
 class SpriteWrap {
     name;
     sprite;
@@ -11,6 +21,10 @@ class SpriteWrap {
         this.name = name
         // console.log(texture.firstChild.firstChild.src)
         this.sprite = Sprite.from(texture.firstChild.firstChild.src)
+        this.sprite.eventMode = "static"
+        this.sprite.on("click", (event)=>{
+            console.log(event)
+        })
         global.window.app.stage.addChild(this.sprite)
         this.sprite.anchor.set(0.5)
 
@@ -23,14 +37,17 @@ class SpriteWrap {
         for(let child of ds.children){
             let block = child["data-block"]
             if(block instanceof BlockStart &&
-                block.checkStart(filter)) this.runSingular(block)
+                block.checkStart(filter)) {
+                    this.runSingular(block)
+                }
         }
     }
 
     runSingular(block) {
+        let key = new Key()
         let start_data = {
             local_variables: {}, else: false, sprite: this.sprite, 
-            clone_id: this.clone_id, owner: this
+            clone_id: this.clone_id, owner: this, key: key
         }
         new Promise((resolve, reject) => {
             let r = block.run(start_data)
@@ -86,6 +103,7 @@ class SpriteMain extends SpriteWrap {
     clone_list = []
     constructor(name, texture) {
         super(name, texture)
+        
         global.window.sprites[name] = this
     }
     remove() {

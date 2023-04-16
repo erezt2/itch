@@ -1,8 +1,4 @@
 import global from "./global.js"
-import BlockStart from "./blocks/blockStart.js"
-// import createThread from "./worker-create.js"
-import BlockGeneric from "./blocks/blockGeneric.js";
-const PIXI = require("pixi.js")
 
 function handle_dropped_parent(dom) {
     let p = dom.parentNode
@@ -126,10 +122,10 @@ export default async function handle_duplicates(dup, dragged, exists) { // dupli
         })
     }
 
-    clone.children[0].onclick = async (event) => {
+    clone.children[0].onclick = async function(event) {
         event.stopPropagation()
         event.preventDefault()
-        
+    
         let first = clone["data-block"].getAncestor()
         let name = first.elementHTML.parentNode.id.slice(3)
         global.window.sprites[name].runSingular(first)

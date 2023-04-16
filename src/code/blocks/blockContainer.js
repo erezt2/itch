@@ -1,8 +1,8 @@
-import BlockGeneric from "./blockGeneric.js";
+import BlockRunnable from "./blockRunnable.js";
 
 const block_playground = document.getElementById("script-dragspace")
 
-export default class BlockContainer extends BlockGeneric {
+export default class BlockContainer extends BlockRunnable {
     constructor(element) {
         super(element)
     }
@@ -20,14 +20,5 @@ export default class BlockContainer extends BlockGeneric {
         let dom = this.elementHTML.children[3]
         if(dom === undefined) return null
         return dom["data-block"]
-    }
-    async run(data) {
-        if(this.constructor === BlockContainer){
-            console.log("WARNING: USING BASE CLASS | %s", this.elementHTML.children[0].innerHTML)
-        }
-        await this.reschedule()
-        let p = this.getNext()
-        if(p===null) return data
-        return await p.run(data)
     }
 }

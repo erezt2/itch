@@ -71,20 +71,13 @@ window.addEventListener("keydown", function(event) {
 // SEPERATE
 import start from "./code/canvas.js"
 let app = start()
-
-
 global.window.app = app
 
-setTimeout(()=>{
-  const can = document.querySelector("#window > canvas")
-  const rect = can.getBoundingClientRect()
-  window.addEventListener("mousemove", (event) => {
-      global.mouse_pos = { 
-          x: event.clientX - rect.left,
-          y: event.clientY - rect.top
-      }
-  })
-}, 500)
+import resetPlayground from "./code/buttons-handle.js"
+
+
+
+
 
 
 // import createThread from "./code/worker-create.js"

@@ -1,4 +1,10 @@
+import global from "./global.js"
+
 function resetPlayground() {
+    for(let key of global.keys) {
+        key.cancel()
+    }
+    global.keys = []
     let sprites = global.window.sprites
     for(let k in sprites) {
         let sm = sprites[k]

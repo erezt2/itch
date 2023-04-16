@@ -3,11 +3,7 @@ import BlockVoid from "./blocks/blockVoid.js"
 import BlockContainer from "./blocks/blockContainer.js"
 import BlockStart from "./blocks/blockStart.js"
 import global from "./global.js"
-
-function handle_dropped_parent(dom) {
-    let p = dom.parentNode
-    if(p.classList.contains("editable")) p.contentEditable = true;
-}
+import {handle_dropped_parent} from "./handle-duplicates.js"
 
 export default async function createSelection() {
     function createWrapper(text) {

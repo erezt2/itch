@@ -1,8 +1,18 @@
 import global from "./global.js"
+import {Key} from "./sprite-wrap.js"
 
-function handle_dropped_parent(dom) {
+function handle_dropped_parent(dom, check_parent) {
+    blockChangeStop(dom, check_parent)
     let p = dom.parentNode
     if(p.classList.contains("editable")) p.contentEditable = true;
+}
+
+function blockChangeStop(dom, check_parent) {
+    if(!("data-block" in dom)) return
+    if(check_parent && dom["data-block"].getParent() === null)return
+    let first = dom["data-block"].getAncestor()
+    let name = first.elementHTML.parentNode.id.slice(3)
+    global.window.sprites[name].stopSingularAllClones(first)
 }
 
 async function drop_in_block(event) {
@@ -20,6 +30,7 @@ async function drop_in_block(event) {
     
     let target = await handle_duplicates(my.duplicate, my.target, false)
     handle_dropped_parent(my.target)
+    blockChangeStop(this.parentNode)
     this.parentNode.appendChild(target);
     target.style.left = "0px"
     if(this.parentNode.classList.contains("draggable")) target.style.top = "100%"
@@ -43,6 +54,7 @@ async function drop_in_input(event) {
     this.innerHTML = "" 
 
     handle_dropped_parent(my.target)
+    blockChangeStop(this.parentNode)
     this.appendChild(target);
     this.contentEditable = false;
     target.style.left = "0px"
@@ -50,7 +62,7 @@ async function drop_in_input(event) {
     
 }
 
-export default async function handle_duplicates(dup, dragged, exists) { // duplication handle (first drag over)
+async function handle_duplicates(dup, dragged, exists) { // duplication handle (first drag over)
     if(!dup) return dragged;
     let clone
     if(!exists) {
@@ -63,8 +75,9 @@ export default async function handle_duplicates(dup, dragged, exists) { // dupli
     }
     else {
         clone = dragged
+        clone.classList.remove("running")
     }
-    
+    global.hashDOM(clone)
     clone.addEventListener("dragstart", global.register_dragged)
 
     // clone.classList.add("draggable")
@@ -127,9 +140,16 @@ export default async function handle_duplicates(dup, dragged, exists) { // dupli
         event.preventDefault()
     
         let first = clone["data-block"].getAncestor()
+
         let name = first.elementHTML.parentNode.id.slice(3)
-        global.window.sprites[name].runSingular(first)
-        
+
+        if (first.elementHTML.classList.contains("running")) {
+            global.window.sprites[name].stopSingular(first)
+        }
+        else{
+            first.elementHTML.classList.add("running")
+            global.window.sprites[name].runSingular(first)
+        }
         // createThread("run block", {obj: .id, input: })
     }
 
@@ -149,3 +169,5 @@ export default async function handle_duplicates(dup, dragged, exists) { // dupli
 
     return clone
 }
+
+export {handle_duplicates, handle_dropped_parent}

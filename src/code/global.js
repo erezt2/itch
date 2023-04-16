@@ -7,23 +7,12 @@ my.window = {width: 640, height: 480, app: null, sprites: {}}
 my.keys = []
 my.dragged = {};
 my.mouse_pos = {x:0, y:0}
+my.settings = require("./settings.json")
 
-my.register_dragged_dup = (event) => {
-    my.dragged.duplicate = true;
-    my.dragged.target = event.target;
-    my.dragged.self_x = event.offsetX;
-    my.dragged.self_y = event.offsetY;
-}
-my.register_dragged = (event) => {
-    my.dragged.duplicate = false;
-    my.dragged.target = event.target;
-    my.dragged.self_x = event.offsetX;
-    my.dragged.self_y = event.offsetY;
-}
 my.path = await ipcRenderer.invoke("homeDir") + "/saves/"
 
 
-function getNextName(name_list, name) {
+my.getNextName = function(name_list, name) {
     if (!name_list.includes(name)) return name;
     let num = name.match(/\d*$/)[0]
     name = name.slice(0, name.length - num.length)
@@ -38,6 +27,26 @@ function getNextName(name_list, name) {
     return newname
 }
 
-my.getNextName = getNextName
+my.register_dragged_dup = (event) => {
+    my.dragged.duplicate = true;
+    my.dragged.target = event.target;
+    my.dragged.self_x = event.offsetX;
+    my.dragged.self_y = event.offsetY;
+}
+my.register_dragged = (event) => {
+    my.dragged.duplicate = false;
+    my.dragged.target = event.target;
+    my.dragged.self_x = event.offsetX;
+    my.dragged.self_y = event.offsetY;
+}
+
+my.nextHashID = 1
+my.hashDOM = function(dom) {
+    if(dom.dataset.hashID >= my.nextHashID) {
+        my.nextHashID = Number(dom.dataset.hashID) + 1
+    }
+    dom.dataset.hashID = dom.dataset.hashID || (my.nextHashID++)
+    return dom.dataset.hashID
+}
 
 export default my;

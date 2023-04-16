@@ -1,11 +1,6 @@
 
-import handle_duplicates from "./handle-duplicates.js"
+import {handle_duplicates, handle_dropped_parent} from "./handle-duplicates.js"
 import global from "./global.js"
-
-function handle_dropped_parent(dom) {
-    let p = dom.parentNode
-    if(p.classList.contains("editable")) p.contentEditable = true;
-}
 
 const playground_container = document.getElementById("script-dragspace")
 export default function createDragspace(name, exists){
@@ -39,7 +34,7 @@ export default function createDragspace(name, exists){
         event.preventDefault();
         let target = await handle_duplicates(my.duplicate, my.target)
 
-        handle_dropped_parent(my.target)
+        handle_dropped_parent(my.target, true)
         block_playground.appendChild(target);
         
 
@@ -49,24 +44,5 @@ export default function createDragspace(name, exists){
 
         target.style.left = (block_playground.scrollLeft + x - my.self_x) + "px"
         target.style.top = (block_playground.scrollTop + y - my.self_y) + "px"
-
-        return 
-        var offsetX = event.offsetX;
-        var offsetY = event.offsetY;
-        var element = event.target;
-        if(element !== block_playground) {
-            while (element !== block_playground) {
-                offsetX += element.offsetLeft;
-                offsetY += element.offsetTop;
-                element = element.parentNode;
-            }
-            target.style.left = (offsetX - my.dragged.self_x) + "px"
-            target.style.top = (offsetY - my.dragged.self_y) + "px"
-            return
-        }
-
-        target.style.left = (block_playground.scrollLeft + offsetX - my.dragged.self_x) + "px"
-        target.style.top = (block_playground.scrollTop + offsetY - my.dragged.self_y) + "px"
     });
-
 }

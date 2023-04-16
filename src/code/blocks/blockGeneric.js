@@ -1,5 +1,6 @@
 import global from "../global.js"
 
+var counter = 0
 export default class BlockGeneric {
     // static input_types = [];
     // static display = "block";
@@ -22,7 +23,15 @@ export default class BlockGeneric {
         }
         return step
     } 
-    reschedule() {
+    reschedule(context) {
+        if(context === "loop" && global.settings.reloadLoopAlways) {
+            return new Promise(resolve => setTimeout(resolve, 0))
+        }
+        let l = global.settings.reloadCounter
+        counter += 1
+        if(counter < l) return (async ()=>{})();
+        if(Math.random() >= global.settings.reloadChance) return (async ()=>{})();
+        counter = 0
         return new Promise(resolve => setTimeout(resolve, 0))
     }
     async getValues(input_types, data) {

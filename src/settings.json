@@ -1,0 +1,11 @@
+{
+    "comment": {
+        "realoadCounter": "amount of blocks before retrying reload",
+        "reloadChance": "chance to successfully reload after trying",
+        "reloadLoopAlways": "always reload on a loop",
+        "default": "1, 0, true -> reload only on loop end or block end"
+    },
+    "reloadCounter": 1,
+    "reloadChance": 0,
+    "reloadLoopAlways": true
+}

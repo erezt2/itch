@@ -1,5 +1,5 @@
 import {selectPlayground, createSprite} from "./create-character.js"
-import handle_duplicates from "./handle-duplicates.js"
+import {handle_duplicates} from "./handle-duplicates.js"
 import my from "./global.js"
 import {SpriteMain} from "./sprite-wrap.js"
 const storage = require("electron-json-storage")

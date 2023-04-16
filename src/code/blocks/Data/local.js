@@ -8,7 +8,7 @@ export default class LocalVariable extends BlockValue {
     }
     async run(data) {
         let args = await this.getValues(this.constructor.input_types, data)
-        if(data.local_variables.hasOwnProperty(args[0])) {
+        if(args[0] in data.local_variables) {
             return data.local_variables[args[0]];
         }
         throw Error(data)

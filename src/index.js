@@ -39,7 +39,6 @@ await createSelection()
 // sprite rendering
 // left click menu + dropdown menu
 // states
-// make some visual changes (fix ghost bug)
 // add blocks
 import global from "./code/global.js"
 
@@ -75,7 +74,13 @@ global.window.app = app
 
 import resetPlayground from "./code/buttons-handle.js"
 
+window.addEventListener("click", (event) => {
+  global.handle_dropdown()
+})
 
+window.addEventListener("drop", (event) => {
+  global.handle_dropdown()
+})
 
 
 

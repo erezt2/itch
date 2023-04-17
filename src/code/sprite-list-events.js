@@ -26,6 +26,7 @@ export default function spriteListEvents() {
         if(event.dataTransfer.files.length === 0) return
         event.preventDefault()
         event.stopPropagation()
+        global.handle_dropdown()
         if(event.dataTransfer.files[0].path.endsWith(".png")) addFile(event.dataTransfer.files[0].path)
         else alert("only PNG files are accepted.")
     })

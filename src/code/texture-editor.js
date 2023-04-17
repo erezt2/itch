@@ -70,6 +70,7 @@ function createTextureEditor(name, exists) {
         if(event.dataTransfer.files.length === 0) return
         event.preventDefault()
         event.stopPropagation()
+        global.handle_dropdown()
         if(event.dataTransfer.files[0].path.toLowerCase().endsWith(".png")) 
             textureEditorAddImage(texture_editor, event.dataTransfer.files[0].path)
         else alert("only PNG files are accepted.")

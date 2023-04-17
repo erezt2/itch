@@ -1,6 +1,7 @@
 import createDragspace from "./script-dragspace.js"
 import {createTextureEditor, textureEditorAddImage} from "./texture-editor.js"
 import createSoundEditor from "./sound-editor.js"
+import global from "./global.js"
 
 const sprites = document.getElementById("sprites")
 const new_char = document.getElementById("new-character")
@@ -44,7 +45,9 @@ function getNextName(name) {
 }
 
 function selectPlayground(name) {
-    console.log(name)
+    if(name === undefined) {
+        name = Object.keys(global.window.sprites)[0]
+    }
 
     document.querySelector("#script-dragspace > .active")?.classList.remove("active");
     document.getElementById(`ds_${name}`).classList.add("active") // dragspace

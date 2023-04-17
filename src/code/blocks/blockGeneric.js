@@ -11,7 +11,8 @@ export default class BlockGeneric {
         let disp = element.children[0]
         this.inputs = []
         for(let c of disp.children) {
-            if(!c.classList.contains("editable")) continue;
+            if(!(c.classList.contains("editable") ||
+                c.classList.contains("selectable"))) continue;
             this.inputs.push(c)
         }
     }
@@ -40,7 +41,7 @@ export default class BlockGeneric {
         for(let i=0; i<this.inputs.length; i++) {
             let dom = this.inputs[i]
             if(input_types[i].isList) {
-                l.push(String(input_types[i](dom.innerHTML)))
+                l.push(String(dom.firstChild.innerHTML))
                 continue
             }
             let val;

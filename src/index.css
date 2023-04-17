@@ -346,6 +346,34 @@ body {
     border-radius: 6px;
 }
 
+.selectable {
+    background-color: white;
+    min-width: 17px;
+    color:black;
+    font-size: 14px;
+    margin: 0 2px;
+    padding: 0 2px;
+    position: relative;
+}
+
+.selectable-dropdown {
+    z-index: 10;
+    position: absolute;
+    left:0;
+    top:100%;
+    background: whitesmoke;
+    border: 1px gray solid;
+    min-width: 50px;
+    flex-flow: column;
+    padding: 1px 4px;
+}
+
+.selectable-division {
+    height: 1px;
+    flex: 1 1 auto;
+    background-color: gray;
+}
+
 .block-int > div:first-child {
     border-radius: 10px;
 }

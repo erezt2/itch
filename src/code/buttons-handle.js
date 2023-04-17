@@ -14,8 +14,8 @@ function resetPlayground() {
     }
 }
 
-let start_buttom = document.getElementById("start_button")
-start_buttom.onclick = function(event) {
+let start_button = document.getElementById("start_button")
+start_button.onclick = function(event) {
     resetPlayground()
     let sprites = global.window.sprites
     for(let k in sprites) {

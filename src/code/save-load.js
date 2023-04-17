@@ -2,6 +2,7 @@ import {selectPlayground, createSprite} from "./create-character.js"
 import {handle_duplicates} from "./handle-duplicates.js"
 import my from "./global.js"
 import {SpriteMain} from "./sprite-wrap.js"
+import createListWrap from "./create-list-wrap.js"
 const storage = require("electron-json-storage")
 
 const sd = document.getElementById("script-dragspace")
@@ -36,6 +37,7 @@ function loadState(savefile) {
         for(let i of all_draggable) {
           handle_duplicates(true, i, true)
         }
+        
         selectPlayground("background")
     })
 }

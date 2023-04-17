@@ -1,17 +1,17 @@
-import BlockVoid from "../blockVoid.js";
 import global from "../../global.js"
+import BlockValue from "../blockValue.js";
 
 function get_all_sprites(data) {
     return Object.keys(global.window.sprites)
 }
 
-export default class Move extends BlockVoid {
+export default class Move extends BlockValue {
     static input_types = [{
        isList: true,
        default: ["mouse\u200b"],
        variable: get_all_sprites,
     }];
-    static display = "point to |";
+    static display = "distance to |";
     constructor(element) {
         super(element)
     }
@@ -27,7 +27,6 @@ export default class Move extends BlockVoid {
             x = obj.sprite.x
             y = obj.sprite.y
         }
-        data.sprite.rotation = Math.atan2(y-data.sprite.y,x-data.sprite.x)
-        return await super.run(data);
+        return ((y-data.sprite.y)**2+(x-data.sprite.x)**2)**0.5
     }
 }

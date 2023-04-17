@@ -4,6 +4,7 @@ import BlockContainer from "./blocks/blockContainer.js"
 import BlockStart from "./blocks/blockStart.js"
 import global from "./global.js"
 import {handle_dropped_parent} from "./handle-duplicates.js"
+import createListWrap from "./create-list-wrap.js"
 
 function createWrapper(text) {
     let dom = document.createElement("span")
@@ -17,13 +18,14 @@ function createTextBox() {
     return dom
 }
 
-function createListWrap(data) {
-    // TODO: Add shit
-}
-
 function selectScriptSectionWrapper(index) {
     return () => selectScriptSection(index)
 }
+
+const sst = document.getElementById("script-selector-table")
+const sbl = document.getElementById("script-block-list")
+const sections = require("./code/blocks/sections.json")
+const section_names = Object.keys(sections)
 
 let selected_section = undefined
 let selected_list = undefined
@@ -39,12 +41,6 @@ function selectScriptSection(index) {
 }
 
 export default async function createSelection() {
-    const sst = document.getElementById("script-selector-table")
-    const sbl = document.getElementById("script-block-list")
-    const sections = require("./code/blocks/sections.json")
-    const section_names = Object.keys(sections)
-    
-
     sbl.addEventListener("dragenter", (event) => {
         event.preventDefault()
     })

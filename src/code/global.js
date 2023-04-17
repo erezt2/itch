@@ -8,6 +8,20 @@ my.keys = []
 my.dragged = {};
 my.mouse_pos = {x:0, y:0}
 my.settings = require("./settings.json")
+my.open_dropdown = null
+my.handle_dropdown = function() {
+    if(my.open_dropdown !== null) {
+        my.open_dropdown.style.display = "none"
+        my.open_dropdown = null
+    }
+}
+
+// my.removeDropdown = function(dropdown) {
+//     let index = my.open_dropdowns.indexOf(dropdown)
+//     if (index !== -1) {
+//         my.open_dropdowns.splice(index, 1)
+//     }
+// }
 
 my.path = await ipcRenderer.invoke("homeDir") + "/saves/"
 

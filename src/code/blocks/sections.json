@@ -3,6 +3,8 @@
         "color": "#3366FF",
         "blocks": ["move.js", "setAngle.js", "changeAngle.js",
                     "-gap",
+                    "pointTo.js",
+                    "-gap",
                     "setX.js", "changeX.js",
                     "setY.js", "changeY.js",
                     "-gap",
@@ -14,7 +16,9 @@
     }, 
     "Sensor":{
         "color":  "#33CCCC",
-        "blocks": ["getMouseX.js", "getMouseY.js"]
+        "blocks": ["distanceTo.js", 
+                    "-gap",
+                    "getMouseX.js", "getMouseY.js"]
     },
     "Audio": {
         "color": "#FF99CC",

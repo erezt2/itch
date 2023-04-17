@@ -87,7 +87,7 @@ class SpriteWrap {
         new Promise((resolve, reject) => {
             let data = block.run(start_data)
             resolve(data)
-        }).then(data=> key.cancel())/*.then(data => {
+        }).finally(data=> {if(!key.canceled)key.cancel()})/*.then(data => {
             if(!data.key.cancel && this.clone_id == 0)
                 block.elementHTML.classList.remove("running")
         })*/
@@ -133,7 +133,7 @@ class SpriteCopy extends SpriteWrap {
     }
     remove() {
         const index = this.parent.clone_list.indexOf(this)
-        this.parent.clone_list.remove(index)
+        this.parent.clone_list.splice(index, 1)
         super.remove()
     }
 }

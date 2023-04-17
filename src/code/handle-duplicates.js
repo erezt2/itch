@@ -1,5 +1,5 @@
 import global from "./global.js"
-import {Key} from "./sprite-wrap.js"
+import createListWrap from "./create-list-wrap.js"
 
 function handle_dropped_parent(dom, check_parent) {
     blockChangeStop(dom, check_parent)
@@ -20,12 +20,12 @@ async function drop_in_block(event) {
     let my = Object.assign({}, global.dragged);
     if(Object.keys(my).length === 0) return;
     if(my.target.dataset["type"] !== "void") return
-    console.log(my.target.dataset["preventDrop"] )
     if(my.target.dataset["preventDrop"] === "true") return;
     if(my.target.contains(this)) return;
 
     global.dragged = {}
     event.stopPropagation();
+    global.handle_dropdown()
     event.preventDefault();
     
     let target = await handle_duplicates(my.duplicate, my.target, false)
@@ -49,6 +49,7 @@ async function drop_in_input(event) {
     
     global.dragged = {}
     event.stopPropagation();
+    global.handle_dropdown()
     event.preventDefault();
     let target = await handle_duplicates(my.duplicate, my.target, false)
     this.innerHTML = "" 
@@ -137,6 +138,7 @@ async function handle_duplicates(dup, dragged, exists) { // duplication handle (
 
     clone.children[0].onclick = async function(event) {
         event.stopPropagation()
+        global.handle_dropdown()
         event.preventDefault()
     
         let first = clone["data-block"].getAncestor()
@@ -152,8 +154,13 @@ async function handle_duplicates(dup, dragged, exists) { // duplication handle (
         }
         // createThread("run block", {obj: .id, input: })
     }
-
+    let i=-1;
     for(let box of clone["data-block"].inputs) {
+        i += 1;
+        if(box.classList.contains("selectable")) {
+            createListWrap(block_class.input_types[i], box)
+            continue
+        }
         box.addEventListener("drop", drop_in_input);
         box.addEventListener("dragenter", (event) => {
             box.classList.add("dropzone-dragenter")
@@ -163,6 +170,7 @@ async function handle_duplicates(dup, dragged, exists) { // duplication handle (
         })
         box.onclick = (event) => {
             event.stopPropagation()
+            global.handle_dropdown()
             if(box.children.length === 0) box.contentEditable = true;
         }
     }

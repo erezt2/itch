@@ -1,7 +1,7 @@
 import BlockVoid from "../blockVoid.js";
 
 export default class ChangeX extends BlockVoid {
-    static input_types = [Number];
+    static input_types = [num => (Number(num) || 0)];
     static display = "change X by |";
     constructor(element) {
         super(element)

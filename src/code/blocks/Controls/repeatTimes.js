@@ -1,7 +1,11 @@
 import BlockContainer from "../blockContainer.js";
 
+function _number(num) {
+    let number
+}
+
 export default class RepeatTimes extends BlockContainer {
-    static input_types = [Number];
+    static input_types = [num => (Number(num) || 0)];
     static display = "repeat | times";
     constructor(element) {
         super(element)

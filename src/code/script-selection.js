@@ -15,6 +15,12 @@ function createTextBox() {
     let dom = document.createElement("span")
     dom.contentEditable = true;
     dom.classList.add("editable")
+    dom.onpaste = (event) => false
+    dom.addEventListener("keydown", (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+        }
+    })
     return dom
 }
 

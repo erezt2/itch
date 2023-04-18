@@ -168,6 +168,12 @@ async function handle_duplicates(dup, dragged, exists) { // duplication handle (
         box.addEventListener("dragleave", (event) => {
             box.classList.remove("dropzone-dragenter")
         })
+        box.onpaste = (event) => false
+        box.addEventListener("keydown", (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+            }
+        })
         box.onclick = (event) => {
             event.stopPropagation()
             global.handle_dropdown()

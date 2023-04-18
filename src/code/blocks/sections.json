@@ -16,7 +16,7 @@
     }, 
     "Sensor":{
         "color":  "#33CCCC",
-        "blocks": ["distanceTo.js", 
+        "blocks": ["distanceTo.js", "getTime.js",
                     "-gap",
                     "getMouseX.js", "getMouseY.js"]
     },
@@ -40,10 +40,10 @@
     }, 
     "Operations":{
         "color": "#77BB00",
-        "blocks": ["addition.js", "subtraction.js", "multiplication.js", "division.js", 
-            "lessThan.js", "lessEquals.js", "equals.js", "greaterEquals.js", "greaterThan.js",
-            "and.js", "or.js", "not.js", "randomInt.js", "randomUniform.js", "join.js",
-            "convertNumber.js", "convertString.js", "convertBoolean.js", "sin.js", "abs.js", "getTime.js"]
+        "blocks": ["addition.js", "subtraction.js", "multiplication.js", "division.js", "modulo.js", "-gap",
+            "lessThan.js", "lessEquals.js", "equals.js", "greaterEquals.js", "greaterThan.js", "-gap",
+            "and.js", "or.js", "not.js", "-gap", "randomInt.js", "randomUniform.js", "-gap", "join.js", "letterOf.js", "length.js", "-gap",
+            "convert.js", "functions.js", "funcTrig.js", "constants.js"]
     }, 
     "Functions":{
         "color": "#666699",

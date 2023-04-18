@@ -88,6 +88,9 @@ export default function createListWrap(data, exists) {
 
             dropdown.appendChild(temp)
         }
+        if(vari.length === 0) div.style.display = "none"
+        else div.style.display = "block"
+        
         dropdown.style.left = "0px"
         dropdown.style.top = "100%"
         let rect = dropdown.getBoundingClientRect()

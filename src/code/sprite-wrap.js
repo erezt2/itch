@@ -94,7 +94,10 @@ class SpriteWrap {
     }
 
     remove() {
-        global.window.app.stage.remove(this.sprite)
+        // console.log(global.window.app.stage)
+        // const index = global.window.app.stage.indexOf(this.sprite)
+        // if(index !== -1) global.window.app.stage.splice(index, 1)
+        this.sprite.destroy()
         for(let k in this.keydict) {
             k.cancel()
         }
@@ -131,9 +134,11 @@ class SpriteCopy extends SpriteWrap {
         super(this.parent.name, this.parent.sprite.texture)
         this.clone_id = sprite_main.clode_next++
     }
-    remove() {
-        const index = this.parent.clone_list.indexOf(this)
-        this.parent.clone_list.splice(index, 1)
+    remove(fromparent) {
+        if(!fromparent) {
+            const index = this.parent.clone_list.indexOf(this)
+            if(index !== -1) this.parent.clone_list.splice(index, 1)
+        }
         super.remove()
     }
 }
@@ -147,6 +152,9 @@ class SpriteMain extends SpriteWrap {
     }
     remove() {
         delete global.window.sprites[this.name]
+        for(let c of this.clone_list) {
+            c.remove(true)
+        }
         super.remove()
     }
     stopSingularAllClones(block) {

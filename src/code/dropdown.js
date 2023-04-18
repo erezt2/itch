@@ -112,7 +112,7 @@ sprite_dropdown.children[2].onclick = async function(event) {
     document.getElementById(`ss_${bname}`).remove()
     document.getElementById(`te_${bname}`).remove()
     document.getElementById(`se_${bname}`).remove()
-    delete global.window.sprites[bname]
+    global.window.sprites[bname].remove()
     selectPlayground()
 }
 

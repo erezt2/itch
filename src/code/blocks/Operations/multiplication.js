@@ -1,7 +1,7 @@
 import BlockInt from "../blockValue.js";
 
 export default class Multiplication extends BlockInt {
-    static input_types = [Number, Number];
+    static input_types = [num => (Number(num) || 0), num => (Number(num) || 0)];
     static display = "| * |";
     constructor(element) {
         super(element)

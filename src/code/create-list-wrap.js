@@ -88,6 +88,11 @@ export default function createListWrap(data, exists) {
 
             dropdown.appendChild(temp)
         }
+        dropdown.style.left = "0px"
+        dropdown.style.top = "100%"
+        let rect = dropdown.getBoundingClientRect()
+        dropdown.style.left = Math.min(window.innerWidth - rect.left - dropdown.offsetWidth - 20, 0) + "px"
+        dropdown.style.top = "calc(100% + " + Math.min(window.innerHeight - rect.top - dropdown.offsetHeight - 20, 0) + "px)"
     }
     
     return dom

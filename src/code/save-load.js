@@ -33,12 +33,12 @@ function loadState(savefile) {
           }
         }
 
-        let all_draggable = document.querySelectorAll("#script-dragspace .draggable")
+        let all_draggable = sd.querySelectorAll(".draggable")
         for(let i of all_draggable) {
           handle_duplicates(true, i, true)
         }
         
-        selectPlayground("background")
+        selectPlayground()
     })
 }
 

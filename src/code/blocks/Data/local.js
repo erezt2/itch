@@ -11,6 +11,6 @@ export default class LocalVariable extends BlockValue {
         if(args[0] in data.local_variables) {
             return data.local_variables[args[0]];
         }
-        throw Error(data)
+        return ""
     }
 }

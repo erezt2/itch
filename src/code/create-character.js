@@ -2,10 +2,11 @@ import createDragspace from "./script-dragspace.js"
 import {createTextureEditor, textureEditorAddImage} from "./texture-editor.js"
 import createSoundEditor from "./sound-editor.js"
 import global from "./global.js"
+import {dropdownSprite} from "./dropdown.js"
 
 const sprites = document.getElementById("sprites")
 const new_char = document.getElementById("new-character")
-function createSpriteSelection(name, immutable) {
+function createSpriteSelection(name) {
     const template = document.createElement("div")
     let container = document.createElement("div")
     container.appendChild(document.createElement("img"))
@@ -15,14 +16,15 @@ function createSpriteSelection(name, immutable) {
     n.innerHTML = name
     template.appendChild(n)
     template.id = "ss_" + name
-    template.onclick = (event) => {
-        selectPlayground(name)
+    template.onclick = function(event) {
+        selectPlayground(this.lastChild.innerHTML)
     }
 
     sprites.insertBefore(template, new_char)
     template.addEventListener('contextmenu', function(event) {
-        alert("You've tried to open context menu");
+        dropdownSprite(this, event)
         event.preventDefault();
+        event.stopPropagation()
     }, false);
 
 }
@@ -45,6 +47,7 @@ function getNextName(name) {
 }
 
 function selectPlayground(name) {
+    console.log(name)
     if(name === undefined) {
         name = Object.keys(global.window.sprites)[0]
     }

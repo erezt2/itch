@@ -22,10 +22,13 @@ export default class Move extends BlockVoid {
             x = global.mouse_pos.x
             y = global.mouse_pos.y
         }
-        else {
+        else if(args[0] in global.window.sprites) {
             let obj = global.window.sprites[args[0]]
             x = obj.sprite.x
             y = obj.sprite.y
+        }
+        else {
+            return await super.run(data);
         }
         data.sprite.rotation = Math.atan2(y-data.sprite.y,x-data.sprite.x)
         return await super.run(data);

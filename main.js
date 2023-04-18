@@ -1,6 +1,7 @@
 const { app, BrowserWindow, dialog, ipcMain } = require('electron')
 const path = require("path")
 const { Worker } = require('worker_threads')
+const prompt = require('electron-prompt');
 
 
 app.whenReady().then(() => {
@@ -41,6 +42,17 @@ ipcMain.handle("showDialog", (event, filter) => {
   return a
 })
 
+ipcMain.handle("promptRename", (event, bname) => {
+  return prompt({
+    title: "Rename sprite",
+    label: `rename '${bname}' to:`,
+    value: 'new name',
+    height: 200,
+  })
+  .then(name => {
+    return name
+  })
+})
 
 
 ipcMain.handle("homeDir", (event) => {

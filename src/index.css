@@ -365,8 +365,38 @@ body {
     border: 1px gray solid;
     min-width: 50px;
     flex-flow: column;
-    padding: 1px 4px;
+    padding: 1px 0px;
+    row-gap: 2px;
 }
+
+.selectable-dropdown > div:not(.selectable-division) {
+    padding: 0px 15px;
+}
+
+.selectable-dropdown > div:not(.selectable-division):hover {
+    background-color: lightgray;
+}
+
+.dropdown {
+    display: none;
+    z-index: 10;
+    position: absolute;
+    background: whitesmoke;
+    border: 1px gray solid;
+    min-width: 50px;
+    flex-flow: column;
+    padding: 1px 0px;
+    row-gap: 2px;
+}
+
+.dropdown > div:not(.selectable-division) {
+    padding: 0px 15px;
+}
+
+.dropdown > div:not(.selectable-division):hover {
+    background-color: lightgray;
+}
+
 
 .selectable-division {
     height: 1px;

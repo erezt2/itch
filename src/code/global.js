@@ -9,6 +9,7 @@ my.dragged = {};
 my.mouse_pos = {x:0, y:0}
 my.settings = require("./settings.json")
 my.open_dropdown = null
+my.dropdown_reference = null
 my.handle_dropdown = function() {
     if(my.open_dropdown !== null) {
         my.open_dropdown.style.display = "none"
@@ -55,6 +56,9 @@ my.register_dragged = (event) => {
 }
 
 my.nextHashID = 1
+my.resetHash = function(dom) {
+    delete dom.dataset["hashID"]
+}
 my.hashDOM = function(dom) {
     if(dom.dataset.hashID >= my.nextHashID) {
         my.nextHashID = Number(dom.dataset.hashID) + 1

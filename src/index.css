@@ -371,6 +371,7 @@ body {
 
 .selectable-dropdown > div:not(.selectable-division) {
     padding: 0px 15px;
+    white-space: nowrap;
 }
 
 .selectable-dropdown > div:not(.selectable-division):hover {
@@ -391,6 +392,7 @@ body {
 
 .dropdown > div:not(.selectable-division) {
     padding: 0px 15px;
+    white-space: nowrap;
 }
 
 .dropdown > div:not(.selectable-division):hover {

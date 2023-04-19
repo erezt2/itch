@@ -13,11 +13,11 @@ export default class BlockVoid extends BlockRunnable {
         if(dom === undefined) return null
         return dom["data-block"]
     }
-    getParent() {
-        let dom = this.elementHTML.parentNode
-        if(dom == block_playground) return null
-        return dom["data-block"] 
-    }
+    // getParent() {
+    //     let dom = this.elementHTML.parentNode
+    //     if(dom == block_playground) return null
+    //     return dom["data-block"] 
+    // }
     async run(data) {
         if(this.constructor === BlockVoid){
             console.log("WARNING: USING BASE CLASS | %s", this.elementHTML.children[0].innerHTML)

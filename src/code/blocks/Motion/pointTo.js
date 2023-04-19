@@ -30,7 +30,7 @@ export default class Move extends BlockVoid {
         else {
             return await super.run(data);
         }
-        data.sprite.rotation = Math.atan2(y-data.sprite.y,x-data.sprite.x)
+        data.owner.rotation = Math.atan2(y-data.sprite.y,x-data.sprite.x)
         return await super.run(data);
     }
 }

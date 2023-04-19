@@ -1,6 +1,7 @@
 import global from "../global.js"
 
 var counter = 0
+const block_playground = document.getElementById("script-dragspace")
 export default class BlockGeneric {
     // static input_types = [];
     // static display = "block";
@@ -16,10 +17,15 @@ export default class BlockGeneric {
             this.inputs.push(c)
         }
     }
-    getParent() {return null;}
+    // getParent() {return null;}
+    getParent() {
+        let dom = this.elementHTML.parentNode
+        if(dom.parentNode === block_playground) return null
+        return dom["data-block"]
+    }
     getAncestor() {
         let step = this;
-        while(step.getParent()) {
+        while(step.getParent() !== null) {
             step = step.getParent()
         }
         return step

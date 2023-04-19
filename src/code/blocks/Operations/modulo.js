@@ -8,6 +8,7 @@ export default class Addition extends BlockInt {
     }
     async run(data) {
         let args = await this.getValues(this.constructor.input_types, data)
-        return args[0] % args[1]
+        let y = args[1]
+        return ((args[0] % y) + y) % y;
     }
 }

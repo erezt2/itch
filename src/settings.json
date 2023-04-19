@@ -1,11 +1,15 @@
 {
     "comment": {
-        "realoadCounter": "amount of blocks before retrying reload",
-        "reloadChance": "chance to successfully reload after trying",
-        "reloadLoopAlways": "always reload on a loop",
+        "realoadCounter": "amount of blocks before retrying reload, default 1",
+        "reloadChance": "chance to successfully reload after trying, default 0",
+        "reloadLoopAlways": "always reload on a loop, default true",
+        "boundBox": "how much can the sprites go out of the screen. 0 - not at all, 1 - fully, default 1",
+        "reboundOnRotate": "should sprites rebound into bounds when rotated, defualt false",
         "default": "1, 0, true -> reload only on loop end or block end"
     },
     "reloadCounter": 1,
     "reloadChance": 0,
-    "reloadLoopAlways": true
+    "reloadLoopAlways": true,
+    "boundBox": 0,
+    "reboundOnRotate": false
 }

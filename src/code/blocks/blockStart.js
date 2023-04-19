@@ -14,8 +14,8 @@ export default class BlockStart extends BlockRunnable {
         if(dom === undefined) return null
         return dom["data-block"]
     }
-    getParent() {
-        return null
-    }
+    // getParent() {
+    //     return null
+    // }
 }
 

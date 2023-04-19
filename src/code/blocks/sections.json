@@ -12,13 +12,15 @@
     }, 
     "Texture":{
         "color": "#CC99FF",
-        "blocks": []
+        "blocks": ["setRotationMode.js"]
     }, 
     "Sensor":{
         "color":  "#33CCCC",
         "blocks": ["distanceTo.js", "getTime.js",
                     "-gap",
-                    "getMouseX.js", "getMouseY.js"]
+                    "getMouseX.js", "getMouseY.js",
+                    "-gap",
+                    "getRotatedWidth.js", "getRotatedHeight.js"]
     },
     "Audio": {
         "color": "#FF99CC",
@@ -43,7 +45,7 @@
         "blocks": ["addition.js", "subtraction.js", "multiplication.js", "division.js", "modulo.js", "-gap",
             "lessThan.js", "lessEquals.js", "equals.js", "greaterEquals.js", "greaterThan.js", "-gap",
             "and.js", "or.js", "not.js", "-gap", "randomInt.js", "randomUniform.js", "-gap", "join.js", "letterOf.js", "length.js", "-gap",
-            "convert.js", "functions.js", "funcTrig.js", "constants.js"]
+            "convert.js", "functions.js", "funcTrig.js", "binaryFunctions.js", "constants.js"]
     }, 
     "Functions":{
         "color": "#666699",

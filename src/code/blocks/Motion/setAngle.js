@@ -8,7 +8,7 @@ export default class SetAngle extends BlockVoid {
     }
     async run(data) {
         let args = await this.getValues(this.constructor.input_types, data)
-        data.sprite.angle = (args[0] % 360)
+        data.owner.angle = (args[0] % 360)
         return await super.run(data);
     }
 }

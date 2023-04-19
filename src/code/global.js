@@ -1,8 +1,6 @@
 const { ipcRenderer } = require("electron");
 
 var my = {}
-my.current_block_id = 0
-my.current_input_id = 0
 my.window = {width: 640, height: 480, app: null, sprites: {}}
 my.keys = []
 my.dragged = {};
@@ -10,6 +8,7 @@ my.mouse_pos = {x:0, y:0}
 my.settings = require("./settings.json")
 my.open_dropdown = null
 my.dropdown_reference = null
+my.loaded_file = null
 my.handle_dropdown = function() {
     if(my.open_dropdown !== null) {
         my.open_dropdown.style.display = "none"

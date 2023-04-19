@@ -11,14 +11,14 @@ export default function createNavbar() {
   function selectNavbar(num) {
     selected_editor?.classList.remove("editor-selected")
     selected_editor_screen?.classList.remove("editor-selected")
-    selected_editor = navbar.children[2+num]
+    selected_editor = navbar.children[3+num]
     selected_editor_screen = wrapper.children[num]
     selected_editor.classList.add("editor-selected")
     selected_editor_screen.classList.add("editor-selected")
   }
 
   for(let i=0; i<4; i++) {
-    navbar.children[2+i].onclick = selectNavbarWrapper(i)
+    navbar.children[3+i].onclick = selectNavbarWrapper(i)
   }
 
   selectNavbarWrapper(0)()

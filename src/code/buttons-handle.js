@@ -9,7 +9,7 @@ function resetPlayground() {
     for(let k in sprites) {
         let sm = sprites[k]
         for(let clone of sm.clone_list) {
-        clone.remove()
+            clone.remove()
         }
     }
 }

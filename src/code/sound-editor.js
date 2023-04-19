@@ -2,7 +2,6 @@ const fs = require("fs")
 const path = require("path")
 const { ipcRenderer } = require("electron")
 import global from "./global.js"
-import {sound_click} from "./handle-sounds.js"
 import {dropdownSound} from "./dropdown.js"
 const dialog = require('dialogs')()
 
@@ -99,7 +98,6 @@ function createSoundEditor(name, exists) {
             row = Math.floor(row)
             x = (x + 47.5)/90
             x = Math.floor(x) // literally the same code word for word
-            console.log(row)
             if(x>=row) x=row
             else if(x<0) x=0
 

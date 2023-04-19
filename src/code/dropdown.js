@@ -91,7 +91,6 @@ function renameInner(event) {
     global.handle_dropdown()
     event.stopPropagation()
     event.preventDefault()
-    console.log(1234)
     let dom = global.dropdown_reference
     let bname = dom.lastChild.innerHTML
 
@@ -248,4 +247,4 @@ sprite_dropdown.children[2].onclick = async function(event) {
 
 
 
-export { dropdownSprite, dropdownTexture, dropdownSound, dropdownBlock }
+export { dropdownSprite, dropdownTexture, dropdownSound, dropdownBlock, handle_height }

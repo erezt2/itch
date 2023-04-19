@@ -26,7 +26,7 @@ function createSpriteSelection(name) {
         event.preventDefault();
         event.stopPropagation()
     }, false);
-
+    return container.firstChild
 }
 
 function getNextName(name) {
@@ -47,7 +47,6 @@ function getNextName(name) {
 }
 
 function selectPlayground(name) {
-    console.log(name)
     if(name === undefined) {
         name = Object.keys(global.window.sprites)[0]
     }
@@ -66,14 +65,16 @@ function selectPlayground(name) {
 }
 
 function createSprite(name, exists, path) {
-    createSpriteSelection(name)
+    let img = createSpriteSelection(name)
     createDragspace(name, exists)
     let editor = createTextureEditor(name, exists)
     createSoundEditor(name, exists)
     if (path) {
-        textureEditorAddImage(editor, path, name)
+        textureEditorAddImage(editor, path, name, img)
     }
-    
+    else {
+        img.src = editor.firstChild.firstChild.firstChild.src
+    }
 }
 
 export {selectPlayground, getNextName, createSprite}

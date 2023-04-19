@@ -10,19 +10,19 @@ const dialog = require('dialogs')()
 
 import {selectPlayground, getNextName, createSprite} from "./create-character.js"
 
+function addFile(_path) {
+    let name = getNextName(path.parse(_path).name)
+    createSprite(name, false, _path)
+    selectPlayground(name)
+}
 
-export default function spriteListEvents() {
+function spriteListEvents() {
     sprites.addEventListener('dragover', (event)=> {
         if(Object.keys(global.dragged).length !== 0) return
         event.preventDefault();
         event.stopPropagation();
     })
-
-    function addFile(_path) {
-        let name = getNextName(path.parse(_path).name)
-        createSprite(name, false, _path)
-        selectPlayground(name)
-    }
+    
 
     sprites.addEventListener('drop', (event) => {
         if(event.dataTransfer.files.length === 0) return
@@ -33,11 +33,12 @@ export default function spriteListEvents() {
         
         let non_png = false
         for(let f of event.dataTransfer.files) {
-            if(f.path.toLowerCase().endsWith(".png")) 
+            let path = f.path.toLowerCase()
+            if(path.endsWith(".png") || path.endsWith(".jpg") || path.endsWith(".jpeg") || path.endsWith(".webp")) 
                 addFile(f.path)
             else non_png = true
         }
-        if(non_png) dialog.alert("only MP3 or WAV files are accepted.", ok => {})
+        if(non_png) dialog.alert("only PNG, JPG, JPEG and WEBP files are accepted.")
     })
 
     new_char.onclick = async (event) => {
@@ -47,3 +48,5 @@ export default function spriteListEvents() {
     }
     
 }
+
+export {addFile,spriteListEvents}

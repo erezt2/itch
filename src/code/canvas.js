@@ -23,10 +23,10 @@ export default function start() {
     })
   
 
-    let bg = new PIXI.Sprite(PIXI.Texture.WHITE)
-    bg.width = global.window.width
-    bg.height = global.window.height
-    bg.eventMode = "static"
+    // let bg = new PIXI.Sprite(PIXI.Texture.WHITE)
+    // bg.width = global.window.width
+    // bg.height = global.window.height
+    // bg.eventMode = "static"
     // bg.on("pointermove", (event)=>{
     //     console.log(event)
     //     global.mouse_pos = { 
@@ -35,13 +35,6 @@ export default function start() {
     //     }
     // })
     app.stage.eventMode = "static"
-    app.stage.addChild(bg)
-
-      
-      
-      
-      
-      
-
+    // app.stage.addChild(bg)
     return app;
 }

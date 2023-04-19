@@ -10,6 +10,6 @@
     "reloadCounter": 1,
     "reloadChance": 0,
     "reloadLoopAlways": true,
-    "boundBox": 0,
+    "boundBox": 1,
     "reboundOnRotate": false
 }

@@ -3,7 +3,6 @@ const path = require("path")
 const { ipcRenderer } = require("electron")
 import global from "./global.js"
 import {SpriteMain} from "./sprite-wrap.js"
-import {texture_click} from "./handle-textures.js"
 import {dropdownTexture} from "./dropdown.js"
 const dialog = require('dialogs')()
 
@@ -37,20 +36,24 @@ function createTextureTemplate(name, src) {
     return template
 }
 
-function textureEditorAddImage(editor, _path, _name) {
+function textureEditorAddImage(editor, _path, _name, img) {
     fs.readFile(_path, (err, data) => {
         if(err) throw err;
         let id_list = []
         for(let dom of editor.children) {
             id_list.push(dom.lastChild.innerHTML)
         }
-
+        let prs = path.parse(_path)
         data = data.toString('base64');
-        let name = global.getNextName(id_list, path.parse(_path).name)
-        let texture = createTextureTemplate(name, "data:image/png;base64," + data)
+        let name = global.getNextName(id_list, prs.name)
+        
+        let texture = createTextureTemplate(name,`data:image/${prs.ext.slice(1).toLowerCase()};base64,`+ data)
         editor.insertBefore(texture, editor.lastChild)
         
-        if(_name) new SpriteMain(_name, texture)
+        if(_name) {
+            img.src = texture.firstChild.firstChild.src
+            new SpriteMain(_name, texture)
+        }
     })
 }
 
@@ -93,7 +96,6 @@ function createTextureEditor(name, exists) {
             row = Math.floor(row)
             x = (x + 47.5)/90
             x = Math.floor(x)
-            console.log(row)
             if(x>=row) x=row
             else if(x<0) x=0
 
@@ -111,11 +113,12 @@ function createTextureEditor(name, exists) {
 
         let non_png = false
         for(let f of event.dataTransfer.files) {
-            if(f.path.toLowerCase().endsWith(".png")) 
+            let path = f.path.toLowerCase()
+            if(path.endsWith(".png") || path.endsWith(".jpg") || path.endsWith(".jpeg") || path.endsWith(".webp")) 
                 textureEditorAddImage(texture_editor, f.path)
             else non_png = true
         }
-        if(non_png) dialog.alert("only PNG files are accepted.")
+        if(non_png) dialog.alert("only PNG, JPG, JPEG and WEBP files are accepted.")
     })
 
     return texture_editor;

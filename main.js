@@ -39,6 +39,7 @@ ipcMain.handle("showDialog", (event, filter) => {
   return a
 })
 
+
 ipcMain.handle("homeDir", (event) => {
   return __dirname
 })

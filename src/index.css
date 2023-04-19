@@ -16,6 +16,7 @@ body {
     box-sizing: border-box;
     margin: 0;
     height: 100%;
+    position: relative;
 }
 
 .grid {
@@ -92,7 +93,7 @@ body {
     border-color: gray;
 }
 
-#editor-navbar > a:nth-child(3) {
+#editor-navbar > a:nth-child(4) {
     margin-left: auto;
 }
 
@@ -358,6 +359,7 @@ body {
 
 .selectable-dropdown {
     z-index: 10;
+    display: none;
     position: absolute;
     left:0;
     top:100%;
@@ -572,4 +574,59 @@ body {
 
 .selecetion-gap {
     margin-bottom: 10px;
+}
+
+#file_button {
+    position: relative;
+}
+
+#file-selector {
+    position: absolute;
+    width: 100%;
+    display: none;
+    height: 100%;
+    top: 0;
+    left: 0;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0,0,0, 0.35);
+}
+
+#file-selector > div {
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: whitesmoke;
+    border: 1px gray solid;
+    max-height: 500px;
+}
+
+#file-selector > div::-webkit-scrollbar-track{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+#file-selector > div::-webkit-scrollbar{
+    height: 8px;
+	width: 8px;
+	background-color: #F5F5F5;
+}
+
+#file-selector > div::-webkit-scrollbar-thumb{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
+}
+
+
+#file-selector > div > div {
+    font-size: 16px;
+    width: 350px;
+    border-bottom: 1px gray solid;
+}
+
+#file-selector > div > div:hover {
+    background-color: lightgray;
 }

@@ -37,27 +37,28 @@ await createSelection()
 
 // TODO:
 // sprite rendering
-// states
+// save button
+// add video streaming abillities
 // add blocks
 import global from "./code/global.js"
 
 
-import spriteListEvents from "./code/sprite-list-events.js"
+import {spriteListEvents, addFile} from "./code/sprite-list-events.js"
 spriteListEvents()
 
 // selectPlayground("background")
 
 
-import { saveState, loadState } from "./code/save-load.js"
+import { saveState, loadState, resetState } from "./code/save-load.js"
 
-window.addEventListener("keydown", function(event) {
-  if (event.key == "s") {
-    saveState("test1")
-  }
-  if (event.key == "l") {
-    loadState("test1")
-  }
-});
+// window.addEventListener("keydown", function(event) {
+//   if (event.key == "s") {
+//     saveState("test1")
+//   }
+//   if (event.key == "l") {
+//     loadState("test1")
+//   }
+// });
 
 
 // SEPERATE
@@ -66,6 +67,9 @@ let app = start()
 global.window.app = app
 
 import resetPlayground from "./code/buttons-handle.js"
+resetPlayground()
+
+import "./code/save-load-event.js"
 
 window.addEventListener("click", (event) => {
   global.handle_dropdown()
@@ -78,6 +82,11 @@ window.addEventListener("drop", (event) => {
 window.addEventListener("contextmenu", (event) => {
   global.handle_dropdown()
 })
+
+addFile("./public/sprite.webp")
+
+
+
 
 
 

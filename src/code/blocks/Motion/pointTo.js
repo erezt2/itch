@@ -1,8 +1,8 @@
 import BlockVoid from "../blockVoid.js";
 import global from "../../global.js"
 
-function get_all_sprites(data) {
-    return Object.keys(global.window.sprites)
+function get_all_sprites() {
+    return Object.keys(global.window.sprites).filter(id => id!==global.selected_sprite)
 }
 
 export default class Move extends BlockVoid {

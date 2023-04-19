@@ -160,7 +160,7 @@ async function handle_duplicates(dup, dragged, exists) { // duplication handle (
         event.preventDefault();
         event.stopPropagation()
     }, false);
-
+    
     let i=-1;
     for(let box of clone["data-block"].inputs) {
         i += 1;

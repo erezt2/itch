@@ -9,7 +9,9 @@ const new_char = document.getElementById("new-character")
 function createSpriteSelection(name) {
     const template = document.createElement("div")
     let container = document.createElement("div")
-    container.appendChild(document.createElement("img"))
+    let img = document.createElement("img")
+    container.appendChild(img)
+    img.draggable = false
     template.appendChild(container)
 
     let n = document.createElement("p")
@@ -26,7 +28,7 @@ function createSpriteSelection(name) {
         event.preventDefault();
         event.stopPropagation()
     }, false);
-    return container.firstChild
+    return img
 }
 
 function getNextName(name) {
@@ -40,6 +42,7 @@ function getNextName(name) {
     num += 1
     let newname = name + num
     while(id_list.includes(newname)) {
+        if(num > 200000000) num = 0
         num += 1
         newname = name + num
     }
@@ -62,6 +65,7 @@ function selectPlayground(name) {
 
     document.querySelector("#editor-sounds > .active")?.classList.remove("active");
     document.getElementById(`se_${name}`).classList.add("active") // textures editor
+    global.selected_sprite = name
 }
 
 function createSprite(name, exists, path) {

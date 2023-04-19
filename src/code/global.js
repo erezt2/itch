@@ -9,6 +9,7 @@ my.settings = require("./settings.json")
 my.open_dropdown = null
 my.dropdown_reference = null
 my.loaded_file = null
+my.selected_sprite = null
 my.handle_dropdown = function() {
     if(my.open_dropdown !== null) {
         my.open_dropdown.style.display = "none"
@@ -35,6 +36,8 @@ my.getNextName = function(name_list, name) {
     num += 1
     let newname = name + num
     while(name_list.includes(newname)) {
+        if(num > 200000000) num = 1
+        console.log(num)
         num += 1
         newname = name + num
     }

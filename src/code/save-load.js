@@ -2,7 +2,9 @@ import {selectPlayground, createSprite} from "./create-character.js"
 import {handle_duplicates} from "./handle-duplicates.js"
 import my from "./global.js"
 import {SpriteMain} from "./sprite-wrap.js"
-import createListWrap from "./create-list-wrap.js"
+import {dropdownTexture, dropdownSound} from "./dropdown.js"
+import {register_dragged_texture} from "./texture-editor.js"
+import {register_dragged_sound} from "./sound-editor.js"
 const storage = require("electron-json-storage")
 
 const sd = document.getElementById("script-dragspace")
@@ -31,12 +33,29 @@ function loadState(savefile) {
             this["data-sound"].play()
             event.preventDefault();
           }
+          snd.addEventListener("dragstart", register_dragged_sound)
+          snd.addEventListener('contextmenu', function(event) {
+              dropdownSound(this, event)
+              event.preventDefault();
+              event.stopPropagation()
+          }, false);
         }
 
         let all_draggable = sd.querySelectorAll(".draggable")
         for(let i of all_draggable) {
           handle_duplicates(true, i, true)
         }
+
+        let all_textures = document.querySelectorAll("#editor-textures > div > div")
+        for(let txt of all_textures) {
+          txt.addEventListener("dragstart", register_dragged_texture)
+          txt.addEventListener('contextmenu', function(event) {
+              dropdownTexture(this, event)
+              event.preventDefault();
+              event.stopPropagation()
+          }, false);
+        }
+        
         
         selectPlayground()
     })

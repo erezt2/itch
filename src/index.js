@@ -37,7 +37,6 @@ await createSelection()
 
 // TODO:
 // sprite rendering
-// left click menu menu
 // states
 // add blocks
 import global from "./code/global.js"

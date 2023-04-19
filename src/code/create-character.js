@@ -1,6 +1,6 @@
 import createDragspace from "./script-dragspace.js"
 import {createTextureEditor, textureEditorAddImage} from "./texture-editor.js"
-import createSoundEditor from "./sound-editor.js"
+import {createSoundEditor} from "./sound-editor.js"
 import global from "./global.js"
 import {dropdownSprite} from "./dropdown.js"
 

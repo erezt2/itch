@@ -20,8 +20,8 @@
     "electron": "^24.1.0"
   },
   "dependencies": {
+    "dialogs": "^2.0.1",
     "electron-json-storage": "^4.6.0",
-    "electron-prompt": "^1.7.0",
     "electron-squirrel-startup": "^1.0.0",
     "pixi.js": "^7.2.3"
   }

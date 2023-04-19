@@ -6,6 +6,8 @@ const sprites = document.getElementById("sprites")
 const { ipcRenderer } = require("electron")
 const fs = require("fs")
 const path = require("path")
+const dialog = require('dialogs')()
+
 import {selectPlayground, getNextName, createSprite} from "./create-character.js"
 
 
@@ -27,8 +29,15 @@ export default function spriteListEvents() {
         event.preventDefault()
         event.stopPropagation()
         global.handle_dropdown()
-        if(event.dataTransfer.files[0].path.endsWith(".png")) addFile(event.dataTransfer.files[0].path)
-        else alert("only PNG files are accepted.")
+
+        
+        let non_png = false
+        for(let f of event.dataTransfer.files) {
+            if(f.path.toLowerCase().endsWith(".png")) 
+                addFile(f.path)
+            else non_png = true
+        }
+        if(non_png) dialog.alert("only MP3 or WAV files are accepted.", ok => {})
     })
 
     new_char.onclick = async (event) => {

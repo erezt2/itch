@@ -1,5 +1,6 @@
 import global from "./global.js"
 import createListWrap from "./create-list-wrap.js"
+import { dropdownBlock } from "./dropdown.js";
 
 function handle_dropped_parent(dom, check_parent) {
     blockChangeStop(dom, check_parent)
@@ -136,7 +137,7 @@ async function handle_duplicates(dup, dragged, exists) { // duplication handle (
         })
     }
 
-    clone.children[0].onclick = async function(event) {
+    clone.firstChild.onclick = async function(event) {
         event.stopPropagation()
         global.handle_dropdown()
         event.preventDefault()
@@ -154,6 +155,12 @@ async function handle_duplicates(dup, dragged, exists) { // duplication handle (
         }
         // createThread("run block", {obj: .id, input: })
     }
+    clone.firstChild.addEventListener('contextmenu', function(event) {
+        dropdownBlock(this, event)
+        event.preventDefault();
+        event.stopPropagation()
+    }, false);
+
     let i=-1;
     for(let box of clone["data-block"].inputs) {
         i += 1;

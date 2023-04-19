@@ -2,15 +2,23 @@ const fs = require("fs")
 const path = require("path")
 const { ipcRenderer } = require("electron")
 import global from "./global.js"
+import {sound_click} from "./handle-sounds.js"
+import {dropdownSound} from "./dropdown.js"
+const dialog = require('dialogs')()
 
-function createAudioTemplate(name, src, ext) {
+var dragged_sound = null
+function register_dragged_sound(event) {
+    dragged_sound = this
+}
+
+function createAudioTemplate(name, src) {
     const template = document.createElement("div")
     let container = document.createElement("div")
     let img = document.createElement("img")
     if(src === null) img.src = "../public/new.png"
     else {
         img.src = "../public/audio.png"
-        img.dataset["audio"] = `data:audio/${ext.toLowerCase()};base64,` + src
+        img.dataset["audio"] = src
         template["data-sound"] = new Audio(img.dataset["audio"])
         template.onclick = function(event) {
             this["data-sound"].play()
@@ -24,6 +32,15 @@ function createAudioTemplate(name, src, ext) {
     let n = document.createElement("p")
     n.innerHTML = name
     template.appendChild(n)
+    template.draggable = true
+
+    template.addEventListener("dragstart", register_dragged_sound)
+    template.addEventListener('contextmenu', function(event) {
+        dropdownSound(this, event)
+        event.preventDefault();
+        event.stopPropagation()
+    }, false);
+
     return template
 }
 
@@ -38,14 +55,14 @@ function soundEditorAddAudio(editor, _path) {
         data = data.toString('base64');
         let prs = path.parse(_path)
         let name = global.getNextName(id_list, prs.name)
-        let texture = createAudioTemplate(name, data, prs.ext.slice(1))
+        let texture = createAudioTemplate(name, `data:audio/${prs.ext.slice(1).toLowerCase()};base64,` + data)
         editor.insertBefore(texture, editor.lastChild)
     })
 }
 
 
 const sound_container = document.getElementById("editor-sounds")
-export default function createSoundEditor(name, exists) {
+function createSoundEditor(name, exists) {
     let sound_editor, add_new
     if(!exists) {
         sound_editor = document.createElement("div") // (`#script-dragspace > div[name="${name}"]`)
@@ -62,7 +79,7 @@ export default function createSoundEditor(name, exists) {
     }
 
     add_new.onclick = async (event) => {
-        let path = await ipcRenderer.invoke("showDialog", { name: 'Audio file', extensions: ['mp3', 'wav', 'm4a']})
+        let path = await ipcRenderer.invoke("showDialog", { name: 'Audio file', extensions: ['mp3', 'wav']})
         if(path === null || path.canceled) return;
         soundEditorAddAudio(sound_editor, path.filePaths[0])
     }
@@ -72,13 +89,41 @@ export default function createSoundEditor(name, exists) {
         event.stopPropagation();
     })
 
-    sound_editor.addEventListener('drop', (event) => {
-        if(event.dataTransfer.files.length === 0) return
+    sound_editor.addEventListener('drop', function(event) {
+        if(event.dataTransfer.files.length === 0) {
+            if(this.children.length <= 1) return
+            let rect = this.getBoundingClientRect()
+            let x = this.scrollLeft + event.clientX - rect.left
+            let y = this.scrollTop + event.clientY - rect.top
+            let row = (this.clientWidth-5)/90
+            row = Math.floor(row)
+            x = (x + 47.5)/90
+            x = Math.floor(x) // literally the same code word for word
+            console.log(row)
+            if(x>=row) x=row
+            else if(x<0) x=0
+
+            y = (y-2.5)/90
+            y = Math.floor(y)
+            if(y<0) y=0
+            let pos = y*row + x
+            if(pos > this.children.length-1) pos= this.children.length-1;
+            this.insertBefore(dragged_sound,this.children[pos])
+            return
+        }
         event.preventDefault()
         event.stopPropagation()
-        let _path = event.dataTransfer.files[0].path.toLowerCase()
-        if(_path.endsWith(".mp3") || _path.endsWith(".wav") || _path.endsWith(".m4a")) 
-            soundEditorAddAudio(sound_editor, event.dataTransfer.files[0].path)
-        else alert("only MP3, WAV or M4a files are accepted.")
+
+        let non_png = false
+        for(let f of event.dataTransfer.files) {
+            let _path = f.path.toLowerCase()
+            if(_path.endsWith(".mp3") || _path.endsWith(".wav")) 
+                soundEditorAddAudio(sound_editor, f.path)
+            else non_png = true
+        }
+        if(non_png) dialog.alert("only MP3 or WAV files are accepted.", ok => {})
     })
 }
+
+export {createAudioTemplate,createSoundEditor, register_dragged_sound}
+// this entire file is just a duplicate im sorry i just couldnt bother making a generic function

@@ -3,13 +3,21 @@ const path = require("path")
 const { ipcRenderer } = require("electron")
 import global from "./global.js"
 import {SpriteMain} from "./sprite-wrap.js"
+import {texture_click} from "./handle-textures.js"
+import {dropdownTexture} from "./dropdown.js"
+const dialog = require('dialogs')()
+
+var dragged_texture = null
+function register_dragged_texture(event) {
+    dragged_texture = this
+}
 
 function createTextureTemplate(name, src) {
     const template = document.createElement("div")
     let container = document.createElement("div")
     let img = document.createElement("img")
     if(src === null) img.src = "../public/new.png"
-    else img.src = "data:image/png;base64," + src
+    else img.src = src
     img.draggable = false;
     container.appendChild(img)
     template.appendChild(container)
@@ -17,6 +25,15 @@ function createTextureTemplate(name, src) {
     let n = document.createElement("p")
     n.innerHTML = name
     template.appendChild(n)
+    template.draggable = true
+
+    template.addEventListener("dragstart", register_dragged_texture)
+    template.addEventListener('contextmenu', function(event) {
+        dropdownTexture(this, event)
+        event.preventDefault();
+        event.stopPropagation()
+    }, false);
+
     return template
 }
 
@@ -30,7 +47,7 @@ function textureEditorAddImage(editor, _path, _name) {
 
         data = data.toString('base64');
         let name = global.getNextName(id_list, path.parse(_path).name)
-        let texture = createTextureTemplate(name, data)
+        let texture = createTextureTemplate(name, "data:image/png;base64," + data)
         editor.insertBefore(texture, editor.lastChild)
         
         if(_name) new SpriteMain(_name, texture)
@@ -66,17 +83,42 @@ function createTextureEditor(name, exists) {
         event.stopPropagation();
     })
 
-    texture_editor.addEventListener('drop', (event) => {
-        if(event.dataTransfer.files.length === 0) return
+    texture_editor.addEventListener('drop', function (event) {
+        if(event.dataTransfer.files.length === 0) {
+            if(this.children.length <= 1) return
+            let rect = this.getBoundingClientRect()
+            let x = this.scrollLeft + event.clientX - rect.left
+            let y = this.scrollTop + event.clientY - rect.top
+            let row = (this.clientWidth-5)/90
+            row = Math.floor(row)
+            x = (x + 47.5)/90
+            x = Math.floor(x)
+            console.log(row)
+            if(x>=row) x=row
+            else if(x<0) x=0
+
+            y = (y-2.5)/90
+            y = Math.floor(y)
+            if(y<0) y=0
+            let pos = y*row + x
+            if(pos > this.children.length-1) pos= this.children.length-1;
+            this.insertBefore(dragged_texture,this.children[pos])
+            return
+        }  
         event.preventDefault()
         event.stopPropagation()
         global.handle_dropdown()
-        if(event.dataTransfer.files[0].path.toLowerCase().endsWith(".png")) 
-            textureEditorAddImage(texture_editor, event.dataTransfer.files[0].path)
-        else alert("only PNG files are accepted.")
+
+        let non_png = false
+        for(let f of event.dataTransfer.files) {
+            if(f.path.toLowerCase().endsWith(".png")) 
+                textureEditorAddImage(texture_editor, f.path)
+            else non_png = true
+        }
+        if(non_png) dialog.alert("only PNG files are accepted.")
     })
 
     return texture_editor;
 }
 
-export {createTextureEditor, textureEditorAddImage} 
+export {createTextureEditor, textureEditorAddImage, createTextureTemplate, register_dragged_texture} 

@@ -3,7 +3,11 @@ import { getNextName, selectPlayground } from "./create-character.js";
 import { handle_duplicates } from "./handle-duplicates.js";
 import { createSprite } from "./create-character.js";
 import { SpriteMain } from "./sprite-wrap.js";
-const { ipcRenderer } = require("electron");
+import { createTextureTemplate } from "./texture-editor.js"
+import { createAudioTemplate } from "./sound-editor.js";
+import { handle_dropped_parent} from "./handle-duplicates.js"
+
+const dialog = require('dialogs')()
 
 function handle_height(dom, event) {
     dom.style.left = event.clientX + "px"
@@ -22,24 +26,150 @@ function dropdownSprite(self, event) {
     handle_height(sprite_dropdown, event)
 }
 
-sprite_dropdown.children[0].onclick = async function(event) {
-    console.log(123)
+const texture_dropdown = document.getElementById("texture-dropdown-menu")
+function dropdownTexture(self, event) {
+    global.handle_dropdown()
+    global.open_dropdown = texture_dropdown
+    texture_dropdown.style.display = "flex"
+    global.dropdown_reference = self
+    handle_height(texture_dropdown, event)
+}
+
+const sound_dropdown = document.getElementById("sound-dropdown-menu")
+function dropdownSound(self, event) {
+    global.handle_dropdown()
+    global.open_dropdown = sound_dropdown
+    sound_dropdown.style.display = "flex"
+    global.dropdown_reference = self
+    handle_height(sound_dropdown, event)
+}
+
+const block_dropdown = document.getElementById("block-dropdown-menu")
+function dropdownBlock(self, event) {
+    global.handle_dropdown()
+    global.open_dropdown = block_dropdown
+    block_dropdown.style.display = "flex"
+    global.dropdown_reference = self
+    handle_height(block_dropdown, event)
+}
+
+
+block_dropdown.children[0].onclick = function(event) {
+    global.handle_dropdown()
+    event.preventDefault()
+    event.stopPropagation()
+    
+    let dom = global.dropdown_reference.parentNode
+    let clone = dom.cloneNode(true)
+    dom = dom["data-block"].getAncestor().elementHTML
+    dom.parentNode.appendChild(clone)
+    clone.style.left = (Number(dom.style.left.slice(0,-2)) + 15)+"px"
+    clone.style.top = (Number(dom.style.top.slice(0,-2)) + 15)+"px"
+    global.resetHash(clone)
+    handle_duplicates(true, clone, true)
+    let all_draggable = clone.querySelectorAll(".draggable")
+    for(let i of all_draggable) {
+        global.resetHash(i)
+        handle_duplicates(true, i, true)
+    }
+    
+}
+
+
+block_dropdown.children[1].onclick = function(event) {
+    global.handle_dropdown()
+    event.preventDefault()
+    event.stopPropagation()
+    
+    let dom = global.dropdown_reference.parentNode
+    handle_dropped_parent(dom)
+    dom.remove()
+}
+
+
+function renameInner(event) {
+    global.handle_dropdown()
+    event.stopPropagation()
+    event.preventDefault()
+    console.log(1234)
+    let dom = global.dropdown_reference
+    let bname = dom.lastChild.innerHTML
+
+    dialog.prompt(`rename texture '${bname}' to:`, name => {
+        if(!name) return
+        let id_list = []
+        for(let c of dom.parentNode.children) {
+            id_list.push(c.lastChild.innerHTML)
+        }
+        name = global.getNextName(id_list, name)
+        dom.lastChild.innerHTML = name
+    })
+}
+
+texture_dropdown.children[0].onclick = renameInner
+sound_dropdown.children[0].onclick = renameInner
+
+function duplicateInner(event) {
+    global.handle_dropdown()
+    event.stopPropagation()
+    event.preventDefault()
+
+    let dom = global.dropdown_reference
+    let bname = dom.lastChild.innerHTML
+    let id_list = []
+    for(let c of dom.parentNode.children) {
+        id_list.push(c.lastChild.innerHTML)
+    }
+    let name = global.getNextName(id_list, bname)
+
+    
+    let src = dom.firstChild.firstChild.dataset["audio"]
+    if(src === undefined) {
+        src = dom.firstChild.firstChild.src
+        dom.parentNode.insertBefore(createTextureTemplate(name, src), dom.nextSibling) 
+    }
+    else {
+        dom.parentNode.insertBefore(createAudioTemplate(name, src), dom.nextSibling) 
+    }
+}
+
+texture_dropdown.children[1].onclick = duplicateInner
+sound_dropdown.children[1].onclick = duplicateInner
+
+function removeInner(event) {
+    global.handle_dropdown()
+    event.stopPropagation()
+    event.preventDefault()
+
+    let dom = global.dropdown_reference
+    
+    let src = dom.firstChild.firstChild.dataset["audio"]
+    if(dom.parentNode.children.length > 2 || src !== undefined) {
+        dom.remove()
+    }
+}
+
+texture_dropdown.children[2].onclick = removeInner
+sound_dropdown.children[2].onclick = removeInner
+
+sprite_dropdown.children[0].onclick = function(event) {
     global.handle_dropdown()
     event.stopPropagation()
     event.preventDefault()
     let dom = global.dropdown_reference
     let bname = dom.lastChild.innerHTML
     
-
-    let name = getNextName(await ipcRenderer.invoke("promptRename", bname))
-    if(name === null || name.length === 0) return
-    document.getElementById(`ds_${bname}`).id = `ds_${name}`
-    document.getElementById(`ss_${bname}`).id = `ss_${name}`
-    document.getElementById(`te_${bname}`).id = `te_${name}`
-    document.getElementById(`se_${bname}`).id = `se_${name}`
-    dom.lastChild.innerHTML = name
-    global.window.sprites[name] = global.window.sprites[bname]
-    delete global.window.sprites[bname]
+    dialog.prompt(`rename sprite '${bname}' to:`, name => {
+        if(!name) return
+        name = getNextName(name)
+        document.getElementById(`ds_${bname}`).id = `ds_${name}`
+        document.getElementById(`ss_${bname}`).id = `ss_${name}`
+        document.getElementById(`te_${bname}`).id = `te_${name}`
+        document.getElementById(`se_${bname}`).id = `se_${name}`
+        dom.lastChild.innerHTML = name
+        global.window.sprites[name] = global.window.sprites[bname]
+        delete global.window.sprites[bname]
+    })
 }
 
 sprite_dropdown.children[1].onclick = async function(event) {
@@ -89,7 +219,6 @@ sprite_dropdown.children[1].onclick = async function(event) {
     }
 
     let all_draggable = dsc.querySelectorAll(".draggable")
-    console.log(all_draggable)
     for(let i of all_draggable) {
         global.resetHash(i)
         handle_duplicates(true, i, true)
@@ -119,4 +248,4 @@ sprite_dropdown.children[2].onclick = async function(event) {
 
 
 
-export { dropdownSprite }
+export { dropdownSprite, dropdownTexture, dropdownSound, dropdownBlock }

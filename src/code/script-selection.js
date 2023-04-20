@@ -5,6 +5,7 @@ import BlockStart from "./blocks/blockStart.js"
 import global from "./global.js"
 import {handle_dropped_parent} from "./handle-duplicates.js"
 import createListWrap from "./create-list-wrap.js"
+const dialog = require('dialogs')()
 
 function createWrapper(text) {
     let dom = document.createElement("span")
@@ -21,6 +22,62 @@ function createTextBox() {
             event.preventDefault();
         }
     })
+    return dom
+}
+
+function createNewVar(block_list, type, obj, def) {
+    
+
+    let block = createButton("create " + type)
+    block_list.appendChild(block)
+    block.onclick = function(event) {
+        dialog.prompt(`Create new ${type}.\n${type} name:`, response=> {
+            if(response) {
+                if(type === "variable") {
+                    if(response in global.data.variables) {
+                        dialog.alert(type+" already exists!")
+                        return 
+                    }
+                    global.data.variables[response] = 0
+                }
+                else  {
+                    if(response in global.data.lists) {
+                        dialog.alert(type+" already exists!")
+                        return 
+                    }
+                    global.data.lists[response] = []
+                }
+            }
+        })
+    }
+    block = createButton("delete "+type)
+    block_list.appendChild(block)
+    block.onclick = function(event) {
+        dialog.prompt(`Delete existing ${type}.\n${type} name:`, response=> {
+            if(response) {
+                if(type === "variable") {
+                    if(!(response in global.data.variables)) {
+                        dialog.alert(type+" does not exists!")
+                        return 
+                    }
+                    delete global.data.variables[response]
+                }
+                else  {
+                    if(!(response in global.data.lists)) {
+                        dialog.alert(type+" does not exists!")
+                        return 
+                    }
+                    delete global.data.lists[response] 
+                }
+            }
+        })
+    }
+}
+
+function createButton(text) {
+    let dom = document.createElement("div")
+    dom.classList.add("button")
+    dom.innerHTML = text
     return dom
 }
 
@@ -90,7 +147,12 @@ export default async function createSelection() {
                     block.classList.add("selection-gap")
                     block_list.appendChild(block)
                 }
-
+                else if(block_name == "-variables") {
+                    createNewVar(block_list, "variable")
+                }
+                else if(block_name == "-lists") {
+                    createNewVar(block_list, "list")
+                }
                 continue
             }
             

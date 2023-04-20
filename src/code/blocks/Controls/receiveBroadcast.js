@@ -1,9 +1,8 @@
 import BlockStart from "../blockStart.js";
 
-
-export default class OnStart extends BlockStart {
-    static input_types = [];
-    static display = "on start";
+export default class RecieveBoradcast extends BlockStart {
+    static input_types = [String];
+    static display = "on broadcast | recieved";
     constructor(element) {
         super(element)
     }
@@ -13,6 +12,6 @@ export default class OnStart extends BlockStart {
     }
     async checkStart(data) {
         let args = await this.getValues(this.constructor.input_types, data)
-        return data.start;
+        return data.broadcast === args[0]
     }
 }

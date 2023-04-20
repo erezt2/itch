@@ -36,8 +36,8 @@ await createSelection()
 
 
 // TODO:
+// fix block size bug
 // sprite rendering
-// save button
 // add video streaming abillities
 // add blocks
 import global from "./code/global.js"

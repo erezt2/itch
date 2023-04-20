@@ -1,12 +1,12 @@
 import BlockInt from "../blockValue.js";
 
 export default class Convert extends BlockInt {
-    static input_types = [num => (Number(num) || 0), {
+    static input_types = [{
         isList: true,
         default: ["boolean", "number", "string"],
         variable: () => [],
-     }];
-    static display = "convert | to |";
+     }, val=>val];
+    static display = "| |";
     constructor(element) {
         super(element)
     }

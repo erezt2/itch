@@ -1,9 +1,9 @@
 import BlockStart from "../blockStart.js";
 
 
-export default class OnStart extends BlockStart {
+export default class OnCloneStart extends BlockStart {
     static input_types = [];
-    static display = "on start";
+    static display = "on clone start";
     constructor(element) {
         super(element)
     }
@@ -13,6 +13,6 @@ export default class OnStart extends BlockStart {
     }
     async checkStart(data) {
         let args = await this.getValues(this.constructor.input_types, data)
-        return data.start;
+        return data.cloned;
     }
 }

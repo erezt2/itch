@@ -1,7 +1,7 @@
 import BlockValue from "../blockValue.js";
 
 export default class LocalVariable extends BlockValue {
-    static input_types = [val => val];
+    static input_types = [String];
     static display = "local variable |";
     constructor(element) {
         super(element)

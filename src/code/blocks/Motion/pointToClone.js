@@ -2,30 +2,32 @@ import BlockVoid from "../blockVoid.js";
 import global from "../../global.js"
 
 function get_all_sprites() {
-    return Object.keys(global.window.sprites).filter(id => id!==global.selected_sprite)
+    return Object.keys(global.window.sprites)
 }
 
-export default class PointTo extends BlockVoid {
+export default class PointToClone extends BlockVoid {
     static input_types = [{
        isList: true,
-       default: ["mouse\u200b"],
+       default: [],
        variable: get_all_sprites,
-    }];
-    static display = "point to |";
+    }, val=>Number(val)||0];
+    static display = "point to |'s clone id = |";
     constructor(element) {
         super(element)
     }
     async run(data) {
         let args = await this.getValues(this.constructor.input_types, data)
-        let x, y
-        if(args[0] === "mouse\u200b") {
-            x = global.mouse_pos.x
-            y = global.mouse_pos.y
-        }
-        else if(args[0] in global.window.sprites) {
+        let x=0, y=0
+        if(args[0] in global.window.sprites) {
             let obj = global.window.sprites[args[0]]
-            x = obj.sprite.x
-            y = obj.sprite.y
+            let id = parseInt(args[1])
+            for(let clone of obj.clone_list){
+                if(clone.clone_id === id) {
+                    x = clone.sprite.x
+                    y = clone.sprite.y
+                    break
+                }
+            }
         }
         else {
             return await super.run(data);

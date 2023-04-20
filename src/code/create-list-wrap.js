@@ -22,7 +22,7 @@ export default function createListWrap(data, exists) {
         dropdown = document.createElement("div")
         dom.appendChild(dropdown)
 
-        if(data.default.length !== 0) {
+        if(has_div) {
             for(let s of data.default) {
                 let temp = document.createElement("div")
                 temp.innerHTML = s
@@ -88,8 +88,11 @@ export default function createListWrap(data, exists) {
 
             dropdown.appendChild(temp)
         }
-        if(vari.length === 0) div.style.display = "none"
-        else div.style.display = "block"
+        if(has_div) {
+            if(vari.length === 0) div.style.display = "none"
+            else div.style.display = "block"
+        }
+        
         
         dropdown.style.left = "0px"
         dropdown.style.top = "100%"

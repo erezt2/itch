@@ -32,23 +32,26 @@ class Key {
         this.canceled = true
         delete this.sprite.keydict[global.hashDOM(this.block)]
         this.block.classList.remove()
-        if(this.sprite.clone_id === 0) 
-                this.block.classList.remove("running")
+        if(this.sprite.clone_id === 0) {
+            this.block.classList.remove("running")
+        }
+            
     }
 }
 
 class SpriteWrap {
     name;
     sprite;
-    clone_id;
+    clone_id=0;
     keydict = {}
     _rotation = 0
     _rotation_mode = 0 // 0-normal, 1-left+right, 2-none
+    promises = []
 
     constructor(name, texture) {
         this.name = name
         // console.log(texture.firstChild.firstChild.src)
-        this.sprite = Sprite.from(texture.firstChild.firstChild.src)
+        this.sprite = Sprite.from(texture)
         this.sprite.eventMode = "static"
         this.sprite.on("click", (event)=>{
             console.log(event)
@@ -58,7 +61,6 @@ class SpriteWrap {
 
         this.x = 0
         this.y = 0
-        this.clone_id = 0;
     }
 
     getKey(block) {
@@ -70,15 +72,17 @@ class SpriteWrap {
         return k in this.keydict
     }
 
-    runBlocks(filter) {
+    async runBlocks(filter) {
         let ds = document.getElementById("ds_"+this.name)
+        let l = []
         for(let child of ds.children){
             let block = child["data-block"]
             if(block instanceof BlockStart &&
-                block.checkStart(filter)) {
-                    this.runSingular(block)
+                await block.checkStart(filter)) {
+                    l.push(this.runSingular(block))
                 }
         }
+        return l
     }
 
     stopSingular(block) {
@@ -86,6 +90,14 @@ class SpriteWrap {
             let _key = this.getKey(block.elementHTML)
             _key.prevent_remove = true
             _key.cancel()
+        }
+    }
+
+    stopSelf(mercy) {
+        let l=Object.values(this.keydict)
+        for(let k of l) {
+            if(k===mercy) continue
+            k.cancel()
         }
     }
 
@@ -98,23 +110,30 @@ class SpriteWrap {
             local_variables: {}, else: false, sprite: this.sprite, 
             clone_id: this.clone_id, owner: this, key: key
         }
-        new Promise((resolve, reject) => {
-            let data = block.run(start_data)
+        let pr = new Promise(async (resolve, reject) => {
+            let data = await block.run(start_data)
             resolve(data)
-        }).finally(data=> {if(!key.canceled)key.cancel()})/*.then(data => {
+        }).finally(data=> {
+            if(!key.canceled)key.cancel()
+            this.promises = this.promises.filter(prom => prom !== pr)
+        })/*.then(data => {
             if(!data.key.cancel && this.clone_id == 0)
                 block.elementHTML.classList.remove("running")
         })*/
+        this.promises.push(pr)
+        return pr
     }
 
     remove() {
         // console.log(global.window.app.stage)
         // const index = global.window.app.stage.indexOf(this.sprite)
         // if(index !== -1) global.window.app.stage.splice(index, 1)
-        this.sprite.destroy()
         for(let k in this.keydict) {
-            k.cancel()
+            this.keydict[k].cancel()
         }
+        Promise.all(this.promises).then(data => this.sprite.destroy())
+        
+        
     }
  
     set x(val) {
@@ -205,29 +224,44 @@ class SpriteWrap {
 
 class SpriteCopy extends SpriteWrap {
     parent;
-    constructor(sprite_main) {
-        this.parent = sprite_main
-        this.clone_id = sprite_main.clode_next
+    is_clone = true;
+    clone_id;
+    constructor(parent) {
+        super(parent.name, parent.sprite.texture)
+        this.parent = parent
+        parent.add_clone(this)
+
+        this.rotation_mode = parent.rotation_mode
+        this.rotation = parent.rotation
+        this.x = parent.x
+        this.y = parent.y
         
-        sprite_main.push(this)
-        super(this.parent.name, this.parent.sprite.texture)
-        this.clone_id = sprite_main.clode_next++
+        this.runBlocks({cloned: true})
     }
     remove(fromparent) {
+        super.remove()
         if(!fromparent) {
             const index = this.parent.clone_list.indexOf(this)
             if(index !== -1) this.parent.clone_list.splice(index, 1)
         }
-        super.remove()
     }
 }
 
 class SpriteMain extends SpriteWrap {
     clone_next = 1;
     clone_list = []
+    is_clone = false;
     constructor(name, texture) {
-        super(name, texture)
+        super(name, texture.firstChild.firstChild.src)
         global.window.sprites[name] = this
+    }
+    create_clone() {
+        new SpriteCopy(this)
+    }
+    add_clone(instance) {
+        this.clone_list.push(instance)
+        instance.clone_id = this.clone_next
+        this.clone_next += 1
     }
     remove() {
         delete global.window.sprites[this.name]
@@ -236,9 +270,19 @@ class SpriteMain extends SpriteWrap {
         }
         super.remove()
     }
+    stopAll(mercy) {
+        this.stopSelf(mercy)
+        for(let cl of this.clone_list) cl.stopSelf(mercy)
+    }
+    async runAllBlocks(data) {
+        let l = []
+        l= l.concat(await this.runBlocks(data))
+        for(let cl of this.clone_list) l=l.concat(await cl.runBlocks(data))
+        return l
+    }
     stopSingularAllClones(block) {
         this.stopSingular(block);
-        for(let c of this.clone_list) c.stopSingular()
+        for(let c of this.clone_list) c.stopSingular(block)
     }
 }
 

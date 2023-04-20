@@ -22,10 +22,13 @@ export default class Move extends BlockValue {
             x = global.mouse_pos.x
             y = global.mouse_pos.y
         }
-        else {
+        else if(args[0] in global.window.sprites) {
             let obj = global.window.sprites[args[0]]
             x = obj.sprite.x
             y = obj.sprite.y
+        }
+        else {
+            return 0
         }
         return ((y-data.sprite.y)**2+(x-data.sprite.x)**2)**0.5
     }

@@ -3,10 +3,10 @@
         "color": "#3366FF",
         "blocks": ["move.js", "setAngle.js", "changeAngle.js",
                     "-gap",
-                    "pointTo.js",
+                    "pointTo.js", "pointToClone.js",
                     "-gap",
                     "setX.js", "changeX.js",
-                    "setY.js", "changeY.js",
+                    "setY.js", "changeY.js", "goto.js", "gotoClone.js",
                     "-gap",
                     "getX.js", "getY.js", "getAngle.js"]
     }, 
@@ -16,7 +16,7 @@
     }, 
     "Sensor":{
         "color":  "#33CCCC",
-        "blocks": ["distanceTo.js", "getTime.js",
+        "blocks": ["distanceTo.js", "distanceToClone.js", "getTime.js",
                     "-gap",
                     "getMouseX.js", "getMouseY.js",
                     "-gap",
@@ -36,9 +36,10 @@
     }, 
     "Controls":{
         "color": "#FF9900",
-        "blocks": ["onStart.js", "ifThen.js", "elseIf.js", "else.js", 
-            "repeatTimes.js", "repeatWhile.js", "repeatUntil.js",
-            "wait.js"]
+        "blocks": ["onStart.js", "ifThen.js", "elseIf.js", "else.js", "-gap", 
+            "repeatTimes.js", "repeatWhile.js", "repeatUntil.js", "forIn.js",
+            "wait.js", "updateScreen.js", "-gap", "receiveBroadcast.js", "broadcast.js", "broadcastWait.js",
+            "-gap", "stop.js", "-gap", "onCloneStart.js", "createClone.js", "deleteClone.js", "cloneID.js"]
     }, 
     "Operations":{
         "color": "#77BB00",
@@ -53,6 +54,12 @@
     }, 
     "Data":{
         "color": "#FF6600",
-        "blocks": ["localVariable.js", "local.js", "consoleLog.js"]
+        "blocks": ["localVariable.js", "local.js", "consoleLog.js", "-gap", 
+        "-variables", "getVariable.js", "setVariable.js", "changeVariable.js",
+        "-gap", "-gap",
+        "-lists", "addList.js", "addIndexList.js", "-gap", "removeList.js", "removeIndexList.js",
+        "-gap", "setList.js", "changeList.js",
+        "-gap", "getList.js", "getIndexList.js", "getStringList.js", "-gap", 
+        "lengthList.js","countList.js"]
     }
 }

@@ -6,7 +6,7 @@ export default class BlockStart extends BlockRunnable {
     constructor(element) {
         super(element)
     }
-    checkStart(data) {
+    async checkStart(data) {
         return false
     }
     getNext(){

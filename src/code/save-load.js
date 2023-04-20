@@ -24,6 +24,8 @@ function resetState() {
   sd.innerHTML = ""
   te.innerHTML = ""
   se.innerHTML = ""
+  global.data.variables = {}
+  global.data.lists = {}
   while(ss.children.length > 1) {
     ss.firstChild.remove()
   }
@@ -86,7 +88,7 @@ function loadState(savefile) {
           }, false);
         }
         
-        
+        global.data = st.data
         selectPlayground()
     })
 }
@@ -106,9 +108,9 @@ function saveState(savefile) {
       st.sprites[name].sounds = se.outerHTML
     }
     st.license = license
+    st.data = global.data
     // console.log("test")
     storage.set(savefile, st, {}, (error) => {
-      console.log(error, "1234")
       if(error) dialog.alert(error)
       else global.loaded_file = savefile
     })

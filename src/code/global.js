@@ -2,6 +2,11 @@ const { ipcRenderer } = require("electron");
 
 var my = {}
 my.window = {width: 640, height: 480, app: null, sprites: {}}
+my.data = {
+    variables: {},
+    lists: {},
+    messages: {}
+}
 my.keys = []
 my.dragged = {};
 my.mouse_pos = {x:0, y:0}
@@ -37,7 +42,6 @@ my.getNextName = function(name_list, name) {
     let newname = name + num
     while(name_list.includes(newname)) {
         if(num > 200000000) num = 1
-        console.log(num)
         num += 1
         newname = name + num
     }

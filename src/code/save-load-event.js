@@ -32,13 +32,10 @@ file_dropdown.children[1].onclick = async function(event){
   files = files.map(val => val.split('.').slice(0, -1).join('.'))
   file_selector.style.display = "flex"
   let flex = file_selector_flex
-  console.log(flex)
   while(flex.firstChild)
     flex.removeChild(flex.firstChild)
   // file_selector.firstChild.innerHTML = ""
-  console.log(files)
   for(let file of files) {
-    console.log
     let obj = document.createElement("div")
     obj.innerHTML = file
     flex.appendChild(obj)

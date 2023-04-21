@@ -60,6 +60,10 @@ block_dropdown.children[0].onclick = function(event) {
     event.stopPropagation()
     
     let dom = global.dropdown_reference.parentNode
+    if(dom.dataset["is_function"]) {
+        dialog.alert("Can't duplicate functions!")
+        return
+    }
     let clone = dom.cloneNode(true)
     dom = dom["data-block"].getAncestor().elementHTML
     dom.parentNode.appendChild(clone)

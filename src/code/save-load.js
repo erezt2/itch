@@ -36,7 +36,7 @@ function resetState() {
     global.window.sprites[sp].remove()
     delete global.window.sprites[sp]
   }
-  for(let fn of sbl.getElementsByClassName("create-function")) {
+  for(let fn of Array.from(sbl.getElementsByClassName("create-function"))) {
     fn.remove()
   }
   global.nextHashID = 1

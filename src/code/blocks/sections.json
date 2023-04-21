@@ -1,4 +1,11 @@
 {
+    "Controls":{
+        "color": "#FF9900",
+        "blocks": ["onStart.js", "ifThen.js", "elseIf.js", "else.js", "-gap", 
+            "repeatTimes.js", "repeatWhile.js", "repeatUntil.js", "forIn.js", "break.js","continue.js","-gap",
+            "wait.js", "updateScreen.js", "-gap", "receiveBroadcast.js", "broadcast.js", "broadcastWait.js",
+            "-gap", "stop.js", "-gap", "onCloneStart.js", "createClone.js", "deleteClone.js", "cloneID.js"]
+    }, 
     "Motion": {
         "color": "#3366FF",
         "blocks": ["move.js", "setAngle.js", "changeAngle.js",
@@ -10,48 +17,6 @@
                     "-gap",
                     "getX.js", "getY.js", "getAngle.js"]
     }, 
-    "Texture":{
-        "color": "#CC99FF",
-        "blocks": ["setRotationMode.js"]
-    }, 
-    "Sensor":{
-        "color":  "#33CCCC",
-        "blocks": ["distanceTo.js", "distanceToClone.js", "getTime.js",
-                    "-gap",
-                    "getMouseX.js", "getMouseY.js",
-                    "-gap",
-                    "getRotatedWidth.js", "getRotatedHeight.js"]
-    },
-    "Audio": {
-        "color": "#FF99CC",
-        "blocks": []
-    }, 
-    "State":{
-        "color": "#00CC99",
-        "blocks": []
-    }, 
-    "Network":{
-        "color": "#FFCC99",
-        "blocks": []
-    }, 
-    "Controls":{
-        "color": "#FF9900",
-        "blocks": ["onStart.js", "ifThen.js", "elseIf.js", "else.js", "-gap", 
-            "repeatTimes.js", "repeatWhile.js", "repeatUntil.js", "forIn.js", "break.js","continue.js","-gap",
-            "wait.js", "updateScreen.js", "-gap", "receiveBroadcast.js", "broadcast.js", "broadcastWait.js",
-            "-gap", "stop.js", "-gap", "onCloneStart.js", "createClone.js", "deleteClone.js", "cloneID.js"]
-    }, 
-    "Operations":{
-        "color": "#77BB00",
-        "blocks": ["addition.js", "subtraction.js", "multiplication.js", "division.js", "modulo.js", "-gap",
-            "lessThan.js", "lessEquals.js", "equals.js", "greaterEquals.js", "greaterThan.js", "-gap",
-            "and.js", "or.js", "not.js", "-gap", "randomInt.js", "randomUniform.js", "-gap", "join.js", "letterOf.js", "length.js", "-gap",
-            "convert.js", "functions.js", "funcTrig.js", "binaryFunctions.js", "constants.js"]
-    }, 
-    "Functions":{
-        "color": "#666699",
-        "blocks": ["input.js", "return.js","-gap","-function-void", "-gap", "-function-value"]
-    }, 
     "Data":{
         "color": "#FF6600",
         "blocks": ["localVariable.js", "local.js", "consoleLog.js", "-gap", 
@@ -61,5 +26,33 @@
         "-gap", "setList.js", "changeList.js",
         "-gap", "getList.js", "getIndexList.js", "getStringList.js", "-gap", 
         "lengthList.js","countList.js"]
+    },
+    "Sensor":{
+        "color":  "#33CCCC",
+        "blocks": ["distanceTo.js", "distanceToClone.js", "getTime.js",
+                    "-gap",
+                    "getMouseX.js", "getMouseY.js",
+                    "-gap",
+                    "getRotatedWidth.js", "getRotatedHeight.js"]
+    },
+    "Haptic":{
+        "color": "#CC99FF",
+        "blocks": ["setRotationMode.js"]
+    }, 
+    "Operations":{
+        "color": "#77BB00",
+        "blocks": ["addition.js", "subtraction.js", "multiplication.js", "division.js", "modulo.js", "-gap",
+            "lessThan.js", "lessEquals.js", "equals.js", "greaterEquals.js", "greaterThan.js", "-gap",
+            "and.js", "or.js", "not.js", "-gap", "randomInt.js", "randomUniform.js", "-gap", "join.js", "letterOf.js", "length.js", "-gap",
+            "convert.js", "functions.js", "funcTrig.js", "binaryFunctions.js", "constants.js"]
+    }, 
+    "Network":{
+        "color": "#990066",
+        "blocks": []
+    },
+    "Functions":{
+        "color": "#666699",
+        "blocks": ["input.js", "return.js","-gap","-function-void", "-gap", "-function-value"]
     }
+    
 }

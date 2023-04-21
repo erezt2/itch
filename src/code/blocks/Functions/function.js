@@ -1,4 +1,5 @@
 import BlockStart from "../blockStart.js";
+import global from "../../global.js"
 
 export default class Function extends BlockStart {
     static input_types = [];
@@ -7,6 +8,12 @@ export default class Function extends BlockStart {
     }
     async run(data) {
         let args = await this.getValues(this.constructor.input_types, data)
+        if(this.elementHTML.dataset["re_switch"] === "true") {
+            let owner = global.window.sprites[this.elementHTML.parentNode.id.slice(3)]
+            data.owner = owner
+            data.sprite = owner.sprite
+            data.clone_id = owner.clone_id
+        }
         data = await super.run(data)
         return data.return
     }

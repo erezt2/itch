@@ -149,7 +149,7 @@ body {
 #script-selector-table {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
     padding: 4px 4px;
     row-gap: 2px;
     column-gap: 4px;
@@ -288,6 +288,8 @@ body {
 .draggable > .draggable:last-child {
     /*class for block in block */
     position: relative; /* TEMP */
+    width: 0;
+    height: 0;
 }
 
 .inside-container > .dropzone:not(:last-child) {
@@ -301,12 +303,12 @@ body {
 
 .draggable > div:first-child {
     cursor: pointer;
-    padding: 3px;
-    height: 100%;
+    padding: 2px;
     /* width: 100%; */
     color: white;
     display: flex;
     width: max-content;
+    height: max-content;
     align-items: center;
     font-size: 16px;
     min-width: 30px;

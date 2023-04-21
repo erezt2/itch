@@ -95,7 +95,7 @@ async function handle_duplicates(dup, dragged, exists) { // duplication handle (
     else {
         let inputs = clone.dataset["func_inputs"].split("|")
         let _inputs = []
-        for(let _in of inputs) {
+        if(clone.dataset["func_inputs"])for(let _in of inputs) {
             let _func;
             if(_in === "[number]") {
                 _func = val => Number(val) || 0

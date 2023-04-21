@@ -99,7 +99,7 @@ function createFunction(block_list, type) {
     button_block.id = type+"-function-creator"
     block_list.appendChild(button_block)
     button_block.onclick = function(event) {
-        dialog.prompt("Create new function:\nInsert inputs using [number]/[string]/[boolean]/[all].\n\nFunction name:", 
+        dialog.prompt("Create new function:\nInsert inputs using [number]/[string]/[boolean]/[all]. add '@' at the start for function to be run by calling sprite (default: receiving sprite)\nFunction name:", 
                       "new function [string] [number]",
                       async response =>{
             if(!response) return;
@@ -107,7 +107,7 @@ function createFunction(block_list, type) {
                 dialog.alert("Function must not include '|' character")
                 return
             }
-            
+            let sw = !response.startsWith("@");
             let types = [...response.matchAll(/\[.*?\]/g)]
             response = response.replaceAll(/\[.*?\]/g, "|")
             let id = "function_"+response
@@ -135,6 +135,7 @@ function createFunction(block_list, type) {
             target.id = id
             target.classList.add("create-function-head")
             target.dataset["is_function"] = true
+            target.dataset["re_switch"] = sw
             target.dataset["re_response"] = response
             target.dataset["re_types"] = types
             target.dataset["re_file"] = fileName
@@ -245,7 +246,7 @@ async function createSelection() {
     })
 
 
-    for(let i=0; i<10; i++) {
+    for(let i=0; i<8; i++) {
         let sn = section_names[i]
 
         let item = document.createElement("a")

@@ -11,6 +11,9 @@ export default class Else extends BlockContainer {
         if(data["else"]) {
             let inside = this.getInside();
             if(inside !== null) data = await inside.run(data)
+            if(data.return !== undefined) return data
+            if(data.break) return data
+            if(data.continue) return data
         }
         data["else"] = false;
         return await super.run(data);

@@ -20,6 +20,6 @@ export default class GetList extends BlockValue {
         if(args[1] in global.data.lists) {
             return global.data.lists[args[1]][parseInt(args[0])]
         }
-        return null
+        return undefined
     }
 }

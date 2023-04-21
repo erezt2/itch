@@ -6,6 +6,7 @@ import {dropdownTexture, dropdownSound} from "./dropdown.js"
 import {register_dragged_texture} from "./texture-editor.js"
 import {register_dragged_sound} from "./sound-editor.js"
 import resetPlayground from "./buttons-handle.js"
+import { createFunctionBlock } from "./script-selection.js"
 const storage = require("electron-json-storage")
 const dialog = require('dialogs')()
 
@@ -18,6 +19,7 @@ const sd = document.getElementById("script-dragspace")
 const te = document.getElementById("editor-textures")
 const se = document.getElementById("editor-sounds")
 const ss = document.getElementById("sprites")
+const sbl = document.getElementById("script-block-list")
 storage.setDataPath(global.path)
 
 function resetState() {
@@ -34,11 +36,14 @@ function resetState() {
     global.window.sprites[sp].remove()
     delete global.window.sprites[sp]
   }
+  for(let fn of sbl.getElementsByClassName("create-function")) {
+    fn.remove()
+  }
   global.nextHashID = 1
 }
 
 function loadState(savefile) {
-    storage.get(savefile, (error, st) => {
+    storage.get(savefile, async (error, st) => {
         if (error) throw error;
         if(st.license !== license) {
           dialog.alert("you are loading an incorrect JSON file!")
@@ -76,6 +81,16 @@ function loadState(savefile) {
         let all_draggable = sd.querySelectorAll(".draggable")
         for(let i of all_draggable) {
           handle_duplicates(true, i, true)
+        }
+
+        let function_heads = sd.getElementsByClassName("create-function-head")
+        let f_list = document.getElementById("function-block-list")
+        for(let fh of function_heads) {
+          let f_response = fh.dataset["re_response"]
+          let f_types = fh.dataset["re_types"]
+          let f_fileName = fh.dataset["re_file"]
+          let f_button = document.getElementById(fh.dataset["re_button"])
+          await createFunctionBlock(f_list, f_button, f_fileName, f_response, f_types, fh.id)
         }
 
         let all_textures = document.querySelectorAll("#editor-textures > div > div")

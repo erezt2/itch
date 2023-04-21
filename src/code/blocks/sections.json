@@ -37,7 +37,7 @@
     "Controls":{
         "color": "#FF9900",
         "blocks": ["onStart.js", "ifThen.js", "elseIf.js", "else.js", "-gap", 
-            "repeatTimes.js", "repeatWhile.js", "repeatUntil.js", "forIn.js",
+            "repeatTimes.js", "repeatWhile.js", "repeatUntil.js", "forIn.js", "break.js","continue.js","-gap",
             "wait.js", "updateScreen.js", "-gap", "receiveBroadcast.js", "broadcast.js", "broadcastWait.js",
             "-gap", "stop.js", "-gap", "onCloneStart.js", "createClone.js", "deleteClone.js", "cloneID.js"]
     }, 
@@ -50,7 +50,7 @@
     }, 
     "Functions":{
         "color": "#666699",
-        "blocks": []
+        "blocks": ["input.js", "return.js","-gap","-function-void", "-gap", "-function-value"]
     }, 
     "Data":{
         "color": "#FF6600",

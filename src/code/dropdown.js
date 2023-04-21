@@ -5,7 +5,7 @@ import { createSprite } from "./create-character.js";
 import { SpriteMain } from "./sprite-wrap.js";
 import { createTextureTemplate } from "./texture-editor.js"
 import { createAudioTemplate } from "./sound-editor.js";
-import { handle_dropped_parent} from "./handle-duplicates.js"
+import { handle_dropped_parent, handle_function_blocks} from "./handle-duplicates.js"
 
 const dialog = require('dialogs')()
 
@@ -71,10 +71,8 @@ block_dropdown.children[0].onclick = function(event) {
     for(let i of all_draggable) {
         global.resetHash(i)
         handle_duplicates(true, i, true)
-    }
-    
+    }   
 }
-
 
 block_dropdown.children[1].onclick = function(event) {
     global.handle_dropdown()
@@ -82,10 +80,10 @@ block_dropdown.children[1].onclick = function(event) {
     event.stopPropagation()
     
     let dom = global.dropdown_reference.parentNode
+    if(handle_function_blocks(dom)) return
     handle_dropped_parent(dom)
     dom.remove()
 }
-
 
 function renameInner(event) {
     global.handle_dropdown()

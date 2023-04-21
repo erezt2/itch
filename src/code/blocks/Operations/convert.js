@@ -12,8 +12,8 @@ export default class Convert extends BlockInt {
     }
     async run(data) {
         let args = await this.getValues(this.constructor.input_types, data)
-        let arg = args[0]
-        switch(args[1]) {
+        let arg = args[1]
+        switch(args[0]) {
             case "boolean": return Boolean(arg)
             case "number": return Number(arg) || 0
             case "string": return String(arg)

@@ -28,7 +28,7 @@ functions -> create functions made up of different blocks. can have inputs/ outp
 import createResize from "./code/resize.js"
 createResize()
 
-import createSelection from "./code/script-selection.js"
+import {createSelection} from "./code/script-selection.js"
 await createSelection()
 
 

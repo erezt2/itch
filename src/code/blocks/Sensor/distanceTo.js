@@ -2,7 +2,7 @@ import global from "../../global.js"
 import BlockValue from "../blockValue.js";
 
 function get_all_sprites() {
-    return Object.keys(global.window.sprites).filter(id => id!==global.selected_sprite)
+    return Object.keys(global.window.sprites)
 }
 
 export default class Move extends BlockValue {

@@ -160,10 +160,6 @@ body {
     border-style: solid;
 }
 
-.draggable > div:first-child {
-    cursor: pointer;
-}
-
 #script-selector-table > a {
     display: flex;
     gap: 3px;
@@ -304,6 +300,7 @@ body {
 
 
 .draggable > div:first-child {
+    cursor: pointer;
     padding: 3px;
     height: 100%;
     /* width: 100%; */
@@ -312,6 +309,7 @@ body {
     width: max-content;
     align-items: center;
     font-size: 16px;
+    min-width: 30px;
 }
 
 .draggable > div:first-child > * {

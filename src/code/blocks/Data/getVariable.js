@@ -20,6 +20,6 @@ export default class GetVariable extends BlockValue {
         if(args[0] in global.data.variables) {
             return global.data.variables[args[0]];
         }
-        return null
+        return undefined
     }
 }

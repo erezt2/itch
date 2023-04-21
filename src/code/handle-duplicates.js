@@ -6,6 +6,7 @@ function handle_dropped_parent(dom, check_parent) {
     blockChangeStop(dom, check_parent)
     let p = dom.parentNode
     if(p.classList.contains("editable")) p.contentEditable = true;
+    return true
 }
 
 function blockChangeStop(dom, check_parent) {
@@ -74,6 +75,10 @@ async function handle_duplicates(dup, dragged, exists) { // duplication handle (
         clone.dataset["type"] = dragged.dataset["type"]
         clone.dataset["path"] = dragged.dataset["path"]
         clone.dataset["preventDrop"] = dragged.dataset["preventDrop"]
+        if(dragged.dataset["func_inputs"] !== undefined)
+            clone.dataset["func_inputs"] = dragged.dataset["func_inputs"];
+        if(dragged.dataset["func_id"] !== undefined)
+            clone.dataset["func_id"] = dragged.dataset["func_id"];
     }
     else {
         clone = dragged
@@ -85,7 +90,30 @@ async function handle_duplicates(dup, dragged, exists) { // duplication handle (
     // clone.classList.add("draggable")
     
     let block_class = (await import(dragged.dataset["path"])).default
-    clone["data-block"] = new block_class(clone)
+    if(dragged.dataset["func_id"] === undefined)
+        clone["data-block"] = new block_class(clone)
+    else {
+        let inputs = clone.dataset["func_inputs"].split("|")
+        let _inputs = []
+        for(let _in of inputs) {
+            let _func;
+            if(_in === "[number]") {
+                _func = val => Number(val) || 0
+            }
+            else if (_in === "[boolean]") {
+                _func = Boolean
+            }
+            else if (_in === "[string]") {
+                _func = String
+            }
+            else {
+                _func = val=>val
+            }
+            _inputs.push(_func)
+        }
+        let function_block = document.getElementById(clone.dataset["func_id"])
+        clone["data-block"] = new block_class(clone, function_block, _inputs)
+    }
 
     let is_container = dragged.classList.contains("block-container")
     if(is_container) {
@@ -191,4 +219,18 @@ async function handle_duplicates(dup, dragged, exists) { // duplication handle (
     return clone
 }
 
-export {handle_duplicates, handle_dropped_parent}
+const dialog = require('dialogs')()
+const sd = document.getElementById("script-dragspace")
+const sbl = document.getElementById("script-block-list")
+function handle_function_blocks(dom){
+    if(dom.dataset["is_function"]) {
+        if(sd.querySelectorAll(`.create-function[data-func_id="${dom.id}"]`).length > 0) {
+            dialog.alert("You should delete all of the function's blocks before attempting to delete it!")
+            return true
+        }
+        sbl.querySelector(`.create-function[data-func_id="${dom.id}"]`).remove()
+    }
+    return false
+}
+
+export {handle_duplicates, handle_dropped_parent, handle_function_blocks}

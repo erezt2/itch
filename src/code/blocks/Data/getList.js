@@ -28,6 +28,6 @@ export default class GetList extends BlockValue {
             else if(args[0] == "last") return list[len-1]
             else return list[Math.floor(Math.random()*len)]
         }
-        return null
+        return undefined
     }
 }

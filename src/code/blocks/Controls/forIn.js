@@ -21,13 +21,18 @@ export default class RepeatTimes extends BlockContainer {
         if(args[1] in global.data.lists){
             let list = Array.from(global.data.lists[args[1]])
             for(let item of list){
+                data.continue = false
                 let inside = this.getInside();
                 data.local_variables[args[0]] = item
                 if(inside !== null) data = await inside.run(data)
                 if(data.key.canceled) break
+                if(data.return !== undefined) return data
+                if(data.break) break
                 await this.reschedule()
             }
         }
+        data.continue = false
+        data.break = false
         return await super.run(data);
     }
 }

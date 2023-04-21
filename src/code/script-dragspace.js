@@ -33,7 +33,7 @@ export default function createDragspace(name, exists){
         block_playground.classList.remove("dragspace-dragenter")
         event.preventDefault();
         let target = await handle_duplicates(my.duplicate, my.target)
-
+        
         handle_dropped_parent(my.target, true)
         block_playground.appendChild(target);
         

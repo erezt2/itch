@@ -107,7 +107,7 @@ class SpriteWrap {
         let key = new Key(this, block.elementHTML)
         
         let start_data = {
-            local_variables: {}, else: false, sprite: this.sprite, 
+            local_variables: {}, else: false, break:false, continue:false, sprite: this.sprite, 
             clone_id: this.clone_id, owner: this, key: key
         }
         let pr = new Promise(async (resolve, reject) => {

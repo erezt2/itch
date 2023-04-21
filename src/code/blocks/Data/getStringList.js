@@ -20,6 +20,6 @@ export default class GetListString extends BlockValue {
         if(args[0] in global.data.lists) {
             return global.data.lists[args[0]].join(" ");
         }
-        return null
+        return undefined
     }
 }

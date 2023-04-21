@@ -5,10 +5,10 @@ createNavbar()
 
 // script selection
 /*
-state -> state table
+[state -> state table] deprecated
 network -> sockets wrappers / web access
 controls -> events + loops, if else, sprite signaling etc
-texture, audio -> exactly like it looks/ sounds
+texture+ audio=hatpic -> exactly like it looks/ sounds
 motion -> position + oriantiation and such
 sensor -> sprite sensing/ mouse pos/ info
 data -> save local/ global variables (ints, strings, tables) and save them localy
@@ -36,9 +36,8 @@ await createSelection()
 
 
 // TODO:
-// fix block size bug
 // sprite rendering
-// add video streaming abillities
+// sensor + audio + textures + (last part of controls) + network
 // add blocks
 import global from "./code/global.js"
 

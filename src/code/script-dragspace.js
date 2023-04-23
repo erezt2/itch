@@ -39,10 +39,14 @@ export default function createDragspace(name, exists){
         
 
         let rect = block_playground.getBoundingClientRect()
+        console.log(my)
         let x = event.clientX - rect.left
         let y = event.clientY - rect.top
-
-        target.style.left = (block_playground.scrollLeft + x - my.self_x) + "px"
-        target.style.top = (block_playground.scrollTop + y - my.self_y) + "px"
+        x = (block_playground.scrollLeft + x - my.self_x)
+        y = (block_playground.scrollTop + y - my.self_y)
+        if(x<3) x =3
+        if(y<3) y= 3
+        target.style.left = x + "px"
+        target.style.top = y + "px"
     });
 }

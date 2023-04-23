@@ -10,7 +10,7 @@ export default class ChangeList extends BlockVoid {
         isList: true,
         default: [],
         variable: get_lists,
-     }, val=>val];
+     }, num => (Number(num) || 0)];
     static display = "change index | of | by |";
     constructor(element) {
         super(element)

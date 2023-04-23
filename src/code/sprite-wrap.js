@@ -2,8 +2,20 @@ import BlockStart from "./blocks/blockStart.js";
 import global from "./global.js"
 const boundBox = global.settings.boundBox
 const reboundOnRotate = global.settings.reboundOnRotate
-const {Sprite} = require("pixi.js")
+const {Sprite, Texture} = require("pixi.js")
 const pi = Math.PI
+
+function HSLtoHEX(h, s, l) {
+    l /= 100;
+    h *= 3.6
+    const a = s * Math.min(l, 1 - l) / 100;
+    const f = n => {
+      const k = (n + h / 30) % 12;
+      const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+      return Math.round(255 * color).toString(16).padStart(2, '0');   // convert to Hex and prefix "0" if needed
+    };
+    return `#${f(0)}${f(8)}${f(4)}`;
+  }
 
 function bound(lower, value, higher) {
     if(value < lower) return lower;
@@ -35,32 +47,64 @@ class Key {
         if(this.sprite.clone_id === 0) {
             this.block.classList.remove("running")
         }
-            
     }
 }
 
 class SpriteWrap {
     name;
+    selected_texture;
     sprite;
     clone_id=0;
     keydict = {}
     _rotation = 0
     _rotation_mode = 0 // 0-normal, 1-left+right, 2-none
     promises = []
+    variables = {}
+    _tint = [100, 100, 100]
 
-    constructor(name, texture) {
+    constructor(name, texture, texture_name) {
         this.name = name
         // console.log(texture.firstChild.firstChild.src)
         this.sprite = Sprite.from(texture)
+        this.selected_texture = texture_name
         this.sprite.eventMode = "static"
         this.sprite.on("click", (event)=>{
             console.log(event)
         })
         global.window.app.stage.addChild(this.sprite)
         this.sprite.anchor.set(0.5)
+        this.variables = {}
 
         this.x = 0
         this.y = 0
+        
+    }
+    get textureDOMList() {
+        return [...document.getElementById(`te_${this.name}`).children].slice(0,-1)
+    }
+    get soundDOMList() {
+        return [...document.getElementById(`se_${this.name}`).children].slice(0,-1)
+    }
+
+    playBlock(val) {
+        val["data-sound"].play()
+    }
+
+    pauseBlock(val) {
+        val["data-sound"].pause();
+        val["data-sound"].currentTime = 0;
+    }
+
+    set textureBlock(val) {
+        this.sprite.texture = Texture.from(val.firstChild.firstChild.src)
+        this.selected_texture = val.lastChild.innerHTML
+    }
+
+    resetTexture() {
+        let block = document.getElementById(`te_${this.name}`).firstChild
+        this.textureBlock = block
+        this.sprite.texture = Texture.from(block.firstChild.firstChild.src)
+        this.sprite.selected_texture = block.lastChild.innerHTML
     }
 
     getKey(block) {
@@ -111,7 +155,14 @@ class SpriteWrap {
             clone_id: this.clone_id, owner: this, key: key
         }
         let pr = new Promise(async (resolve, reject) => {
-            let data = await block.run(start_data)
+            let data 
+            try {
+                data = await block.run(start_data)
+            }
+            catch(e) {
+                reject(e)
+                throw e
+            }
             resolve(data)
         }).finally(data=> {
             if(!key.canceled)key.cancel()
@@ -131,9 +182,7 @@ class SpriteWrap {
         for(let k in this.keydict) {
             this.keydict[k].cancel()
         }
-        Promise.all(this.promises).then(data => this.sprite.destroy())
-        
-        
+        Promise.all(this.promises).then(data => this.sprite.destroy()) 
     }
  
     set x(val) {
@@ -220,6 +269,13 @@ class SpriteWrap {
         else this.sprite.rotation = 0
         if(reboundOnRotate)this.bump_out()
     }
+    set tint(val) {
+        this.sprite.tint = HSLtoHEX(...val)
+        this._tint = val
+    }
+    get tint() {
+        return this._tint
+    }
 }
 
 class SpriteCopy extends SpriteWrap {
@@ -227,7 +283,7 @@ class SpriteCopy extends SpriteWrap {
     is_clone = true;
     clone_id;
     constructor(parent) {
-        super(parent.name, parent.sprite.texture)
+        super(parent.name, parent.sprite.texture, parent.selected_texture)
         this.parent = parent
         parent.add_clone(this)
 
@@ -235,6 +291,8 @@ class SpriteCopy extends SpriteWrap {
         this.rotation = parent.rotation
         this.x = parent.x
         this.y = parent.y
+        this.sprite.scale.x = parent.sprite.scale.x
+        this.sprite.scale.y = parent.sprite.scale.y
         
         this.runBlocks({cloned: true})
     }
@@ -252,7 +310,7 @@ class SpriteMain extends SpriteWrap {
     clone_list = []
     is_clone = false;
     constructor(name, texture) {
-        super(name, texture.firstChild.firstChild.src)
+        super(name, texture.firstChild.firstChild.src, texture.lastChild.innerHTML)
         global.window.sprites[name] = this
     }
     create_clone() {

@@ -17,16 +17,17 @@
                     "-gap",
                     "getX.js", "getY.js", "getAngle.js"]
     }, 
-    "Data":{
-        "color": "#FF6600",
-        "blocks": ["localVariable.js", "local.js", "consoleLog.js", "-gap", 
-        "-variables", "getVariable.js", "setVariable.js", "changeVariable.js",
-        "-gap", "-gap",
-        "-lists", "addList.js", "addIndexList.js", "-gap", "removeList.js", "removeIndexList.js",
-        "-gap", "setList.js", "changeList.js",
-        "-gap", "getList.js", "getIndexList.js", "getStringList.js", "-gap", 
-        "lengthList.js","countList.js"]
-    },
+    "Haptic":{
+        "color": "#CC99FF",
+        "blocks": ["setRotationMode.js", "visible.js", "switchTexture.js", "nextTexture.js",
+                    "indexTexture.js", "getTextureIndex.js", "-gap",
+                    "setScaleX.js","setScaleY.js", "changeScaleX.js","changeScaleY.js",
+                    "getScaleX.js", "getScaleY.js","-gap",
+                    "bringFront.js", "pushBack.js", "-gap",
+                    "setTintHue.js","setTintSat.js","setTintLight.js",
+                    "getTintHue.js","getTintSat.js","getTintLight.js","-gap",
+                    "playSound.js", "playSoundIndex.js", "stopSound.js", "stopSoundIndex.js", "stopSpriteSounds.js"]
+    }, 
     "Sensor":{
         "color":  "#33CCCC",
         "blocks": ["distanceTo.js", "distanceToClone.js", "getTime.js",
@@ -35,10 +36,16 @@
                     "-gap",
                     "getRotatedWidth.js", "getRotatedHeight.js"]
     },
-    "Haptic":{
-        "color": "#CC99FF",
-        "blocks": ["setRotationMode.js"]
-    }, 
+    "Data":{
+        "color": "#FF6600",
+        "blocks": ["localVariable.js", "local.js", "instanceVariable.js", "instance.js","consoleLog.js", "-gap", 
+        "-variables", "getVariable.js", "setVariable.js", "changeVariable.js",
+        "-gap", "-gap",
+        "-lists", "addList.js", "addIndexList.js", "-gap", "removeList.js", "removeIndexList.js",
+        "-gap", "setList.js", "changeList.js",
+        "-gap", "getList.js", "getIndexList.js", "getStringList.js", "-gap", 
+        "lengthList.js","countList.js"]
+    },
     "Operations":{
         "color": "#77BB00",
         "blocks": ["addition.js", "subtraction.js", "multiplication.js", "division.js", "modulo.js", "-gap",

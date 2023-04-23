@@ -31,7 +31,6 @@ my.handle_dropdown = function() {
 
 my.path = await ipcRenderer.invoke("homeDir") + "/saves/"
 
-
 my.getNextName = function(name_list, name) {
     if (!name_list.includes(name)) return name;
     let num = name.match(/\d*$/)[0]

@@ -10,7 +10,7 @@ export default class ChangeVariable extends BlockVoid {
         isList: true,
         default: [],
         variable: get_variables,
-     }, val => val];
+     }, num => (Number(num) || 0)];
     static display = "change | by |";
     constructor(element) {
         super(element)

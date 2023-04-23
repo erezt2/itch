@@ -242,7 +242,7 @@ body {
 .draggable > .dropzone {
     /* border: 1px solid black; */
     width: calc(100% + 10px);
-    min-width: 45px;
+    min-width: 65px;
     height: 15px;
     position: absolute;
     left:-5px;
@@ -283,13 +283,14 @@ body {
 #script-dragspace > .active > div {
     /* class in block dragspace */
     position: absolute;
+    width: 15px;
 }
 
 .draggable > .draggable:last-child {
     /*class for block in block */
     position: relative; /* TEMP */
     width: 0;
-    height: 0;
+    height: max-content;
 }
 
 .inside-container > .dropzone:not(:last-child) {

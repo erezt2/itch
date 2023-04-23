@@ -1,9 +1,9 @@
-const PIXI = require("pixi.js")
+const {Application} = require("pixi.js")
 const win = document.getElementById("window")
 import global from "./global.js"
 
 export default function start() {
-    let app = new PIXI.Application({ width: global.window.width, height: global.window.height, background: "#FFFFFF" });
+    let app = new Application({ width: global.window.width, height: global.window.height, background: "#FFFFFF" });
     win.appendChild(app.view)
 
 

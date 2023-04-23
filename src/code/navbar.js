@@ -17,7 +17,7 @@ export default function createNavbar() {
     selected_editor_screen.classList.add("editor-selected")
   }
 
-  for(let i=0; i<4; i++) {
+  for(let i=0; i<3; i++) {
     navbar.children[3+i].onclick = selectNavbarWrapper(i)
   }
 

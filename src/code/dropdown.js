@@ -96,7 +96,10 @@ function renameInner(event) {
     let dom = global.dropdown_reference
     let bname = dom.lastChild.innerHTML
 
-    dialog.prompt(`rename texture '${bname}' to:`, name => {
+    let type = 'audio'
+    if(dom.parentNode.id.startsWith("te_")) type = 'texture'
+
+    dialog.prompt(`rename ${type} '${bname}' to:`, name => {
         if(!name) return
         let id_list = []
         for(let c of dom.parentNode.children) {
@@ -104,6 +107,12 @@ function renameInner(event) {
         }
         name = global.getNextName(id_list, name)
         dom.lastChild.innerHTML = name
+        let sp = global.window.sprites[dom.parentNode.id.slice(3)]
+        if(type === "texture" && sp.selected_texture === bname) {
+           sp.selected_texture = name
+           
+        }
+        console.log(sp)
     })
 }
 
@@ -146,7 +155,14 @@ function removeInner(event) {
     
     let src = dom.firstChild.firstChild.dataset["audio"]
     if(dom.parentNode.children.length > 2 || src !== undefined) {
+        let bname = dom.lastChild.innerHTML
+        let sp = global.window.sprites[dom.parentNode.id.slice(3)]
+        let starts_with = dom.parentNode.id.startsWith("te_")
         dom.remove()
+        if(starts_with && sp.selected_texture === bname) {
+            sp.resetTexture()
+            console.log("reset")
+        }
     }
 }
 
@@ -170,6 +186,7 @@ sprite_dropdown.children[0].onclick = function(event) {
         dom.lastChild.innerHTML = name
         global.window.sprites[name] = global.window.sprites[bname]
         delete global.window.sprites[bname]
+        global.window.sprites[name].name = name
     })
 }
 
@@ -214,7 +231,7 @@ sprite_dropdown.children[1].onclick = async function(event) {
         if (od === undefined) continue
         snd["data-sound"] = new Audio(od)
         snd.onclick = function(event) {
-            this["data-sound"].play()
+            this["data-sound"].play().
             event.preventDefault();
         }
     }

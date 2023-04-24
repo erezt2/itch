@@ -13,6 +13,7 @@ export default class Function extends BlockStart {
             data.owner = owner
             data.sprite = owner.sprite
             data.clone_id = owner.clone_id
+            data.user = owner.user
         }
         data = await super.run(data)
         return data.return

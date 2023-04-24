@@ -29,6 +29,7 @@ async function createBlock(block, block_name, sn, display) {
     block.classList.add("draggable")
     block.draggable = true 
     block.addEventListener("dragstart", global.register_dragged_dup)
+    block.addEventListener("dragend", global.stop_drag)
     
     let inside = document.createElement("div")
     let block_class = (await import(`./blocks/${sn}/${block_name}`)).default

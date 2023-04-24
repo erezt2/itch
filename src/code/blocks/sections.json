@@ -24,8 +24,8 @@
                     "setScaleX.js","setScaleY.js", "changeScaleX.js","changeScaleY.js",
                     "getScaleX.js", "getScaleY.js","-gap",
                     "bringFront.js", "pushBack.js", "-gap",
-                    "setTintHue.js","setTintSat.js","setTintLight.js",
-                    "getTintHue.js","getTintSat.js","getTintLight.js","-gap",
+                    "setTint.js",
+                    "getTint.js", "-gap",
                     "playSound.js", "playSoundIndex.js", "stopSound.js", "stopSoundIndex.js", "stopSpriteSounds.js"]
     }, 
     "Sensor":{
@@ -34,7 +34,7 @@
                     "-gap",
                     "getMouseX.js", "getMouseY.js",
                     "-gap",
-                    "getRotatedWidth.js", "getRotatedHeight.js"]
+                    "getRotatedWidth.js", "getRotatedHeight.js", "touching.js"]
     },
     "Data":{
         "color": "#FF6600",

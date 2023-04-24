@@ -47,23 +47,35 @@ spriteListEvents()
 
 // selectPlayground("background")
 
-
-import { saveState, loadState, resetState } from "./code/save-load.js"
-
-// window.addEventListener("keydown", function(event) {
-//   if (event.key == "s") {
-//     saveState("test1")
-//   }
-//   if (event.key == "l") {
-//     loadState("test1")
-//   }
-// });
-
-
-// SEPERATE
 import start from "./code/canvas.js"
 let app = start()
 global.window.app = app
+
+import User from "./code/user.js"
+global.mainUser = new User()
+
+import { saveState, loadState, resetState } from "./code/save-load.js"
+
+const body = document.getElementsByTagName("body")[0]
+document.addEventListener("keydown", function(event) {
+  if(document.activeElement !== body || 
+    document.getElementsByClassName("dialog-widget").length > 0) 
+    return;
+  console.log(event.key)
+});
+
+const can = document.querySelector("#window > canvas")
+const rect = can.getBoundingClientRect()
+window.addEventListener("mousemove", (event) => {
+    global.mainUser.mouse_pos = { 
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top
+    }
+})
+
+
+// SEPERATE
+
 
 import resetPlayground from "./code/buttons-handle.js"
 resetPlayground()

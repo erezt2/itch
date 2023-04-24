@@ -86,6 +86,7 @@ async function handle_duplicates(dup, dragged, exists) { // duplication handle (
     }
     global.hashDOM(clone)
     clone.addEventListener("dragstart", global.register_dragged)
+    clone.addEventListener("dragend", global.stop_drag)
 
     // clone.classList.add("draggable")
     

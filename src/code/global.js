@@ -15,6 +15,8 @@ my.open_dropdown = null
 my.dropdown_reference = null
 my.loaded_file = null
 my.selected_sprite = null
+my.users = {}
+my.mainUser = null
 my.handle_dropdown = function() {
     if(my.open_dropdown !== null) {
         my.open_dropdown.style.display = "none"
@@ -48,16 +50,23 @@ my.getNextName = function(name_list, name) {
 }
 
 my.register_dragged_dup = (event) => {
+    sd.classList.add("dragging-now")
     my.dragged.duplicate = true;
     my.dragged.target = event.target;
     my.dragged.self_x = event.offsetX;
     my.dragged.self_y = event.offsetY;
 }
+const sd = document.getElementById("script-dragspace")
 my.register_dragged = (event) => {
+    sd.classList.add("dragging-now")
     my.dragged.duplicate = false;
     my.dragged.target = event.target;
     my.dragged.self_x = event.offsetX;
     my.dragged.self_y = event.offsetY;
+}
+
+my.stop_drag = (event) => {
+    sd.classList.remove("dragging-now")
 }
 
 my.nextHashID = 1

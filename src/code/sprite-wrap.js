@@ -61,8 +61,12 @@ class SpriteWrap {
     promises = []
     variables = {}
     _tint = [100, 100, 100]
+    user
 
-    constructor(name, texture, texture_name) {
+    constructor(name, texture, texture_name, user) {
+        if(user === undefined) this.user = global.users[0]
+        else this.user = user
+
         this.name = name
         // console.log(texture.firstChild.firstChild.src)
         this.sprite = Sprite.from(texture)
@@ -152,7 +156,7 @@ class SpriteWrap {
         
         let start_data = {
             local_variables: {}, else: false, break:false, continue:false, sprite: this.sprite, 
-            clone_id: this.clone_id, owner: this, key: key
+            clone_id: this.clone_id, owner: this, user: this.user, key: key
         }
         let pr = new Promise(async (resolve, reject) => {
             let data 
@@ -208,6 +212,7 @@ class SpriteWrap {
         return halfH - this.sprite.y
     }
     get w() { // width including rotation
+        return this.sprite.getBounds().width
         let w = this.sprite.width
         let h = this.sprite.height
         let rot = mod(this.sprite.rotation, (2*pi))
@@ -218,6 +223,7 @@ class SpriteWrap {
         return  Math.cos(rot - deg) * diag
     }
     get h() {
+        return this.sprite.getBounds().height
         let w = this.sprite.width
         let h = this.sprite.height
         let rot = mod(this.sprite.rotation, (2*pi))
@@ -293,6 +299,7 @@ class SpriteCopy extends SpriteWrap {
         this.y = parent.y
         this.sprite.scale.x = parent.sprite.scale.x
         this.sprite.scale.y = parent.sprite.scale.y
+        this.tint = parent.tint
         
         this.runBlocks({cloned: true})
     }

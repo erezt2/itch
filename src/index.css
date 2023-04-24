@@ -335,6 +335,7 @@ body {
 
 .editable {
     margin: 0 3px;
+    border-radius: 6px;
 }
 
 .editable:focus {
@@ -347,7 +348,6 @@ body {
     color:black;
     padding: 1px 2px;
     font-size: 14px;
-    border-radius: 6px;
 }
 
 .selectable {
@@ -647,4 +647,9 @@ body {
 .button:hover {
     background-color: gainsboro;
     cursor: pointer;
+}
+
+
+.dragging-now .draggable {
+    width: auto !important;
 }

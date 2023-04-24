@@ -18,11 +18,11 @@ export default class Goto extends BlockVoid {
     async run(data) {
         let args = await this.getValues(this.constructor.input_types, data)
         if(args[0] === "mouse\u200b") {
-            let x = global.mouse_pos.x
+            let x = data.user.mouse_pos.x
             if (x < 0) x = 0 
             if (x >= global.window.width) x = global.window.width
             x = x - Math.round(global.window.width / 2)
-            let y = global.mouse_pos.y
+            let y = data.user.mouse_pos.y
             if (y < 0) y = 0
             if (y >= global.window.height) y = global.window.height
             y= Math.round(global.window.height / 2) - y

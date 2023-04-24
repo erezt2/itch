@@ -19,8 +19,8 @@ export default class Move extends BlockValue {
         let args = await this.getValues(this.constructor.input_types, data)
         let x, y
         if(args[0] === "mouse\u200b") {
-            x = global.mouse_pos.x
-            y = global.mouse_pos.y
+            x = data.user.mouse_pos.x
+            y = data.user.mouse_pos.y
         }
         else if(args[0] in global.window.sprites) {
             let obj = global.window.sprites[args[0]]

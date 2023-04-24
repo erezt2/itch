@@ -18,13 +18,14 @@ export default class PlaySound extends BlockVoid {
     }
     async run(data) {
         let args = await this.getValues(this.constructor.input_types, data)
-
+        let list = data.owner.soundDOMList
+        if(list.length === 0) return await super.run(data);
         if(args[0] === "random\u200b") {
-            let list = data.owner.soundDOMList
+            
             data.owner.playBlock(list[Math.floor(Math.random()*list.length)])
         }
         else {
-            for(let dom of data.owner.soundDOMList){
+            for(let dom of list){
                 if(args[0] === dom.lastChild.innerHTML) {
                     data.owner.playBlock(dom)
                     break

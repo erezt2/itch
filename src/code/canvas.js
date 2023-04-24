@@ -12,18 +12,7 @@ export default function start() {
     app.ticker.add((delta) => {
         elapsed += delta;
     });
-    
-    const can = document.querySelector("#window > canvas")
-    const rect = can.getBoundingClientRect()
-    window.addEventListener("mousemove", (event) => {
-        global.mouse_pos = { 
-            x: event.clientX - rect.left,
-            y: event.clientY - rect.top
-        }
-    })
-  
-
-    // let bg = new PIXI.Sprite(PIXI.Texture.WHITE)
+    // let bg= new PIXI.Sprite(PIXI.Texture.WHITE)
     // bg.width = global.window.width
     // bg.height = global.window.height
     // bg.eventMode = "static"

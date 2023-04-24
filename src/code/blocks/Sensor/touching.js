@@ -1,36 +1,32 @@
-import BlockVoid from "../blockVoid.js";
 import global from "../../global.js"
+import BlockValue from "../blockValue.js";
 
 function get_all_sprites() {
     return Object.keys(global.window.sprites)
 }
 
-export default class PointTo extends BlockVoid {
+export default class Touching extends BlockValue {
     static input_types = [{
        isList: true,
        default: ["mouse\u200b"],
        variable: get_all_sprites,
     }];
-    static display = "point to |";
+    static display = "touching |?";
     constructor(element) {
         super(element)
     }
     async run(data) {
         let args = await this.getValues(this.constructor.input_types, data)
-        let x, y
+        let mp = data.user.mouse_pos
         if(args[0] === "mouse\u200b") {
-            x = data.user.mouse_pos.x
-            y = data.user.mouse_pos.y
+            return data.sprite.getBounds().contains(mp.x, mp.y)
         }
         else if(args[0] in global.window.sprites) {
             let obj = global.window.sprites[args[0]]
-            x = obj.sprite.x
-            y = obj.sprite.y
+            return obj.sprite.getBounds().intersects(data.sprite.getBounds())
         }
         else {
-            return await super.run(data);
+            return false
         }
-        data.owner.rotation = Math.atan2(y-data.sprite.y,x-data.sprite.x)
-        return await super.run(data);
     }
 }

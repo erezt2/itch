@@ -9,7 +9,7 @@ export default class GetMouseY extends blockValue {
     }
     async run(data) {
         let args = await this.getValues(this.constructor.input_types, data)
-        let y = global.mouse_pos.y
+        let y = data.user.mouse_pos.y
         if (y < 0) y = 0
         if (y >= global.window.height) y = global.window.height
         return Math.round(global.window.height / 2) - y

@@ -72,8 +72,8 @@ class SpriteWrap {
         this.sprite = Sprite.from(texture)
         this.selected_texture = texture_name
         this.sprite.eventMode = "static"
-        this.sprite.on("click", (event)=>{
-            console.log(event)
+        this.sprite.on("click", async (event)=>{
+            this.runBlocks({clickedOn: true})
         })
         global.window.app.stage.addChild(this.sprite)
         this.sprite.anchor.set(0.5)
@@ -120,14 +120,15 @@ class SpriteWrap {
         return k in this.keydict
     }
 
-    async runBlocks(filter) {
+    async runBlocks(filter, args) {
+        filter.selfObject = this
         let ds = document.getElementById("ds_"+this.name)
         let l = []
         for(let child of ds.children){
             let block = child["data-block"]
             if(block instanceof BlockStart &&
                 await block.checkStart(filter)) {
-                    l.push(this.runSingular(block))
+                    l.push(this.runSingular(block, args))
                 }
         }
         return l
@@ -149,7 +150,7 @@ class SpriteWrap {
         }
     }
 
-    runSingular(block) {
+    runSingular(block, args) {
         this.stopSingular(block)
         if(this.clone_id === 0) block.elementHTML.classList.add("running")
         let key = new Key(this, block.elementHTML)
@@ -157,6 +158,10 @@ class SpriteWrap {
         let start_data = {
             local_variables: {}, else: false, break:false, continue:false, sprite: this.sprite, 
             clone_id: this.clone_id, owner: this, user: this.user, key: key
+        }
+        if(args !== undefined) start_data = {
+            ...args,
+            ...start_data,
         }
         let pr = new Promise(async (resolve, reject) => {
             let data 
@@ -288,8 +293,11 @@ class SpriteCopy extends SpriteWrap {
     parent;
     is_clone = true;
     clone_id;
-    constructor(parent) {
-        super(parent.name, parent.sprite.texture, parent.selected_texture)
+    constructor(parent, user_id) {
+        let user
+        if(user_id) user = global.users[user_id]
+        else user = undefined
+        super(parent.name, parent.sprite.texture, parent.selected_texture, user)
         this.parent = parent
         parent.add_clone(this)
 
@@ -320,8 +328,8 @@ class SpriteMain extends SpriteWrap {
         super(name, texture.firstChild.firstChild.src, texture.lastChild.innerHTML)
         global.window.sprites[name] = this
     }
-    create_clone() {
-        new SpriteCopy(this)
+    create_clone(user_id) {
+        new SpriteCopy(this, user_id)
     }
     add_clone(instance) {
         this.clone_list.push(instance)

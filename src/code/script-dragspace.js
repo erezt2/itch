@@ -39,7 +39,6 @@ export default function createDragspace(name, exists){
         
 
         let rect = block_playground.getBoundingClientRect()
-        console.log(my)
         let x = event.clientX - rect.left
         let y = event.clientY - rect.top
         x = (block_playground.scrollLeft + x - my.self_x)

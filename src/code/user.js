@@ -3,66 +3,115 @@ import global from "./global.js"
 const Key = Object.freeze({
     none: 0,
     down: 1,
-    hold: 2,
-    up: 3,
 });
 
 const key_list = {
-    32:"space",
-    37:"arrow left",
-    38:"arrow up",
-    39:"arrow right",
-    40:"arrow down",	
-    48:"0",
-    49:"1",
-    50:"2",
-    51:"3",
-    52:"4",
-    53:"5",
-    54:"6",
-    55:"7",	
-    56:"8",	
-    57:"9",
-    65:"a",
-    66:"b",	
-    67:"c",	
-    68:"d",
-    69:"e",	
-    70:"f",	
-    71:"g",
-    72:"h",	
-    73:"i",	
-    74:"j",	
-    75:"k",
-    76:"l",
-    77:"m",	
-    78:"n",	
-    79:"o",	
-    80:"p",	
-    81:"q",	
-    82:"r",	
-    83:"s",	
-    84:"t",
-    85:"u",	
-    86:"v",	
-    87:"w",
-    88:"x",
-    89:"y",
-    90:"z",
+    "space":" ",
+    "left arrow":"ArrowLeft",
+    "up arrow":"ArrowUp",
+    "right arrow":"ArrowRight",
+    "down arrow": "ArrowDown",	
+    "0":"0",
+    "1":"1",
+    "2":"2",
+    "3":"3",
+    "4":"4",
+    "5":"5",
+    "6":"6",
+    "7":"7",	
+    "8":"8",	
+    "9":"9",
+    "a":"a",
+    "b":"b",	
+    "c":"c",	
+    "d":"d",
+    "e":"e",	
+    "f":"f",	
+    "g":"g",
+    "h":"h",	
+    "i":"i",	
+    "j":"j",	
+    "k":"k",
+    "l":"l",
+    "m":"m",	
+    "n":"n",	
+    "o":"o",	
+    "p":"p",	
+    "q":"q",	
+    "r":"r",	
+    "s":"s",	
+    "t":"t",
+    "u":"u",	
+    "v":"v",	
+    "w":"w",
+    "x":"x",
+    "y":"y",
+    "z":"z",
 }
 
 var user = 0
 
-export default class User {
+class User {
     static users = {}
+    static peers = {}
     userID = 0
     mouse_pos
-    constructor() {
+    keys
+    mouseDown
+
+    key_down(key) {
+        if(this.keys[key]) return;
+        this.keys[key] = Key.down
+
+        let sprites = global.window.sprites
+        for(let k in sprites) {
+            sprites[k].runBlocks({keyDown: {user: this, key: key}})
+        }
+    }
+
+    key_up(key) {
+        this.keys[key] = Key.none
+    }
+
+    is_key_down(key) {
+        return this.keys[key] === Key.down
+    }
+
+    mouse_down() {
+        this.mouseDown = true
+    }
+
+    mouse_up() {
+        this.mouseDown = false
+    }
+
+    promise_resolve
+
+    answer(ans) {
+        if(this.promise_resolve)
+            this.promise_resolve(ans || "")
+    }
+    async ask(q) {
+        this.connection.send({"ask": q})
+        let p = new Promise(resolve => {
+            this.promise_resolve = resolve
+        })
+        return await p
+    }
+
+    constructor(peer_id, connection) {
+        this.connection = connection
+        this.peerID = peer_id
         this.userID = user
+        this.promise_resolve = null
         user += 1
         this.mouse_pos = {x: 0, y: 0}
         this.keys = {}
         for(let i of Object.keys(key_list)) this.keys[i] = Key.none
+        this.mouseDown = false
         global.users[this.userID] = this
+        global.peers[this.peerID] = this
     }
 }
+
+export {User, key_list}

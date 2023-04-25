@@ -16,7 +16,10 @@ my.dropdown_reference = null
 my.loaded_file = null
 my.selected_sprite = null
 my.users = {}
+my.peers = {}
+my.connections = []
 my.mainUser = null
+my.peer = null
 my.handle_dropdown = function() {
     if(my.open_dropdown !== null) {
         my.open_dropdown.style.display = "none"

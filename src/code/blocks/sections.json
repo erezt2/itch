@@ -1,7 +1,8 @@
 {
     "Controls":{
         "color": "#FF9900",
-        "blocks": ["onStart.js", "ifThen.js", "elseIf.js", "else.js", "-gap", 
+        "blocks": ["onStart.js", "onKeyPressed.js", "onSpritePressed.js","-gap",
+             "ifThen.js", "elseIf.js", "else.js", "-gap", 
             "repeatTimes.js", "repeatWhile.js", "repeatUntil.js", "forIn.js", "break.js","continue.js","-gap",
             "wait.js", "updateScreen.js", "-gap", "receiveBroadcast.js", "broadcast.js", "broadcastWait.js",
             "-gap", "stop.js", "-gap", "onCloneStart.js", "createClone.js", "deleteClone.js", "cloneID.js"]
@@ -34,7 +35,8 @@
                     "-gap",
                     "getMouseX.js", "getMouseY.js",
                     "-gap",
-                    "getRotatedWidth.js", "getRotatedHeight.js", "touching.js"]
+                    "getRotatedWidth.js", "getRotatedHeight.js", "-gap",
+                    "touching.js", "keyPressed.js", "mouseDown.js", "ask.js"]
     },
     "Data":{
         "color": "#FF6600",
@@ -55,7 +57,8 @@
     }, 
     "Network":{
         "color": "#990066",
-        "blocks": []
+        "blocks": ["onJoin.js", "newUser.js", "currentUser.js", "-gap",
+                    "createControlledClone.js", "giveControls.js"]
     },
     "Functions":{
         "color": "#666699",

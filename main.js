@@ -19,9 +19,9 @@ app.whenReady().then(() => {
     })
     win.loadFile('./src/index.html')
     win.webContents.openDevTools()
-    ipcMain.handle("runThread", (event, _function, arguments) => {
-      const worker = new Worker('./src/code/worker-thread.mjs', { workerData: {function: _function, arguments: arguments} })
-    })
+    // ipcMain.handle("runThread", (event, _function, arguments) => {
+    //   const worker = new Worker('./src/code/worker-thread.mjs', { workerData: {function: _function, arguments: arguments} })
+    // })
 })
 
 ipcMain.handle("showDialog", (event, filter) => {

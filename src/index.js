@@ -48,10 +48,10 @@ spriteListEvents()
 // selectPlayground("background")
 
 import start from "./code/canvas.js"
-let app = start()
-global.window.app = app
+let _app = start()
+global.window.app = _app
 
-import User from "./code/user.js"
+import {User} from "./code/user.js"
 global.mainUser = new User()
 
 import { saveState, loadState, resetState } from "./code/save-load.js"
@@ -61,8 +61,20 @@ document.addEventListener("keydown", function(event) {
   if(document.activeElement !== body || 
     document.getElementsByClassName("dialog-widget").length > 0) 
     return;
-  console.log(event.key)
+  global.mainUser.key_down(event.key)
 });
+
+document.addEventListener("keyup", function(event) {
+  global.mainUser.key_up(event.key)
+});
+
+document.addEventListener("mousedown", function(event) {
+  if(event.button === 0) global.mainUser.mouse_down()
+}) 
+
+document.addEventListener("mouseup", function(event) {
+  if(event.button === 0) global.mainUser.mouse_up()
+}) 
 
 const can = document.querySelector("#window > canvas")
 const rect = can.getBoundingClientRect()
@@ -96,9 +108,28 @@ window.addEventListener("contextmenu", (event) => {
 
 addFile("./public/sprite.webp")
 
+import startServer from "./code/connection.js"
+startServer()
+
+// const {ExpressPeerServer}= require("peer")
+// const app = rqeuire("express")()
 
 
+// const server = require("http").createServer(app);
+// const peerServer = ExpressPeerServer(server, {debug: true})
+
+// app.use("/peerjs", peerServer)
+
+// const PORT = 20022
+// server.listen(PORT, ()=>console.log("server running!"))
 
 
+// const video = document.createElement('video');
+// document.getElementsByTagName("body")[0].appendChild(video)
+// video.srcObject = stream;
+// video.autoplay = true
+// video.controls = true
+// video.width = global.window.width
+// video.height = global.window.height
 
 

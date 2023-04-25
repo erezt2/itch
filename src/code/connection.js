@@ -25,6 +25,7 @@ export default function runServer() {
 
     peer.on("open", id=> {
         peer.on('connection', conn => {
+          global.connections.push(conn)
           let user = new User(conn.peer, conn)
           peer.call(conn.peer, stream)
           conn.on('data', data => {
@@ -34,13 +35,10 @@ export default function runServer() {
             if(data.keyUp)user.key_up(data.keyUp)
             if(data.mousePos)user.mouse_pos = data.mousePos
             if(data.answer) user.answer(data.answer)
+            if(data.join) user.join()
+            if(data.quit) user.quit()
           });
         //   conn.on("")
-          let sprites = global.window.sprites
-          global.connections.push(conn)
-          for(let k in sprites) {
-              sprites[k].runBlocks({userConnection: true}, {newUserID: user.userID})
-          }
         });
       })
 }

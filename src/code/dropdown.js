@@ -112,7 +112,6 @@ function renameInner(event) {
            sp.selected_texture = name
            
         }
-        console.log(sp)
     })
 }
 
@@ -161,7 +160,6 @@ function removeInner(event) {
         dom.remove()
         if(starts_with && sp.selected_texture === bname) {
             sp.resetTexture()
-            console.log("reset")
         }
     }
 }

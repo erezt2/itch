@@ -57,7 +57,7 @@
     }, 
     "Network":{
         "color": "#990066",
-        "blocks": ["onJoin.js", "newUser.js", "currentUser.js", "-gap",
+        "blocks": ["onJoin.js", "onQuit.js", "newUser.js", "currentUser.js", "-gap",
                     "createControlledClone.js", "giveControls.js"]
     },
     "Functions":{

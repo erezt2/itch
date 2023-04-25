@@ -13,6 +13,11 @@ function resetPlayground() {
             clone.remove()
         }
     }
+    for(let usr of Object.values(global.users)) {
+        usr.joined = false
+        usr.allowedIn = true
+    }
+    console.log("STOP")
 }
 
 let start_button = document.getElementById("start_button")

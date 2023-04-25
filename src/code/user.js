@@ -65,7 +65,7 @@ class User {
 
         let sprites = global.window.sprites
         for(let k in sprites) {
-            sprites[k].runBlocks({keyDown: {user: this, key: key}})
+            sprites[k].runAllBlocks({keyDown: {user: this, key: key}})
         }
     }
 
@@ -98,7 +98,26 @@ class User {
         })
         return await p
     }
-
+    joined = false
+    allowedIn = false
+    join() {
+        if(!this.allowedIn) return
+        if(this.joined) return
+        this.joined = true;
+        this.allowedIn = false
+        let sprites = global.window.sprites
+        for(let k in sprites) {
+            sprites[k].runBlocks({userConnection: true}, {newUserID: this.userID})
+        }
+    }
+    quit() {
+        if(!this.joined) return
+        this.joined = false
+        let sprites = global.window.sprites
+        for(let k in sprites) {
+            sprites[k].runAllBlocks({stopConnection: true, userStopped: this, })
+        }
+    }
     constructor(peer_id, connection) {
         this.connection = connection
         this.peerID = peer_id

@@ -15,15 +15,19 @@ function resetPlayground() {
     }
     for(let usr of Object.values(global.users)) {
         usr.joined = false
-        usr.allowedIn = true
+        usr.allowedIn = false
     }
-    console.log("STOP")
+    
 }
 
 let start_button = document.getElementById("start_button")
 start_button.onclick = async function(event) {
     resetPlayground()
     let sprites = global.window.sprites
+    for(let usr of Object.values(global.users)) {
+        usr.joined = false
+        usr.allowedIn = true
+    }
     for(let k in sprites) {
         await sprites[k].runBlocks({start: true})
     }

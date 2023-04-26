@@ -72,9 +72,6 @@ class SpriteWrap {
         this.sprite = Sprite.from(texture)
         this.selected_texture = texture_name
         this.sprite.eventMode = "static"
-        this.sprite.on("click", async (event)=>{
-            this.runBlocks({clickedOn: true})
-        })
         global.window.app.stage.addChild(this.sprite)
         this.sprite.anchor.set(0.5)
         this.variables = {}
@@ -347,10 +344,10 @@ class SpriteMain extends SpriteWrap {
         this.stopSelf(mercy)
         for(let cl of this.clone_list) cl.stopSelf(mercy)
     }
-    async runAllBlocks(data) {
+    async runAllBlocks(filter, data) {
         let l = []
-        l= l.concat(await this.runBlocks(data))
-        for(let cl of this.clone_list) l=l.concat(await cl.runBlocks(data))
+        l= l.concat(await this.runBlocks(filter, data))
+        for(let cl of this.clone_list) l=l.concat(await cl.runBlocks(filter, data))
         return l
     }
     stopSingularAllClones(block) {

@@ -79,6 +79,11 @@ class User {
 
     mouse_down() {
         this.mouseDown = true
+        let sprites = global.window.sprites
+        for(let k in sprites) {
+            sprites[k].runAllBlocks({clickedOn: true, userClicked: this, 
+                mousePosXY: [this.mouse_pos.x, this.mouse_pos.y]}, {actionUserID: this.userID})
+        }
     }
 
     mouse_up() {
@@ -107,7 +112,7 @@ class User {
         this.allowedIn = false
         let sprites = global.window.sprites
         for(let k in sprites) {
-            sprites[k].runBlocks({userConnection: true}, {newUserID: this.userID})
+            sprites[k].runBlocks({userConnection: true}, {actionUserID: this.userID})
         }
     }
     quit() {
@@ -115,7 +120,7 @@ class User {
         this.joined = false
         let sprites = global.window.sprites
         for(let k in sprites) {
-            sprites[k].runAllBlocks({stopConnection: true, userStopped: this, })
+            sprites[k].runAllBlocks({stopConnection: true, userStopped: this})
         }
     }
     constructor(peer_id, connection) {

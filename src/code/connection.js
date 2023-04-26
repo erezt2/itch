@@ -19,6 +19,7 @@ export default function runServer() {
         () => dialog.alert("the current ID of the server is " + id + "\n(copied to clipboard)"),
         () => dialog.alert("the current ID of the server is " + id + "\ncould not be copied to clipboard (app wasnt focused)")
     )
+    global.serverID = id
 
     let peer = new Peer("itch-app-connection-id-"+id);
     global.peer = peer

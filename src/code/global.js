@@ -20,6 +20,7 @@ my.peers = {}
 my.connections = []
 my.mainUser = null
 my.peer = null
+my.serverID = null
 my.handle_dropdown = function() {
     if(my.open_dropdown !== null) {
         my.open_dropdown.style.display = "none"

@@ -14,7 +14,6 @@ export default class OnStart extends BlockStart {
     }
     async checkStart(data) {
         let args = await this.getValues(this.constructor.input_types, data)
-        
-        return data.clickedOn && data.userClicked === data.selfObject.user && data.selfObject.sprite.getBounds().contains(...data.mousePosXY);
+        return data.clickedOn && data.selfObject.sprite.getBounds().contains(...data.mousePosXY);
     }
 }

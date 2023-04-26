@@ -2,7 +2,9 @@ const { app, BrowserWindow, dialog, ipcMain } = require('electron')
 const path = require("path")
 
 app.whenReady().then(() => {
+    console.log(__dirname+"/public/sprite.webp")
     const win = new BrowserWindow({
+        icon: __dirname+"/public/sprite.ico",
         width: 1200,
         height: 800,
         resizable: true,
@@ -14,11 +16,11 @@ app.whenReady().then(() => {
             nodeIntegrationInWorker: true,
             enableRemoteModule: true,
             contextIsolation: false,
-            sandbox:false,
+            sandbox: false,
         }
     })
     win.loadFile('./src/index.html')
-    win.webContents.openDevTools()
+    // win.webContents.openDevTools()
     // ipcMain.handle("runThread", (event, _function, arguments) => {
     //   const worker = new Worker('./src/code/worker-thread.mjs', { workerData: {function: _function, arguments: arguments} })
     // })

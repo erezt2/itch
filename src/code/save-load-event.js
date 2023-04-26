@@ -72,3 +72,11 @@ file_dropdown.children[2].onclick = async function(event){
   if(global.loaded_file !== null) saveState(global.loaded_file)
   else saveAs(event)
 }
+
+file_dropdown.children[4].onclick = function(event) {
+  let id = global.serverID
+  navigator.clipboard.writeText(id).then(
+      () => dialog.alert("the current ID of the server is " + id + "\n(copied to clipboard)"),
+      () => dialog.alert("the current ID of the server is " + id + "\ncould not be copied to clipboard (app wasnt focused)")
+  )
+}

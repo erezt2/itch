@@ -106,7 +106,7 @@ window.addEventListener("contextmenu", (event) => {
   global.handle_dropdown()
 })
 
-addFile("./public/sprite.webp")
+addFile(global.path+"/public/sprite.webp")
 
 import startServer from "./code/connection.js"
 startServer()

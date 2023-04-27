@@ -35,7 +35,8 @@ my.handle_dropdown = function() {
 //     }
 // }
 
-my.path = await ipcRenderer.invoke("homeDir") + "/saves/"
+my.path = await ipcRenderer.invoke("homeDir")
+my.savePath = my.path + "/saves/"
 
 my.getNextName = function(name_list, name) {
     if (!name_list.includes(name)) return name;

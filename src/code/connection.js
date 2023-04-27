@@ -12,7 +12,11 @@ const genRand = (len) => {
 
 export default function runServer() {
     const can = document.querySelector("#window > canvas")
+    // const actx = new AudioContext()
+    // const dest = actx.createMediaStreamDestination()
+    
     const stream = can.captureStream(25)
+    // stream.addTrack(dest.stream.getAudioTracks()[0])
 
     let id = genRand(8)
     navigator.clipboard.writeText(id).then(
@@ -25,6 +29,7 @@ export default function runServer() {
     global.peer = peer
 
     peer.on("open", id=> {
+        global.serverID = id
         peer.on('connection', conn => {
           global.connections.push(conn)
           let user = new User(conn.peer, conn)

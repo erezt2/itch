@@ -28,7 +28,7 @@ file_dropdown.children[0].onclick = function(event) {
 }
 
 file_dropdown.children[1].onclick = async function(event){
-  let files = fs.readdirSync(global.path);
+  let files = fs.readdirSync(global.savePath);
   files = files.map(val => val.split('.').slice(0, -1).join('.'))
   file_selector.style.display = "flex"
   let flex = file_selector_flex
@@ -54,7 +54,7 @@ file_selector.onclick = function(event) {
 }
 
 async function saveAs(event){
-  let files = fs.readdirSync(global.path);
+  let files = fs.readdirSync(global.savePath);
 
   dialog.prompt("Save as:", name => {
     if(!name) return

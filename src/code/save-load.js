@@ -20,7 +20,7 @@ const te = document.getElementById("editor-textures")
 const se = document.getElementById("editor-sounds")
 const ss = document.getElementById("sprites")
 const sbl = document.getElementById("script-block-list")
-storage.setDataPath(global.path)
+storage.setDataPath(global.savePath)
 
 function resetState() {
   sd.innerHTML = ""

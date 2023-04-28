@@ -4,7 +4,7 @@ import BlockStart from "../blockStart.js";
 
 export default class OnStart extends BlockStart {
     static input_types = [];
-    static display = "on sprite click";
+    static display = "on sprite click (sets action ID)";
     constructor(element) {
         super(element)
     }

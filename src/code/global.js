@@ -55,19 +55,19 @@ my.getNextName = function(name_list, name) {
 }
 
 my.register_dragged_dup = (event) => {
-    sd.classList.add("dragging-now")
     my.dragged.duplicate = true;
     my.dragged.target = event.target;
     my.dragged.self_x = event.offsetX;
     my.dragged.self_y = event.offsetY;
+    setTimeout(()=>sd.classList.add("dragging-now"), 5)
 }
 const sd = document.getElementById("script-dragspace")
 my.register_dragged = (event) => {
-    sd.classList.add("dragging-now")
     my.dragged.duplicate = false;
     my.dragged.target = event.target;
     my.dragged.self_x = event.offsetX;
     my.dragged.self_y = event.offsetY;
+    setTimeout(()=>sd.classList.add("dragging-now"), 5)
 }
 
 my.stop_drag = (event) => {

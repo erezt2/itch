@@ -20,12 +20,13 @@ export default class GotoClone extends BlockVoid {
         if(args[0] in global.window.sprites) {
             let obj = global.window.sprites[args[0]]
             let id = parseInt(args[1])
-            for(let clone of obj.clone_list){
-                if(clone.clone_id === id) {
-                    data.owner.x = clone.x
-                    data.owner.y = clone.y
-                    break
-                }
+            if(id === 0) {
+                return obj.sprite.getBounds().intersects(data.sprite.getBounds())
+            }
+            else if(id in obj.clone_list) {
+                let clone = obj.clone_list[id]
+                data.owner.x = clone.x
+                data.owner.y = clone.y
             }
         }
         return await super.run(data);

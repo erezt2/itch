@@ -8,7 +8,7 @@ function resetPlayground() {
     let sprites = global.window.sprites
     for(let k in sprites) {
         let sm = sprites[k]
-        let list = Array.from(sm.clone_list)
+        let list = Object.values(sm.clone_list)
         for(let clone of list) {
             clone.remove()
         }
@@ -29,6 +29,7 @@ start_button.onclick = async function(event) {
         usr.allowedIn = true
     }
     for(let k in sprites) {
+        // sprites[k].clone_list[0] = sprites[k]
         await sprites[k].runBlocks({start: true})
     }
 }

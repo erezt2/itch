@@ -311,15 +311,15 @@ class SpriteCopy extends SpriteWrap {
     remove(fromparent) {
         super.remove()
         if(!fromparent) {
-            const index = this.parent.clone_list.indexOf(this)
-            if(index !== -1) this.parent.clone_list.splice(index, 1)
+            if(this.clone_id in this.parent.clone_list)
+                delete this.parent.clone_list[this.clone_id]
         }
     }
 }
 
 class SpriteMain extends SpriteWrap {
     clone_next = 1;
-    clone_list = []
+    clone_list = {}
     is_clone = false;
     constructor(name, texture) {
         super(name, texture.firstChild.firstChild.src, texture.lastChild.innerHTML)
@@ -329,30 +329,31 @@ class SpriteMain extends SpriteWrap {
         new SpriteCopy(this, user_id)
     }
     add_clone(instance) {
-        this.clone_list.push(instance)
+        this.clone_list[this.clone_next] = instance
         instance.clone_id = this.clone_next
         this.clone_next += 1
     }
     remove() {
         delete global.window.sprites[this.name]
-        for(let c of this.clone_list) {
-            c.remove(true)
+        for(let c in this.clone_list) {
+            this.clone_list[c].remove(true)
         }
         super.remove()
     }
     stopAll(mercy) {
         this.stopSelf(mercy)
-        for(let cl of this.clone_list) cl.stopSelf(mercy)
+        for(let cl in this.clone_list) this.clone_list[cl].stopSelf(mercy)
     }
     async runAllBlocks(filter, data) {
         let l = []
         l= l.concat(await this.runBlocks(filter, data))
-        for(let cl of this.clone_list) l=l.concat(await cl.runBlocks(filter, data))
+        for(let cl in this.clone_list) 
+            l=l.concat(await this.clone_list[cl].runBlocks(filter, data))
         return l
     }
     stopSingularAllClones(block) {
         this.stopSingular(block);
-        for(let c of this.clone_list) c.stopSingular(block)
+        for(let c in this.clone_list) this.clone_list[c].stopSingular(block)
     }
 }
 

@@ -42,6 +42,13 @@ export default class BlockGeneric {
         return new Promise(resolve => setTimeout(resolve, 0))
     }
     async getValues(input_types, data) {
+        if(data.selfObject !== undefined) {
+            data = data.selfObject
+            data = {
+                local_variables: {}, sprite: data.sprite, 
+                clone_id: data.clone_id, owner: data, user: data.user
+            }
+        }
         if (this.inputs.length !== input_types.length) throw "bad block build"
         let l = []
         for(let i=0; i<this.inputs.length; i++) {

@@ -13,6 +13,6 @@ export default class VoidTemplate extends BlockVoid {
         let data_copy = Object.assign({}, data)
         data_copy.inputs = args
         await this.function_block["data-block"].run(data_copy)
-        return await super.run(data_copy)
+        return await super.run(data)
     }
 }

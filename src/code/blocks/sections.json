@@ -36,7 +36,7 @@
                     "getMouseX.js", "getMouseY.js",
                     "-gap",
                     "getRotatedWidth.js", "getRotatedHeight.js", "-gap",
-                    "touching.js", "keyPressed.js", "mouseDown.js", "ask.js"]
+                    "touching.js", "touchingClone.js", "keyPressed.js", "mouseDown.js", "ask.js"]
     },
     "Data":{
         "color": "#FF6600",
@@ -46,7 +46,7 @@
         "-lists", "addList.js", "addIndexList.js", "-gap", "removeList.js", "removeIndexList.js",
         "-gap", "setList.js", "changeList.js",
         "-gap", "getList.js", "getIndexList.js", "getStringList.js", "-gap", 
-        "lengthList.js","countList.js"]
+        "lengthList.js","countList.js", "indexOf.js"]
     },
     "Operations":{
         "color": "#77BB00",

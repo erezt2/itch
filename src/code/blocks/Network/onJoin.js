@@ -3,7 +3,7 @@ import BlockStart from "../blockStart.js";
 
 export default class OnJoin extends BlockStart {
     static input_types = [];
-    static display = "on user join (new user = ID)";
+    static display = "on user join (sets action ID)";
     constructor(element) {
         super(element)
     }

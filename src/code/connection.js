@@ -29,7 +29,7 @@ export default function runServer() {
     global.peer = peer
 
     peer.on("open", id=> {
-        global.serverID = id
+        global.serverID = id.split("-").splice(-1)[0]
         peer.on('connection', conn => {
           global.connections.push(conn)
           let user = new User(conn.peer, conn)

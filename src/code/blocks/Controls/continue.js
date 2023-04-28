@@ -8,6 +8,7 @@ export default class Return extends BlockVoid {
     }
     async run(data) {
         let args = await this.getValues(this.constructor.input_types, data)
+        data.continue = true
         return data
     }
 }

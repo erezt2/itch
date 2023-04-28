@@ -3,7 +3,7 @@ import global from "../../global.js"
 
 export default class CreateClone extends BlockVoid {
     static input_types = [num => (Number(num) || 0)];
-    static display = "create clone, action ID = |";
+    static display = "create clone, user ID = |";
     constructor(element) {
         super(element)
     }

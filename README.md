@@ -1,8 +1,11 @@
 # itch
-scratch copy
+A visual programming language for kids that supports multiplayer (using WebRTC)
+
+This program is mostly intuitive, but some features can be misleading.
+There probably some minor\ rare bugs left in the program.
 
 
-sorry in advance for the lack of modularity i need to finish this whole project due april 30th
+Sorry in advance for the lack of modularity if you are looking through the code, I had to finish this whole project due april 30th so I cut some corners.
 
 
-also, there are a lot of cases where the blocks dont handle type conversion, so put that into your mind (there is a conversion block)
+

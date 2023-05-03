@@ -1,7 +1,7 @@
 # itch
 A visual programming language for kids that supports multiplayer (using WebRTC)
 
-This program is mostly intuitive, but some features can be misleading.
+This program is mostly intuitive, but some features can be specific or misleading (functions and networks are strong offenders).
 There probably some minor\ rare bugs left in the program.
 
 

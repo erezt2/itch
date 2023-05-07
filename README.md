@@ -6,15 +6,15 @@ There probably some minor\ rare bugs left in the program.
 
 
 Simple user interface!
-![interface screenshot](https://github.com/erezt2/itch/blob/master/readme/ss1.png?raw=true)
+![interface screenshot](readme/ss1.png?raw=true)
 
 
 Drag and drop!
-![interface screenshot](https://github.com/erezt2/itch/blob/master/readme/v2.gif?raw=true)
+![interface screenshot](readme/v2.gif?raw=true)
 
 
 Connect Online!
-![interface screenshot](https://github.com/erezt2/itch/blob/master/readme/v1.gif?raw=true)
+![interface screenshot](readme/v1.gif?raw=true)
 
 
 
